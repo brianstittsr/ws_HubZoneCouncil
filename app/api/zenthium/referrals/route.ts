@@ -77,28 +77,33 @@ export async function GET(request: NextRequest) {
     });
 
     // Also include public location submissions so they appear in the dashboard
-    let pubQuery = adminDb
-      .collection(COLLECTIONS.ZENTHIUM_LOCATION_SUBMISSIONS)
-      .orderBy("createdAt", "desc") as FirebaseFirestore.Query;
-    if (status) pubQuery = pubQuery.where("status", "==", status);
-    const pubSnapshot = await pubQuery.get();
-    const pubReferrals = pubSnapshot.docs.map((doc) => {
-      const d = doc.data();
-      const city = d.city ?? "";
-      const state = d.state ?? "";
-      return {
-        id: doc.id,
-        source: "public_location_form",
-        title: d.propertyName ? `${d.propertyName} — ${city}, ${state}` : d.submitterName ?? doc.id,
-        propertyName: d.propertyName ?? "",
-        address: { street: d.address ?? "", city, state, zip: d.zip ?? "", country: d.country ?? "US" },
-        status: d.status ?? "Submitted",
-        createdAt: d.createdAt?.toDate().toISOString(),
-        updatedAt: d.updatedAt?.toDate().toISOString(),
-      };
-    });
+    let pubReferrals: { id: string; source: string; title: string; propertyName: string; address: object; status: string; createdAt: string | undefined; updatedAt: string | undefined }[] = [];
+    try {
+      let pubQuery = adminDb
+        .collection(COLLECTIONS.ZENTHIUM_LOCATION_SUBMISSIONS)
+        .orderBy("createdAt", "desc") as FirebaseFirestore.Query;
+      if (status) pubQuery = pubQuery.where("status", "==", status);
+      const pubSnapshot = await pubQuery.get();
+      pubReferrals = pubSnapshot.docs.map((doc) => {
+        const d = doc.data();
+        const city = d.city ?? "";
+        const state = d.state ?? "";
+        return {
+          id: doc.id,
+          source: "public_location_form",
+          title: d.propertyName ? `${d.propertyName} — ${city}, ${state}` : d.submitterName ?? doc.id,
+          propertyName: d.propertyName ?? "",
+          address: { street: d.address ?? "", city, state, zip: d.zip ?? "", country: d.country ?? "US" },
+          status: d.status ?? "Submitted",
+          createdAt: d.createdAt?.toDate().toISOString(),
+          updatedAt: d.updatedAt?.toDate().toISOString(),
+        };
+      });
+    } catch (e) {
+      console.warn("[Zenthium] location-submissions list query failed (index may be missing):", e);
+    }
 
-    const all = [...referrals, ...pubReferrals].sort((a, b) => {
+    const all = ([...referrals, ...pubReferrals] as { createdAt?: string }[]).sort((a, b) => {
       const ta = a.createdAt ? new Date(a.createdAt).getTime() : 0;
       const tb = b.createdAt ? new Date(b.createdAt).getTime() : 0;
       return tb - ta;

@@ -59,29 +59,37 @@ export async function GET(
       updatedAt: data.updatedAt?.toDate().toISOString(),
     };
 
-    const historySnap = await adminDb
-      .collection(COLLECTIONS.ZENTHIUM_REFERRAL_STATUS_HISTORY)
-      .where("referralId", "==", id)
-      .orderBy("createdAt", "desc")
-      .get();
+    let statusHistory: unknown[] = [];
+    try {
+      const historySnap = await adminDb
+        .collection(COLLECTIONS.ZENTHIUM_REFERRAL_STATUS_HISTORY)
+        .where("referralId", "==", id)
+        .orderBy("createdAt", "desc")
+        .get();
+      statusHistory = historySnap.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+        createdAt: doc.data().createdAt?.toDate().toISOString(),
+      }));
+    } catch (e) {
+      console.warn("[Zenthium] statusHistory query failed (index may be missing):", e);
+    }
 
-    const statusHistory = historySnap.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-      createdAt: doc.data().createdAt?.toDate().toISOString(),
-    }));
-
-    const meetingsSnap = await adminDb
-      .collection(COLLECTIONS.ZENTHIUM_MEETINGS)
-      .where("referralId", "==", id)
-      .orderBy("createdAt", "desc")
-      .get();
-
-    const meetings = meetingsSnap.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-      createdAt: doc.data().createdAt?.toDate().toISOString(),
-    }));
+    let meetings: unknown[] = [];
+    try {
+      const meetingsSnap = await adminDb
+        .collection(COLLECTIONS.ZENTHIUM_MEETINGS)
+        .where("referralId", "==", id)
+        .orderBy("createdAt", "desc")
+        .get();
+      meetings = meetingsSnap.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+        createdAt: doc.data().createdAt?.toDate().toISOString(),
+      }));
+    } catch (e) {
+      console.warn("[Zenthium] meetings query failed (index may be missing):", e);
+    }
 
     return NextResponse.json({ referral, statusHistory, meetings });
   } catch (error) {
