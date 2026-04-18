@@ -252,6 +252,32 @@ export default function ZenthiumPage() {
         </div>
       </section>
 
+      {/* Full-bleed data center image banner */}
+      <div className="relative w-full overflow-hidden" style={{ height: "420px" }}>
+        <Image
+          src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1920&q=80"
+          alt="Hyperscale data center — global digital infrastructure"
+          fill
+          className="object-cover object-center"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(to right, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.55) 50%, rgba(10,10,10,0.3) 100%)" }} />
+        <div className="absolute inset-0 flex items-center">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <div className="max-w-xl">
+              <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "#F5A623" }}>The Scale of Opportunity</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-white leading-tight mb-4">
+                The world needs 10x more data center capacity by 2030.
+              </h2>
+              <p className="text-base" style={{ color: "#bbb" }}>
+                AI workloads, cloud migration, and autonomous systems are creating an unprecedented infrastructure gap.
+                Zenthium is actively closing it — one strategic site at a time.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* We Are Looking For */}
       <section className="py-20" style={{ backgroundColor: "#0a0a0a" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -286,6 +312,22 @@ export default function ZenthiumPage() {
             </div>
 
             <div className="space-y-4">
+              {/* Industrial property image */}
+              <div className="relative w-full h-52 rounded-2xl overflow-hidden border" style={{ borderColor: "rgba(245,166,35,0.2)" }}>
+                <Image
+                  src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=900&q=80"
+                  alt="Industrial warehouse suitable for data center conversion"
+                  fill
+                  className="object-cover object-center"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+                <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.2) 60%)" }} />
+                <div className="absolute bottom-4 left-4 right-4">
+                  <p className="text-white font-semibold text-sm">Idle warehouses, steel mills, industrial facilities</p>
+                  <p className="text-xs mt-0.5" style={{ color: "#F5A623" }}>Transform underutilized assets into high-value infrastructure</p>
+                </div>
+              </div>
+
               <div className="rounded-xl p-5 border" style={{ backgroundColor: "rgba(245,166,35,0.06)", borderColor: "rgba(245,166,35,0.25)" }}>
                 <div className="flex items-center gap-2 mb-3">
                   <TrendingUp className="h-5 w-5" style={{ color: "#F5A623" }} />
@@ -299,17 +341,39 @@ export default function ZenthiumPage() {
                   <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 mt-0.5 shrink-0" style={{ color: "#F5A623" }} />Strategic joint venture structure to maximize long-term asset value</li>
                 </ul>
               </div>
-              <div className="rounded-xl p-5" style={{ backgroundColor: "#1a1a1a" }}>
-                <p className="text-sm italic" style={{ color: "#888" }}>
-                  "The AI revolution is driving unprecedented demand for power-intensive data infrastructure.
-                  Energy-rich properties and industrial assets are becoming the most valuable real estate in the world."
-                </p>
-                <p className="text-sm font-semibold mt-3 text-white">— Zenthium AI</p>
-              </div>
             </div>
           </div>
         </div>
       </section>
+
+      {/* Three-image property mosaic */}
+      <div className="py-16" style={{ backgroundColor: "#0a0a0a" }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-center text-xs font-bold uppercase tracking-widest mb-8" style={{ color: "#F5A623" }}>The types of sites we evaluate</p>
+          <div className="grid grid-cols-3 gap-4">
+            {[
+              { src: "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?auto=format&fit=crop&w=700&q=80", label: "Power Substations & Grid Assets", sub: "High-voltage infrastructure" },
+              { src: "https://images.unsplash.com/photo-1570128862111-d248b4df4df6?auto=format&fit=crop&w=700&q=80", label: "Vacant Industrial Land", sub: "Greenfield & brownfield parcels" },
+              { src: "https://images.unsplash.com/photo-1566193135038-4979a0ea6c98?auto=format&fit=crop&w=700&q=80", label: "Idle Warehouses & Mills", sub: "Adaptive reuse opportunities" },
+            ].map((img) => (
+              <div key={img.label} className="relative rounded-2xl overflow-hidden" style={{ height: "220px" }}>
+                <Image
+                  src={img.src}
+                  alt={img.label}
+                  fill
+                  className="object-cover object-center"
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                />
+                <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(10,10,10,0.9) 0%, rgba(10,10,10,0.15) 55%)" }} />
+                <div className="absolute bottom-3 left-3 right-3">
+                  <p className="text-white font-semibold text-xs leading-tight">{img.label}</p>
+                  <p className="text-xs mt-0.5" style={{ color: "#F5A623" }}>{img.sub}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
 
       {/* Site Requirements */}
       <section className="py-20" style={{ backgroundColor: "#111" }}>
@@ -367,6 +431,32 @@ export default function ZenthiumPage() {
           </div>
         </div>
       </section>
+
+      {/* Full-bleed power grid banner */}
+      <div className="relative w-full overflow-hidden" style={{ height: "360px" }}>
+        <Image
+          src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=1920&q=80"
+          alt="High-voltage power transmission lines at dusk"
+          fill
+          className="object-cover object-bottom"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(to left, rgba(10,10,10,0.9) 0%, rgba(10,10,10,0.55) 50%, rgba(10,10,10,0.3) 100%)" }} />
+        <div className="absolute inset-0 flex items-center justify-end">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex justify-end">
+            <div className="max-w-lg text-right">
+              <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "#F5A623" }}>Power Is the Asset</p>
+              <h3 className="text-3xl md:text-4xl font-bold text-white leading-tight mb-3">
+                If you control power, you control the future.
+              </h3>
+              <p className="text-base" style={{ color: "#bbb" }}>
+                Grid access, substations, and stranded energy are now the most sought-after real estate on earth.
+                Zenthium turns your energy asset into long-term cash flow.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* FAQs */}
       <section className="py-20" style={{ backgroundColor: "#0a0a0a" }}>
