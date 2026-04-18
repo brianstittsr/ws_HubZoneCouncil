@@ -149,41 +149,67 @@ export function ReferralForm({ userId }: ReferralFormProps) {
   const progress = ((step - 1) / (STEPS.length - 1)) * 100;
 
   return (
-    <div className="max-w-3xl mx-auto space-y-6">
-      {/* Step Indicator */}
-      <div className="space-y-2">
-        <div className="flex items-center justify-between text-sm">
-          <span className="font-medium">{STEPS[step - 1].title}</span>
-          <span className="text-muted-foreground">Step {step} of {STEPS.length}</span>
+    <div className="flex gap-6 items-start w-full">
+      {/* ── Left: Step Sidebar ── */}
+      <aside className="hidden lg:flex flex-col gap-1 w-56 shrink-0 sticky top-6">
+        <div className="mb-4">
+          <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">Progress</p>
+          <Progress value={progress} className="h-2 mb-1" />
+          <p className="text-xs text-muted-foreground text-right">Step {step} of {STEPS.length}</p>
         </div>
-        <Progress value={progress} className="h-2" />
-        <div className="hidden sm:flex justify-between">
-          {STEPS.map((s) => (
+        {STEPS.map((s) => {
+          const isComplete = s.id < step;
+          const isCurrent = s.id === step;
+          return (
             <button
               key={s.id}
               type="button"
-              onClick={() => s.id < step && setStep(s.id)}
-              className={`text-xs ${s.id < step ? "text-primary cursor-pointer hover:underline" : s.id === step ? "text-foreground font-medium" : "text-muted-foreground"}`}
+              onClick={() => isComplete && setStep(s.id)}
+              disabled={!isComplete}
+              className={`flex items-start gap-3 px-3 py-2.5 rounded-lg text-left transition-colors w-full ${
+                isCurrent
+                  ? "bg-primary/10 text-primary"
+                  : isComplete
+                  ? "text-muted-foreground hover:bg-muted cursor-pointer"
+                  : "text-muted-foreground/50 cursor-not-allowed"
+              }`}
             >
-              {s.title}
+              <span className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-xs font-bold border ${
+                isCurrent ? "border-primary bg-primary text-primary-foreground" : isComplete ? "border-primary bg-primary/10 text-primary" : "border-muted-foreground/30"
+              }`}>
+                {isComplete ? <CheckCircle2 className="h-3 w-3" /> : s.id}
+              </span>
+              <span>
+                <span className="block text-sm font-medium leading-tight">{s.title}</span>
+                <span className="block text-xs opacity-70 mt-0.5">{s.description}</span>
+              </span>
             </button>
-          ))}
-        </div>
-      </div>
+          );
+        })}
+      </aside>
 
-      {error && (
-        <Alert variant="destructive">
-          <AlertCircle className="h-4 w-4" />
-          <AlertDescription>{error}</AlertDescription>
-        </Alert>
-      )}
+      {/* ── Right: Form Content ── */}
+      <div className="flex-1 min-w-0 space-y-4">
+        {error && (
+          <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        )}
 
-      <Card>
-        <CardHeader>
-          <CardTitle>{STEPS[step - 1].title}</CardTitle>
-          <CardDescription>{STEPS[step - 1].description}</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
+        <Card>
+          <CardHeader className="pb-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <CardTitle>{STEPS[step - 1].title}</CardTitle>
+                <CardDescription>{STEPS[step - 1].description}</CardDescription>
+              </div>
+              <span className="lg:hidden text-sm text-muted-foreground">Step {step}/{STEPS.length}</span>
+            </div>
+            {/* Mobile step progress bar */}
+            <Progress value={progress} className="h-1.5 lg:hidden mt-2" />
+          </CardHeader>
+          <CardContent className="space-y-4">
           {/* ── STEP 1: Site Information ── */}
           {step === 1 && (
             <>
@@ -389,26 +415,27 @@ export function ReferralForm({ userId }: ReferralFormProps) {
         </CardContent>
       </Card>
 
-      {/* Navigation */}
-      <div className="flex justify-between">
-        <Button type="button" variant="outline" onClick={handleBack} disabled={step === 1}>
-          <ChevronLeft className="h-4 w-4 mr-1" />
-          Back
-        </Button>
-        {step < STEPS.length ? (
-          <Button type="button" onClick={handleNext}>
-            Next
-            <ChevronRight className="h-4 w-4 ml-1" />
+        {/* Navigation */}
+        <div className="flex justify-between pt-2">
+          <Button type="button" variant="outline" onClick={handleBack} disabled={step === 1}>
+            <ChevronLeft className="h-4 w-4 mr-1" />
+            Back
           </Button>
-        ) : (
-          <Button onClick={handleSubmit} disabled={isSubmitting}>
-            {isSubmitting ? (
-              <><Loader2 className="h-4 w-4 mr-2 animate-spin" />Submitting...</>
-            ) : (
-              <><CheckCircle2 className="h-4 w-4 mr-2" />Submit Referral</>
-            )}
-          </Button>
-        )}
+          {step < STEPS.length ? (
+            <Button type="button" onClick={handleNext}>
+              Next
+              <ChevronRight className="h-4 w-4 ml-1" />
+            </Button>
+          ) : (
+            <Button onClick={handleSubmit} disabled={isSubmitting}>
+              {isSubmitting ? (
+                <><Loader2 className="h-4 w-4 mr-2 animate-spin" />Submitting...</>
+              ) : (
+                <><CheckCircle2 className="h-4 w-4 mr-2" />Submit Referral</>
+              )}
+            </Button>
+          )}
+        </div>
       </div>
     </div>
   );

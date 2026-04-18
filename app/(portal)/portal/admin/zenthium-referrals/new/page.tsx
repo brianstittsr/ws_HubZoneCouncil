@@ -15,28 +15,29 @@ export default function NewZenthiumReferralPage() {
       : profile.email ?? "anonymous";
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center gap-4">
-        <Button variant="ghost" size="sm" asChild>
-          <Link href="/portal/admin/zenthium-referrals">
-            <ArrowLeft className="h-4 w-4 mr-1" />
-            Back to Dashboard
-          </Link>
-        </Button>
+    <div className="min-h-full">
+      {/* Top bar */}
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-4">
+          <Button variant="ghost" size="sm" asChild>
+            <Link href="/portal/admin/zenthium-referrals">
+              <ArrowLeft className="h-4 w-4 mr-1" />
+              Back to Dashboard
+            </Link>
+          </Button>
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-primary/10">
+              <Database className="h-5 w-5 text-primary" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold tracking-tight">Submit New Site Referral</h1>
+              <p className="text-sm text-muted-foreground">Submit a data center site to Zenthium for evaluation</p>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div className="flex items-center gap-3">
-        <div className="p-2 rounded-lg bg-primary/10">
-          <Database className="h-5 w-5 text-primary" />
-        </div>
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight">Submit New Site Referral</h1>
-          <p className="text-sm text-muted-foreground">
-            Submit a data center site to Zenthium for evaluation
-          </p>
-        </div>
-      </div>
-
+      {/* Full-width form */}
       <ReferralForm userId={userId} />
     </div>
   );
