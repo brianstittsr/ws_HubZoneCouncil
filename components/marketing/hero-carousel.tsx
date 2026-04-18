@@ -141,7 +141,7 @@ export function HeroCarousel({ slides = defaultSlides, autoPlayInterval = 6000 }
   return (
     <section className="relative overflow-hidden bg-black text-white">
       {/* Background Image */}
-      {currentSlide.backgroundImage && (
+      {currentSlide.backgroundImage && currentSlide.backgroundImage.startsWith("http") && (
         <Image
           key={currentSlide.id}
           src={currentSlide.backgroundImage}
@@ -150,6 +150,7 @@ export function HeroCarousel({ slides = defaultSlides, autoPlayInterval = 6000 }
           priority
           className="object-cover object-center transition-opacity duration-700 animate-in fade-in"
           sizes="100vw"
+          unoptimized={false}
         />
       )}
       {/* Dark overlay over the image */}

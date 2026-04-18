@@ -44,13 +44,19 @@ export async function GET() {
     const col = adminDb.collection(COLLECTIONS.ZENTHIUM_DIRECT_CONTACTS);
     await seedDefaultsIfEmpty(col);
 
-    const snap = await col.orderBy("sortOrder", "asc").orderBy("name", "asc").get();
-    const contacts = snap.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-      createdAt: doc.data().createdAt?.toDate().toISOString(),
-      updatedAt: doc.data().updatedAt?.toDate().toISOString(),
-    }));
+    const snap = await col.orderBy("sortOrder", "asc").get();
+    const contacts = (
+      snap.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+        createdAt: doc.data().createdAt?.toDate().toISOString(),
+        updatedAt: doc.data().updatedAt?.toDate().toISOString(),
+      })) as Record<string, unknown>[]
+    ).sort((a, b) => {
+      const so = ((a.sortOrder as number) ?? 0) - ((b.sortOrder as number) ?? 0);
+      if (so !== 0) return so;
+      return String(a.name ?? "").localeCompare(String(b.name ?? ""));
+    });
 
     return NextResponse.json({ contacts });
   } catch (error) {
