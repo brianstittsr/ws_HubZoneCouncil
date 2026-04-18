@@ -189,7 +189,7 @@ export function HeroCarousel({ slides = defaultSlides, autoPlayInterval = 6000 }
             </div>
 
             {/* CTAs */}
-            <div className="mt-10 flex justify-center">
+            <div className="mt-10 flex flex-wrap justify-center gap-4">
               {currentSlide.primaryCta.modal === "zenthium_location" ? (
                 <Button size="lg" className="text-lg px-8" onClick={() => setZenthiumModalOpen(true)}>
                   {currentSlide.primaryCta.text}
@@ -200,6 +200,13 @@ export function HeroCarousel({ slides = defaultSlides, autoPlayInterval = 6000 }
                   <Link href={currentSlide.primaryCta.href}>
                     {currentSlide.primaryCta.text}
                     <ArrowRight className="ml-2 h-5 w-5" />
+                  </Link>
+                </Button>
+              )}
+              {currentSlide.secondaryCta.text && (
+                <Button size="lg" variant="outline" className="text-lg px-8 border-white/40 text-white hover:bg-white/10" asChild>
+                  <Link href={currentSlide.secondaryCta.href}>
+                    {currentSlide.secondaryCta.text}
                   </Link>
                 </Button>
               )}

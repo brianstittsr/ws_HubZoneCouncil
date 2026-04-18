@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
   Accordion,
@@ -26,7 +25,6 @@ import {
   TrendingUp,
   ChevronRight,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { ZenthiumLocationModal } from "@/components/zenthium/ZenthiumLocationModal";
 
 const SITE_REQUIREMENTS = [
@@ -157,61 +155,69 @@ export default function ZenthiumPage() {
   const openModal = () => setModalOpen(true);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen" style={{ backgroundColor: "#0a0a0a", color: "#fff" }}>
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-black text-white">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#1a1a1a_1px,transparent_1px),linear-gradient(to_bottom,#1a1a1a_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)]" />
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-transparent" />
+      <section className="relative overflow-hidden text-white" style={{ backgroundColor: "#0a0a0a" }}>
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#2a2000_1px,transparent_1px),linear-gradient(to_bottom,#2a2000_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)]" />
+        <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(245,166,35,0.12) 0%, transparent 65%)" }} />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-36 text-center">
-          <Badge variant="outline" className="mb-6 border-primary/50 text-primary text-sm">
+          <Badge variant="outline" className="mb-6 text-sm" style={{ borderColor: "rgba(245,166,35,0.6)", color: "#F5A623" }}>
             Strategic Partners Wanted
           </Badge>
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-6">
             Powering the{" "}
-            <span className="text-primary">AI Infrastructure</span>{" "}
+            <span style={{ color: "#F5A623" }}>AI Infrastructure</span>{" "}
             Revolution
           </h1>
-          <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-4">
+          <p className="text-lg md:text-xl max-w-3xl mx-auto mb-4" style={{ color: "#ccc" }}>
             Zenthium is at the forefront of the global AI and data infrastructure expansion.
             With <strong className="text-white">10+ gigawatts of demand</strong> from global hyperscalers
             and Fortune 500 companies, we are actively building the next generation of high-performance
             digital infrastructure across the globe.
           </p>
-          <p className="text-base text-gray-400 max-w-2xl mx-auto mb-10">
+          <p className="text-base max-w-2xl mx-auto mb-10" style={{ color: "#999" }}>
             The opportunity is massive — and we are seeking strategic joint venture partners ready to build alongside us.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="text-lg px-8" onClick={openModal}>
+            <button
+              onClick={openModal}
+              className="inline-flex items-center justify-center gap-2 rounded-full text-base font-semibold px-8 py-3 transition-all hover:opacity-90 active:scale-95"
+              style={{ backgroundColor: "#F5A623", color: "#000" }}
+            >
               Submit a Location
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
-            <Button size="lg" variant="outline" className="text-lg px-8 border-white/30 text-white hover:bg-white/10" asChild>
-              <a href="https://zenthium.ai" target="_blank" rel="noopener noreferrer">
-                Visit Zenthium.ai
-                <ChevronRight className="ml-2 h-5 w-5" />
-              </a>
-            </Button>
+              <ArrowRight className="h-5 w-5" />
+            </button>
+            <a
+              href="https://zenthium.ai"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-full text-base font-semibold px-8 py-3 border transition-all hover:bg-white/5"
+              style={{ borderColor: "#F5A623", color: "#F5A623" }}
+            >
+              Visit Zenthium.ai
+              <ChevronRight className="h-5 w-5" />
+            </a>
           </div>
 
           {/* Stats */}
-          <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 border-t border-white/10 pt-10">
+          <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 border-t pt-10" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
             {STATS.map((s) => (
               <div key={s.label} className="text-center">
-                <p className="text-3xl font-bold text-primary">{s.value}</p>
-                <p className="text-sm text-gray-400 mt-1">{s.label}</p>
+                <p className="text-3xl font-bold" style={{ color: "#F5A623" }}>{s.value}</p>
+                <p className="text-sm mt-1" style={{ color: "#888" }}>{s.label}</p>
               </div>
             ))}
           </div>
         </div>
-        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-24" style={{ background: "linear-gradient(to top, #0a0a0a, transparent)" }} />
       </section>
 
       {/* What Zenthium Delivers */}
-      <section className="py-20 bg-muted/30">
+      <section className="py-20" style={{ backgroundColor: "#111" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
-            <h2 className="text-3xl font-bold mb-4">What Zenthium Delivers</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
+            <h2 className="text-3xl font-bold mb-4 text-white">What Zenthium Delivers</h2>
+            <p className="max-w-2xl mx-auto" style={{ color: "#999" }}>
               Zenthium secures and places long-term hyperscale and enterprise demand through structured, long-term partnerships.
             </p>
           </div>
@@ -221,12 +227,12 @@ export default function ZenthiumPage() {
               { icon: Zap, title: "10–20 MW+ Deployments", desc: "Minimum 10–20 MW deployments with scalable expansion paths to hundreds of MW." },
               { icon: Server, title: "End-to-End Execution", desc: "From site identification through commissioning, Zenthium manages the full development lifecycle." },
             ].map((item) => (
-              <div key={item.title} className="bg-background rounded-xl p-6 border shadow-sm">
-                <div className="p-3 rounded-lg bg-primary/10 w-fit mb-4">
-                  <item.icon className="h-6 w-6 text-primary" />
+              <div key={item.title} className="rounded-xl p-6 border" style={{ backgroundColor: "#1a1a1a", borderColor: "rgba(245,166,35,0.2)" }}>
+                <div className="p-3 rounded-lg w-fit mb-4" style={{ backgroundColor: "rgba(245,166,35,0.12)" }}>
+                  <item.icon className="h-6 w-6" style={{ color: "#F5A623" }} />
                 </div>
-                <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
-                <p className="text-muted-foreground text-sm">{item.desc}</p>
+                <h3 className="text-lg font-semibold mb-2 text-white">{item.title}</h3>
+                <p className="text-sm" style={{ color: "#999" }}>{item.desc}</p>
               </div>
             ))}
           </div>
@@ -234,54 +240,58 @@ export default function ZenthiumPage() {
       </section>
 
       {/* We Are Looking For */}
-      <section className="py-20">
+      <section className="py-20" style={{ backgroundColor: "#0a0a0a" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
-              <h2 className="text-3xl font-bold mb-4">We Are Looking for New Data Center Locations</h2>
-              <p className="text-muted-foreground mb-6">
+              <h2 className="text-3xl font-bold mb-4 text-white">We Are Looking for New Data Center Locations</h2>
+              <p className="mb-6" style={{ color: "#aaa" }}>
                 Zenthium partners with owners of energy-rich properties and industrial assets to transform
                 underutilized real estate into high-value digital infrastructure hubs. Whether it's a
                 warehouse, steel mill, gas plant, industrial facility, or powered land — we bring the committed demand.
               </p>
-              <p className="text-muted-foreground mb-8">
+              <p className="mb-8" style={{ color: "#aaa" }}>
                 If you control power and want to participate in one of the fastest-growing sectors in history,
                 now is the time. You supply the power. We'll bring the demand.
               </p>
               <div className="space-y-3">
                 {PARTNER_TYPES.map((type) => (
                   <div key={type} className="flex items-center gap-3">
-                    <CheckCircle2 className="h-5 w-5 text-primary shrink-0" />
-                    <span className="text-sm">{type}</span>
+                    <CheckCircle2 className="h-5 w-5 shrink-0" style={{ color: "#F5A623" }} />
+                    <span className="text-sm text-white">{type}</span>
                   </div>
                 ))}
               </div>
-              <Button className="mt-8" size="lg" onClick={openModal}>
+              <button
+                onClick={openModal}
+                className="mt-8 inline-flex items-center gap-2 rounded-full font-semibold px-8 py-3 transition-all hover:opacity-90"
+                style={{ backgroundColor: "#F5A623", color: "#000" }}
+              >
                 Submit Your Location
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
+                <ArrowRight className="h-5 w-5" />
+              </button>
             </div>
 
             <div className="space-y-4">
-              <div className="bg-primary/5 border border-primary/20 rounded-xl p-5">
+              <div className="rounded-xl p-5 border" style={{ backgroundColor: "rgba(245,166,35,0.06)", borderColor: "rgba(245,166,35,0.25)" }}>
                 <div className="flex items-center gap-2 mb-3">
-                  <TrendingUp className="h-5 w-5 text-primary" />
-                  <span className="font-semibold">Why Partner with Zenthium?</span>
+                  <TrendingUp className="h-5 w-5" style={{ color: "#F5A623" }} />
+                  <span className="font-semibold text-white">Why Partner with Zenthium?</span>
                 </div>
-                <ul className="space-y-2 text-sm text-muted-foreground">
-                  <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-primary mt-0.5 shrink-0" />10+ GW of contracted and active demand pipeline</li>
-                  <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-primary mt-0.5 shrink-0" />Direct relationships with hyperscalers and Fortune 500 companies</li>
-                  <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-primary mt-0.5 shrink-0" />Expertise in utility coordination and infrastructure execution</li>
-                  <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-primary mt-0.5 shrink-0" />Global expansion footprint across North America and beyond</li>
-                  <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-primary mt-0.5 shrink-0" />Strategic joint venture structure to maximize long-term asset value</li>
+                <ul className="space-y-2 text-sm" style={{ color: "#aaa" }}>
+                  <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 mt-0.5 shrink-0" style={{ color: "#F5A623" }} />10+ GW of contracted and active demand pipeline</li>
+                  <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 mt-0.5 shrink-0" style={{ color: "#F5A623" }} />Direct relationships with hyperscalers and Fortune 500 companies</li>
+                  <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 mt-0.5 shrink-0" style={{ color: "#F5A623" }} />Expertise in utility coordination and infrastructure execution</li>
+                  <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 mt-0.5 shrink-0" style={{ color: "#F5A623" }} />Global expansion footprint across North America and beyond</li>
+                  <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 mt-0.5 shrink-0" style={{ color: "#F5A623" }} />Strategic joint venture structure to maximize long-term asset value</li>
                 </ul>
               </div>
-              <div className="bg-muted rounded-xl p-5">
-                <p className="text-sm italic text-muted-foreground">
+              <div className="rounded-xl p-5" style={{ backgroundColor: "#1a1a1a" }}>
+                <p className="text-sm italic" style={{ color: "#888" }}>
                   "The AI revolution is driving unprecedented demand for power-intensive data infrastructure.
                   Energy-rich properties and industrial assets are becoming the most valuable real estate in the world."
                 </p>
-                <p className="text-sm font-semibold mt-3">— Zenthium AI</p>
+                <p className="text-sm font-semibold mt-3 text-white">— Zenthium AI</p>
               </div>
             </div>
           </div>
@@ -289,11 +299,11 @@ export default function ZenthiumPage() {
       </section>
 
       {/* Site Requirements */}
-      <section className="py-20 bg-muted/30">
+      <section className="py-20" style={{ backgroundColor: "#111" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
-            <h2 className="text-3xl font-bold mb-4">Data Center Site Requirements</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
+            <h2 className="text-3xl font-bold mb-4 text-white">Data Center Site Requirements</h2>
+            <p className="max-w-2xl mx-auto" style={{ color: "#999" }}>
               Zenthium evaluates every location against the following criteria. Required items are non-negotiable;
               preferred items significantly improve a site's score and deployment timeline.
             </p>
@@ -302,51 +312,68 @@ export default function ZenthiumPage() {
             {SITE_REQUIREMENTS.map((req) => (
               <div
                 key={req.title}
-                className={cn(
-                  "rounded-xl p-5 border flex gap-4",
-                  req.required
-                    ? "bg-background border-primary/30"
-                    : "bg-background border-border"
-                )}
+                className="rounded-xl p-5 border flex gap-4"
+                style={{
+                  backgroundColor: "#1a1a1a",
+                  borderColor: req.required ? "rgba(245,166,35,0.35)" : "rgba(255,255,255,0.08)",
+                }}
               >
-                <div className={cn("p-2.5 rounded-lg h-fit shrink-0", req.required ? "bg-primary/10" : "bg-muted")}>
-                  <req.icon className={cn("h-5 w-5", req.required ? "text-primary" : "text-muted-foreground")} />
+                <div
+                  className="p-2.5 rounded-lg h-fit shrink-0"
+                  style={{ backgroundColor: req.required ? "rgba(245,166,35,0.12)" : "rgba(255,255,255,0.06)" }}
+                >
+                  <req.icon className="h-5 w-5" style={{ color: req.required ? "#F5A623" : "#777" }} />
                 </div>
                 <div>
                   <div className="flex items-center gap-2 mb-1">
-                    <h3 className="font-semibold text-sm">{req.title}</h3>
-                    <Badge variant={req.required ? "default" : "secondary"} className="text-xs">
+                    <h3 className="font-semibold text-sm text-white">{req.title}</h3>
+                    <span
+                      className="text-xs font-medium px-2 py-0.5 rounded-full"
+                      style={req.required
+                        ? { backgroundColor: "rgba(245,166,35,0.15)", color: "#F5A623" }
+                        : { backgroundColor: "rgba(255,255,255,0.08)", color: "#aaa" }
+                      }
+                    >
                       {req.required ? "Required" : "Preferred"}
-                    </Badge>
+                    </span>
                   </div>
-                  <p className="text-sm text-muted-foreground">{req.description}</p>
+                  <p className="text-sm" style={{ color: "#999" }}>{req.description}</p>
                 </div>
               </div>
             ))}
           </div>
           <div className="text-center mt-10">
-            <Button size="lg" onClick={openModal}>
+            <button
+              onClick={openModal}
+              className="inline-flex items-center gap-2 rounded-full font-semibold px-8 py-3 transition-all hover:opacity-90"
+              style={{ backgroundColor: "#F5A623", color: "#000" }}
+            >
               Submit a Location for Review
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
+              <ArrowRight className="h-5 w-5" />
+            </button>
           </div>
         </div>
       </section>
 
       {/* FAQs */}
-      <section className="py-20">
+      <section className="py-20" style={{ backgroundColor: "#0a0a0a" }}>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
-            <h2 className="text-3xl font-bold mb-4">Frequently Asked Questions</h2>
-            <p className="text-muted-foreground">Everything you need to know about partnering with Zenthium.</p>
+            <h2 className="text-3xl font-bold mb-4 text-white">Frequently Asked Questions</h2>
+            <p style={{ color: "#999" }}>Everything you need to know about partnering with Zenthium.</p>
           </div>
           <Accordion type="single" collapsible className="space-y-3">
             {FAQS.map((faq, i) => (
-              <AccordionItem key={i} value={`faq-${i}`} className="border rounded-xl px-5">
-                <AccordionTrigger className="text-left font-medium hover:no-underline py-4">
+              <AccordionItem
+                key={i}
+                value={`faq-${i}`}
+                className="rounded-xl px-5"
+                style={{ border: "1px solid rgba(255,255,255,0.1)", backgroundColor: "#111" }}
+              >
+                <AccordionTrigger className="text-left font-medium hover:no-underline py-4 text-white">
                   {faq.question}
                 </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground pb-4">
+                <AccordionContent className="pb-4" style={{ color: "#aaa" }}>
                   {faq.answer}
                 </AccordionContent>
               </AccordionItem>
@@ -356,20 +383,28 @@ export default function ZenthiumPage() {
       </section>
 
       {/* CTA Banner */}
-      <section className="py-20 bg-primary text-primary-foreground">
+      <section className="py-20" style={{ background: "linear-gradient(135deg, #1a1000 0%, #0a0a0a 100%)", borderTop: "1px solid rgba(245,166,35,0.2)" }}>
         <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to Partner with Zenthium?</h2>
-          <p className="text-primary-foreground/80 mb-8 text-lg">
+          <h2 className="text-3xl font-bold mb-4 text-white">Ready to Partner with Zenthium?</h2>
+          <p className="mb-8 text-lg" style={{ color: "#aaa" }}>
             Submit your property today. Our team reviews every submission and responds within 5 business days.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="secondary" className="text-lg px-8" onClick={openModal}>
+            <button
+              onClick={openModal}
+              className="inline-flex items-center gap-2 rounded-full font-semibold px-8 py-3 transition-all hover:opacity-90 text-lg"
+              style={{ backgroundColor: "#F5A623", color: "#000" }}
+            >
               Submit a Location
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
-            <Button size="lg" variant="outline" className="text-lg px-8 border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10" asChild>
-              <Link href="/contact">Talk to Our Team</Link>
-            </Button>
+              <ArrowRight className="h-5 w-5" />
+            </button>
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center rounded-full font-semibold px-8 py-3 border transition-all hover:bg-white/5 text-lg"
+              style={{ borderColor: "rgba(255,255,255,0.25)", color: "#fff" }}
+            >
+              Talk to Our Team
+            </Link>
           </div>
         </div>
       </section>
