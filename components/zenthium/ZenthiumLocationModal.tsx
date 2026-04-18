@@ -6,7 +6,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Progress } from "@/components/ui/progress";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
   Dialog,
@@ -219,7 +218,7 @@ export function ZenthiumLocationModal({ open, onOpenChange, onSuccess }: Zenthiu
             <Button onClick={() => handleOpenChange(false)} className="mt-4">Close</Button>
           </div>
         ) : (
-          <div className="space-y-4 py-2">
+          <div className="space-y-5 py-1">
             {/* Error */}
             {error && (
               <Alert variant="destructive">
@@ -228,23 +227,14 @@ export function ZenthiumLocationModal({ open, onOpenChange, onSuccess }: Zenthiu
               </Alert>
             )}
 
-            {/* Step sidebar + content */}
-            <div className="flex gap-4">
-              {/* Mobile progress bar */}
-              <div className="w-full lg:hidden">
-                <Progress value={progress} className="h-1.5 mb-1" />
-                <p className="text-xs text-muted-foreground text-right mb-2">Step {step}/{STEPS.length}</p>
+            {/* Step indicator — full width top bar */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between text-xs text-muted-foreground">
+                <span className="font-semibold">{STEPS[step - 1].title}</span>
+                <span>Step {step} of {STEPS.length}</span>
               </div>
-            </div>
-
-            {/* Desktop sidebar + form layout */}
-            <div className="flex gap-5 items-start">
-              {/* Sidebar */}
-              <aside className="hidden lg:flex flex-col gap-1 w-44 shrink-0">
-                <div className="mb-3">
-                  <Progress value={progress} className="h-2 mb-1" />
-                  <p className="text-xs text-muted-foreground text-right">Step {step} of {STEPS.length}</p>
-                </div>
+              <Progress value={progress} className="h-1.5" />
+              <div className="flex gap-1">
                 {STEPS.map((s) => {
                   const isComplete = s.id < step;
                   const isCurrent = s.id === step;
@@ -254,273 +244,241 @@ export function ZenthiumLocationModal({ open, onOpenChange, onSuccess }: Zenthiu
                       type="button"
                       onClick={() => isComplete && setStep(s.id)}
                       disabled={!isComplete}
-                      className={`flex items-start gap-2 px-2 py-2 rounded-lg text-left transition-colors w-full text-sm ${
+                      title={s.title}
+                      className={`flex-1 flex items-center justify-center gap-1 py-1.5 rounded text-xs font-medium transition-colors ${
                         isCurrent
-                          ? "bg-primary/10 text-primary"
+                          ? "bg-primary text-primary-foreground"
                           : isComplete
-                          ? "text-muted-foreground hover:bg-muted cursor-pointer"
-                          : "text-muted-foreground/50 cursor-not-allowed"
+                          ? "bg-primary/20 text-primary hover:bg-primary/30 cursor-pointer"
+                          : "bg-muted text-muted-foreground cursor-not-allowed"
                       }`}
                     >
-                      <span className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-xs font-bold border ${
-                        isCurrent
-                          ? "border-primary bg-primary text-primary-foreground"
-                          : isComplete
-                          ? "border-primary bg-primary/10 text-primary"
-                          : "border-muted-foreground/30"
-                      }`}>
-                        {isComplete ? <CheckCircle2 className="h-3 w-3" /> : s.id}
-                      </span>
-                      <span>
-                        <span className="block font-medium leading-tight">{s.title}</span>
-                        <span className="block text-xs opacity-70">{s.description}</span>
-                      </span>
+                      {isComplete ? <CheckCircle2 className="h-3 w-3" /> : <span>{s.id}</span>}
+                      <span className="hidden sm:inline truncate">{s.title}</span>
                     </button>
                   );
                 })}
-              </aside>
-
-              {/* Form card */}
-              <div className="flex-1 min-w-0">
-                <Card>
-                  <CardHeader className="pb-3">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <CardTitle className="text-base">{STEPS[step - 1].title}</CardTitle>
-                        <CardDescription className="text-sm">{STEPS[step - 1].description}</CardDescription>
-                      </div>
-                      <span className="lg:hidden text-xs text-muted-foreground">Step {step}/{STEPS.length}</span>
-                    </div>
-                    <Progress value={progress} className="h-1 lg:hidden mt-2" />
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-
-                    {/* ── STEP 1: Site Information ── */}
-                    {step === 1 && (
-                      <>
-                        <div className="space-y-2">
-                          <Label htmlFor="m-title">Referral Title *</Label>
-                          <Input id="m-title" value={form.title} onChange={(e) => set("title", e.target.value)} placeholder="125-Acre Industrial Site — Phoenix, AZ" />
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="m-propertyName">Property Name *</Label>
-                          <Input id="m-propertyName" value={form.propertyName} onChange={(e) => set("propertyName", e.target.value)} placeholder="Desert Ridge Industrial Park" />
-                        </div>
-                        <div className="grid grid-cols-2 gap-4">
-                          <div className="space-y-2 col-span-2">
-                            <Label htmlFor="m-street">Street Address</Label>
-                            <Input id="m-street" value={form.address.street} onChange={(e) => setAddress("street", e.target.value)} placeholder="1234 Industrial Blvd" />
-                          </div>
-                          <div className="space-y-2">
-                            <Label htmlFor="m-city">City *</Label>
-                            <Input id="m-city" value={form.address.city} onChange={(e) => setAddress("city", e.target.value)} placeholder="Phoenix" />
-                          </div>
-                          <div className="space-y-2">
-                            <Label htmlFor="m-state">State *</Label>
-                            <Input id="m-state" value={form.address.state} onChange={(e) => setAddress("state", e.target.value)} placeholder="AZ" maxLength={2} />
-                          </div>
-                          <div className="space-y-2">
-                            <Label htmlFor="m-zip">ZIP Code</Label>
-                            <Input id="m-zip" value={form.address.zip} onChange={(e) => setAddress("zip", e.target.value)} placeholder="85001" />
-                          </div>
-                          <div className="space-y-2">
-                            <Label htmlFor="m-country">Country</Label>
-                            <Input id="m-country" value={form.address.country} onChange={(e) => setAddress("country", e.target.value)} placeholder="US" />
-                          </div>
-                        </div>
-                        <div className="grid grid-cols-2 gap-4">
-                          <div className="space-y-2">
-                            <Label htmlFor="m-coords">Coordinates (lat,lng)</Label>
-                            <Input id="m-coords" value={form.coordinates} onChange={(e) => set("coordinates", e.target.value)} placeholder="33.4484,-112.0740" />
-                          </div>
-                          <div className="space-y-2">
-                            <Label htmlFor="m-parcel">Parcel Number</Label>
-                            <Input id="m-parcel" value={form.parcelNumber} onChange={(e) => set("parcelNumber", e.target.value)} placeholder="123-45-678" />
-                          </div>
-                          <div className="space-y-2">
-                            <Label htmlFor="m-acreage">Acreage</Label>
-                            <Input id="m-acreage" type="number" min={0} value={form.acreage ?? ""} onChange={(e) => set("acreage", e.target.value ? Number(e.target.value) : undefined)} placeholder="125" />
-                          </div>
-                          <div className="space-y-2">
-                            <Label htmlFor="m-sqft">Square Footage</Label>
-                            <Input id="m-sqft" type="number" min={0} value={form.squareFootage ?? ""} onChange={(e) => set("squareFootage", e.target.value ? Number(e.target.value) : undefined)} placeholder="500000" />
-                          </div>
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="m-desc">Description *</Label>
-                          <Textarea id="m-desc" value={form.description} onChange={(e) => set("description", e.target.value)} placeholder="Describe the property and its data center potential..." rows={3} />
-                        </div>
-                      </>
-                    )}
-
-                    {/* ── STEP 2: Infrastructure ── */}
-                    {step === 2 && (
-                      <>
-                        <div className="grid grid-cols-2 gap-4">
-                          <div className="space-y-2">
-                            <Label htmlFor="m-power">Power Capacity (MW)</Label>
-                            <Input id="m-power" type="number" min={0} step={0.1} value={form.powerCapacityMW ?? ""} onChange={(e) => set("powerCapacityMW", e.target.value ? Number(e.target.value) : undefined)} placeholder="50" />
-                          </div>
-                          <div className="space-y-2">
-                            <Label htmlFor="m-zoning">Zoning Classification</Label>
-                            <Input id="m-zoning" value={form.zoning} onChange={(e) => set("zoning", e.target.value)} placeholder="M-1 Industrial" />
-                          </div>
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="m-utilities">Utilities Description</Label>
-                          <Textarea id="m-utilities" value={form.utilities} onChange={(e) => set("utilities", e.target.value)} placeholder="APS electric service, SRP backup, natural gas available..." rows={3} />
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="m-fiber">Fiber Availability</Label>
-                          <Textarea id="m-fiber" value={form.fiberAvailability} onChange={(e) => set("fiberAvailability", e.target.value)} placeholder="CenturyLink, Cox, and Zayo fiber on-site..." rows={2} />
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="m-water">Water Availability</Label>
-                          <Textarea id="m-water" value={form.waterAvailability} onChange={(e) => set("waterAvailability", e.target.value)} placeholder="City municipal water, reclaimed water available for cooling..." rows={2} />
-                        </div>
-                      </>
-                    )}
-
-                    {/* ── STEP 3: Ownership & Pricing ── */}
-                    {step === 3 && (
-                      <>
-                        <div className="space-y-2">
-                          <Label htmlFor="m-ownership">Ownership Structure</Label>
-                          <Textarea id="m-ownership" value={form.ownership} onChange={(e) => set("ownership", e.target.value)} placeholder="Fee simple ownership, single entity, no encumbrances..." rows={3} />
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="m-pricing">Pricing / Asking Price</Label>
-                          <Textarea id="m-pricing" value={form.pricing} onChange={(e) => set("pricing", e.target.value)} placeholder="$15M asking price, willing to ground lease at $XX/acre/year..." rows={3} />
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="m-timeline">Transaction Timeline</Label>
-                          <Input id="m-timeline" value={form.timeline} onChange={(e) => set("timeline", e.target.value)} placeholder="Available immediately / 6-month due diligence period" />
-                        </div>
-                      </>
-                    )}
-
-                    {/* ── STEP 4: Contacts ── */}
-                    {step === 4 && (
-                      <>
-                        <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Point of Contact (POC)</p>
-                        <div className="grid grid-cols-2 gap-4">
-                          <div className="space-y-2">
-                            <Label>Name</Label>
-                            <Input value={form.poc.name} onChange={(e) => setPoc("name", e.target.value)} placeholder="Jane Smith" />
-                          </div>
-                          <div className="space-y-2">
-                            <Label>Company</Label>
-                            <Input value={form.poc.company} onChange={(e) => setPoc("company", e.target.value)} placeholder="Property Owner LLC" />
-                          </div>
-                          <div className="space-y-2">
-                            <Label>Email</Label>
-                            <Input type="email" value={form.poc.email} onChange={(e) => setPoc("email", e.target.value)} placeholder="jane@owner.com" />
-                          </div>
-                          <div className="space-y-2">
-                            <Label>Phone</Label>
-                            <Input value={form.poc.phone} onChange={(e) => setPoc("phone", e.target.value)} placeholder="(602) 555-1234" />
-                          </div>
-                        </div>
-
-                        <div className="border-t pt-4 mt-2">
-                          <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-4">Direct Contact</p>
-                          <div className="space-y-2 mb-4">
-                            <Label>Select Contact</Label>
-                            <Select
-                              value={selectedDirectContactId}
-                              onValueChange={(contactId) => {
-                                setSelectedDirectContactId(contactId);
-                                const found = directContactOptions.find((c) => c.id === contactId);
-                                if (found) {
-                                  setForm((prev) => ({
-                                    ...prev,
-                                    directContact: {
-                                      name: found.name,
-                                      email: found.email,
-                                      phone: found.phone,
-                                      company: found.company,
-                                    },
-                                  }));
-                                }
-                              }}
-                            >
-                              <SelectTrigger>
-                                <SelectValue placeholder="Choose a Zenthium contact..." />
-                              </SelectTrigger>
-                              <SelectContent>
-                                {directContactOptions.map((c) => (
-                                  <SelectItem key={c.id} value={c.id}>
-                                    {c.name}{c.company ? ` — ${c.company}` : ""}
-                                  </SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
-                            <p className="text-xs text-muted-foreground">Fields below are auto-filled but can be overridden.</p>
-                          </div>
-                          <div className="grid grid-cols-2 gap-4">
-                            <div className="space-y-2">
-                              <Label>Name</Label>
-                              <Input value={form.directContact.name} onChange={(e) => setDirectContact("name", e.target.value)} placeholder="John Doe" />
-                            </div>
-                            <div className="space-y-2">
-                              <Label>Company</Label>
-                              <Input value={form.directContact.company} onChange={(e) => setDirectContact("company", e.target.value)} placeholder="Broker Realty Group" />
-                            </div>
-                            <div className="space-y-2">
-                              <Label>Email</Label>
-                              <Input type="email" value={form.directContact.email} onChange={(e) => setDirectContact("email", e.target.value)} placeholder="john@broker.com" />
-                            </div>
-                            <div className="space-y-2">
-                              <Label>Phone</Label>
-                              <Input value={form.directContact.phone} onChange={(e) => setDirectContact("phone", e.target.value)} placeholder="(602) 555-5678" />
-                            </div>
-                          </div>
-                        </div>
-                      </>
-                    )}
-
-                    {/* ── STEP 5: Additional Notes ── */}
-                    {step === 5 && (
-                      <>
-                        <div className="space-y-2">
-                          <Label htmlFor="m-env">Environmental Notes</Label>
-                          <Textarea id="m-env" value={form.environmentalNotes} onChange={(e) => set("environmentalNotes", e.target.value)} placeholder="Phase I ESA completed, no known contamination..." rows={4} />
-                        </div>
-                        <div className="mt-4 p-4 bg-muted rounded-lg space-y-1">
-                          <p className="text-sm font-medium">Review Summary</p>
-                          <p className="text-sm text-muted-foreground"><span className="font-medium">Property:</span> {form.propertyName || "—"}</p>
-                          <p className="text-sm text-muted-foreground"><span className="font-medium">Location:</span> {form.address.city ? `${form.address.city}, ${form.address.state}` : "—"}</p>
-                          <p className="text-sm text-muted-foreground"><span className="font-medium">Power Capacity:</span> {form.powerCapacityMW ? `${form.powerCapacityMW} MW` : "—"}</p>
-                          <p className="text-sm text-muted-foreground"><span className="font-medium">POC:</span> {form.poc.name || "—"}</p>
-                        </div>
-                      </>
-                    )}
-
-                  </CardContent>
-                </Card>
-
-                {/* Navigation */}
-                <div className="flex justify-between pt-3">
-                  <Button type="button" variant="outline" onClick={handleBack} disabled={step === 1}>
-                    <ChevronLeft className="h-4 w-4 mr-1" />
-                    Back
-                  </Button>
-                  {step < STEPS.length ? (
-                    <Button type="button" onClick={handleNext}>
-                      Next
-                      <ChevronRight className="h-4 w-4 ml-1" />
-                    </Button>
-                  ) : (
-                    <Button onClick={handleSubmit} disabled={isSubmitting}>
-                      {isSubmitting ? (
-                        <><Loader2 className="h-4 w-4 mr-2 animate-spin" />Submitting...</>
-                      ) : (
-                        <><CheckCircle2 className="h-4 w-4 mr-2" />Submit Location</>
-                      )}
-                    </Button>
-                  )}
-                </div>
               </div>
+            </div>
+
+            {/* Full-width form fields */}
+            <div className="space-y-4">
+
+              {/* ── STEP 1: Site Information ── */}
+              {step === 1 && (
+                <>
+                  <div className="space-y-2">
+                    <Label htmlFor="m-title">Referral Title *</Label>
+                    <Input id="m-title" value={form.title} onChange={(e) => set("title", e.target.value)} placeholder="125-Acre Industrial Site — Phoenix, AZ" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="m-propertyName">Property Name *</Label>
+                    <Input id="m-propertyName" value={form.propertyName} onChange={(e) => set("propertyName", e.target.value)} placeholder="Desert Ridge Industrial Park" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="m-street">Street Address</Label>
+                    <Input id="m-street" value={form.address.street} onChange={(e) => setAddress("street", e.target.value)} placeholder="1234 Industrial Blvd" />
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="space-y-2">
+                      <Label htmlFor="m-city">City *</Label>
+                      <Input id="m-city" value={form.address.city} onChange={(e) => setAddress("city", e.target.value)} placeholder="Phoenix" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="m-state">State *</Label>
+                      <Input id="m-state" value={form.address.state} onChange={(e) => setAddress("state", e.target.value)} placeholder="AZ" maxLength={2} />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="m-zip">ZIP Code</Label>
+                      <Input id="m-zip" value={form.address.zip} onChange={(e) => setAddress("zip", e.target.value)} placeholder="85001" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="m-country">Country</Label>
+                      <Input id="m-country" value={form.address.country} onChange={(e) => setAddress("country", e.target.value)} placeholder="US" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="m-coords">Coordinates (lat,lng)</Label>
+                      <Input id="m-coords" value={form.coordinates} onChange={(e) => set("coordinates", e.target.value)} placeholder="33.4484,-112.0740" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="m-parcel">Parcel Number</Label>
+                      <Input id="m-parcel" value={form.parcelNumber} onChange={(e) => set("parcelNumber", e.target.value)} placeholder="123-45-678" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="m-acreage">Acreage</Label>
+                      <Input id="m-acreage" type="number" min={0} value={form.acreage ?? ""} onChange={(e) => set("acreage", e.target.value ? Number(e.target.value) : undefined)} placeholder="125" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="m-sqft">Square Footage</Label>
+                      <Input id="m-sqft" type="number" min={0} value={form.squareFootage ?? ""} onChange={(e) => set("squareFootage", e.target.value ? Number(e.target.value) : undefined)} placeholder="500000" />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="m-desc">Description *</Label>
+                    <Textarea id="m-desc" value={form.description} onChange={(e) => set("description", e.target.value)} placeholder="Describe the property and its data center potential..." rows={3} />
+                  </div>
+                </>
+              )}
+
+              {/* ── STEP 2: Infrastructure ── */}
+              {step === 2 && (
+                <>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="space-y-2">
+                      <Label htmlFor="m-power">Power Capacity (MW)</Label>
+                      <Input id="m-power" type="number" min={0} step={0.1} value={form.powerCapacityMW ?? ""} onChange={(e) => set("powerCapacityMW", e.target.value ? Number(e.target.value) : undefined)} placeholder="50" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="m-zoning">Zoning Classification</Label>
+                      <Input id="m-zoning" value={form.zoning} onChange={(e) => set("zoning", e.target.value)} placeholder="M-1 Industrial" />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="m-utilities">Utilities Description</Label>
+                    <Textarea id="m-utilities" value={form.utilities} onChange={(e) => set("utilities", e.target.value)} placeholder="APS electric service, SRP backup, natural gas available..." rows={3} />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="m-fiber">Fiber Availability</Label>
+                    <Textarea id="m-fiber" value={form.fiberAvailability} onChange={(e) => set("fiberAvailability", e.target.value)} placeholder="CenturyLink, Cox, and Zayo fiber on-site..." rows={2} />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="m-water">Water Availability</Label>
+                    <Textarea id="m-water" value={form.waterAvailability} onChange={(e) => set("waterAvailability", e.target.value)} placeholder="City municipal water, reclaimed water available for cooling..." rows={2} />
+                  </div>
+                </>
+              )}
+
+              {/* ── STEP 3: Ownership & Pricing ── */}
+              {step === 3 && (
+                <>
+                  <div className="space-y-2">
+                    <Label htmlFor="m-ownership">Ownership Structure</Label>
+                    <Textarea id="m-ownership" value={form.ownership} onChange={(e) => set("ownership", e.target.value)} placeholder="Fee simple ownership, single entity, no encumbrances..." rows={3} />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="m-pricing">Pricing / Asking Price</Label>
+                    <Textarea id="m-pricing" value={form.pricing} onChange={(e) => set("pricing", e.target.value)} placeholder="$15M asking price, willing to ground lease at $XX/acre/year..." rows={3} />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="m-timeline">Transaction Timeline</Label>
+                    <Input id="m-timeline" value={form.timeline} onChange={(e) => set("timeline", e.target.value)} placeholder="Available immediately / 6-month due diligence period" />
+                  </div>
+                </>
+              )}
+
+              {/* ── STEP 4: Contacts ── */}
+              {step === 4 && (
+                <>
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Point of Contact (POC)</p>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="space-y-2">
+                      <Label>Name</Label>
+                      <Input value={form.poc.name} onChange={(e) => setPoc("name", e.target.value)} placeholder="Jane Smith" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Company</Label>
+                      <Input value={form.poc.company} onChange={(e) => setPoc("company", e.target.value)} placeholder="Property Owner LLC" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Email</Label>
+                      <Input type="email" value={form.poc.email} onChange={(e) => setPoc("email", e.target.value)} placeholder="jane@owner.com" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Phone</Label>
+                      <Input value={form.poc.phone} onChange={(e) => setPoc("phone", e.target.value)} placeholder="(602) 555-1234" />
+                    </div>
+                  </div>
+                  <div className="border-t pt-4">
+                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">Direct Contact</p>
+                    <div className="space-y-2 mb-3">
+                      <Label>Select Contact</Label>
+                      <Select
+                        value={selectedDirectContactId}
+                        onValueChange={(contactId) => {
+                          setSelectedDirectContactId(contactId);
+                          const found = directContactOptions.find((c) => c.id === contactId);
+                          if (found) {
+                            setForm((prev) => ({
+                              ...prev,
+                              directContact: { name: found.name, email: found.email, phone: found.phone, company: found.company },
+                            }));
+                          }
+                        }}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Choose a Zenthium contact..." />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {directContactOptions.map((c) => (
+                            <SelectItem key={c.id} value={c.id}>
+                              {c.name}{c.company ? ` — ${c.company}` : ""}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <p className="text-xs text-muted-foreground">Fields below are auto-filled but can be overridden.</p>
+                    </div>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="space-y-2">
+                        <Label>Name</Label>
+                        <Input value={form.directContact.name} onChange={(e) => setDirectContact("name", e.target.value)} placeholder="John Doe" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label>Company</Label>
+                        <Input value={form.directContact.company} onChange={(e) => setDirectContact("company", e.target.value)} placeholder="Broker Realty Group" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label>Email</Label>
+                        <Input type="email" value={form.directContact.email} onChange={(e) => setDirectContact("email", e.target.value)} placeholder="john@broker.com" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label>Phone</Label>
+                        <Input value={form.directContact.phone} onChange={(e) => setDirectContact("phone", e.target.value)} placeholder="(602) 555-5678" />
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
+
+              {/* ── STEP 5: Additional Notes ── */}
+              {step === 5 && (
+                <>
+                  <div className="space-y-2">
+                    <Label htmlFor="m-env">Environmental Notes</Label>
+                    <Textarea id="m-env" value={form.environmentalNotes} onChange={(e) => set("environmentalNotes", e.target.value)} placeholder="Phase I ESA completed, no known contamination..." rows={4} />
+                  </div>
+                  <div className="p-4 bg-muted rounded-lg space-y-1.5">
+                    <p className="text-sm font-semibold">Review Summary</p>
+                    <p className="text-sm text-muted-foreground"><span className="font-medium">Property:</span> {form.propertyName || "—"}</p>
+                    <p className="text-sm text-muted-foreground"><span className="font-medium">Location:</span> {form.address.city ? `${form.address.city}, ${form.address.state}` : "—"}</p>
+                    <p className="text-sm text-muted-foreground"><span className="font-medium">Power Capacity:</span> {form.powerCapacityMW ? `${form.powerCapacityMW} MW` : "—"}</p>
+                    <p className="text-sm text-muted-foreground"><span className="font-medium">POC:</span> {form.poc.name || "—"}</p>
+                  </div>
+                </>
+              )}
+
+            </div>
+
+            {/* Navigation */}
+            <div className="flex justify-between pt-2 border-t">
+              <Button type="button" variant="outline" onClick={handleBack} disabled={step === 1}>
+                <ChevronLeft className="h-4 w-4 mr-1" />
+                Back
+              </Button>
+              {step < STEPS.length ? (
+                <Button type="button" onClick={handleNext}>
+                  Next
+                  <ChevronRight className="h-4 w-4 ml-1" />
+                </Button>
+              ) : (
+                <Button onClick={handleSubmit} disabled={isSubmitting}>
+                  {isSubmitting ? (
+                    <><Loader2 className="h-4 w-4 mr-2 animate-spin" />Submitting...</>
+                  ) : (
+                    <><CheckCircle2 className="h-4 w-4 mr-2" />Submit Location</>
+                  )}
+                </Button>
+              )}
             </div>
           </div>
         )}
