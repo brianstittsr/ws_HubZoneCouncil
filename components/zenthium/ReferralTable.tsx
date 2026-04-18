@@ -22,6 +22,7 @@ export interface ReferralRow {
   status: ZenthiumReferralStatus;
   createdAt: string;
   updatedAt: string;
+  source?: string;
 }
 
 interface ReferralTableProps {
@@ -66,7 +67,9 @@ export function ReferralTable({ referrals, isLoading }: ReferralTableProps) {
           <TableRow key={ref.id} className="cursor-pointer hover:bg-muted/50">
             <TableCell className="font-medium">
               <Link
-                href={`/portal/admin/zenthium-referrals/${ref.id}`}
+                href={ref.source === "public_location_form"
+                  ? `/portal/admin/zenthium-referrals/submissions/${ref.id}`
+                  : `/portal/admin/zenthium-referrals/${ref.id}`}
                 className="hover:text-primary transition-colors"
               >
                 {ref.title}
@@ -87,7 +90,9 @@ export function ReferralTable({ referrals, isLoading }: ReferralTableProps) {
             </TableCell>
             <TableCell>
               <Button asChild size="sm" variant="ghost">
-                <Link href={`/portal/admin/zenthium-referrals/${ref.id}`}>
+                <Link href={ref.source === "public_location_form"
+                  ? `/portal/admin/zenthium-referrals/submissions/${ref.id}`
+                  : `/portal/admin/zenthium-referrals/${ref.id}`}>
                   <ExternalLink className="h-4 w-4" />
                 </Link>
               </Button>

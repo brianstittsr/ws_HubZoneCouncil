@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, use } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -146,6 +147,7 @@ export default function ZenthiumReferralDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = use(params);
+  const router = useRouter();
   const { profile } = useUserProfile();
   const isAdmin = profile.role === "admin" || profile.role === "superadmin";
 
@@ -172,6 +174,11 @@ export default function ZenthiumReferralDetailPage({
       const res = await fetch(`/api/zenthium/referrals/${id}`);
       if (!res.ok) throw new Error("Not found");
       const data = await res.json();
+      // Record lives in ZENTHIUM_LOCATION_SUBMISSIONS — redirect to the right page
+      if (data.redirect) {
+        router.replace(data.redirect);
+        return;
+      }
       setReferral(data.referral);
       setStatusHistory(data.statusHistory ?? []);
       setMeetings(data.meetings ?? []);
@@ -183,7 +190,7 @@ export default function ZenthiumReferralDetailPage({
     } finally {
       setIsLoading(false);
     }
-  }, [id]);
+  }, [id, router]);
 
   useEffect(() => {
     fetchDetail();

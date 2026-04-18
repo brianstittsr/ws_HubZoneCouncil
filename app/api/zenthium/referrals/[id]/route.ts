@@ -37,9 +37,17 @@ export async function GET(
 
   try {
     const docRef = adminDb.collection(COLLECTIONS.ZENTHIUM_REFERRALS).doc(id);
-    const snap = await docRef.get();
+    let snap = await docRef.get();
 
+    // Fall through: check zenthiumLocationSubmissions if not found in zenthiumReferrals
     if (!snap.exists) {
+      const pubSnap = await adminDb.collection(COLLECTIONS.ZENTHIUM_LOCATION_SUBMISSIONS).doc(id).get();
+      if (pubSnap.exists) {
+        return NextResponse.json(
+          { redirect: `/portal/admin/zenthium-referrals/submissions/${id}` },
+          { status: 200 }
+        );
+      }
       return NextResponse.json({ error: "Referral not found" }, { status: 404 });
     }
 

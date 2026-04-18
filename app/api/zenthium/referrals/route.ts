@@ -65,14 +65,46 @@ export async function GET(request: NextRequest) {
     }
 
     const snapshot = await query.get();
-    const referrals = snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-      createdAt: doc.data().createdAt?.toDate().toISOString(),
-      updatedAt: doc.data().updatedAt?.toDate().toISOString(),
-    }));
+    const referrals = snapshot.docs.map((doc) => {
+      const d = doc.data();
+      return {
+        id: doc.id,
+        ...d,
+        source: d.source ?? "admin_form",
+        createdAt: d.createdAt?.toDate().toISOString(),
+        updatedAt: d.updatedAt?.toDate().toISOString(),
+      };
+    });
 
-    return NextResponse.json({ referrals });
+    // Also include public location submissions so they appear in the dashboard
+    let pubQuery = adminDb
+      .collection(COLLECTIONS.ZENTHIUM_LOCATION_SUBMISSIONS)
+      .orderBy("createdAt", "desc") as FirebaseFirestore.Query;
+    if (status) pubQuery = pubQuery.where("status", "==", status);
+    const pubSnapshot = await pubQuery.get();
+    const pubReferrals = pubSnapshot.docs.map((doc) => {
+      const d = doc.data();
+      const city = d.city ?? "";
+      const state = d.state ?? "";
+      return {
+        id: doc.id,
+        source: "public_location_form",
+        title: d.propertyName ? `${d.propertyName} — ${city}, ${state}` : d.submitterName ?? doc.id,
+        propertyName: d.propertyName ?? "",
+        address: { street: d.address ?? "", city, state, zip: d.zip ?? "", country: d.country ?? "US" },
+        status: d.status ?? "Submitted",
+        createdAt: d.createdAt?.toDate().toISOString(),
+        updatedAt: d.updatedAt?.toDate().toISOString(),
+      };
+    });
+
+    const all = [...referrals, ...pubReferrals].sort((a, b) => {
+      const ta = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+      const tb = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+      return tb - ta;
+    });
+
+    return NextResponse.json({ referrals: all });
   } catch (error) {
     console.error("[Zenthium] GET referrals error:", error);
     return NextResponse.json({ error: "Failed to fetch referrals" }, { status: 500 });
