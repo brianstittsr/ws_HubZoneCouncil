@@ -2254,6 +2254,11 @@ export const COLLECTIONS = {
   // SAM.gov Federal Opportunities
   SAM_SAVED_OPPORTUNITIES: "samSavedOpportunities",
   SAM_SEARCH_SCHEDULES: "samSearchSchedules",
+  // Zenthium Data Center Referral Portal
+  ZENTHIUM_REFERRALS: "zenthiumReferrals",
+  ZENTHIUM_REFERRAL_STATUS_HISTORY: "zenthiumReferralStatusHistory",
+  ZENTHIUM_MEETINGS: "zenthiumMeetings",
+  ZENTHIUM_NOTIFICATIONS: "zenthiumNotifications",
 } as const;
 
 // ============================================================================

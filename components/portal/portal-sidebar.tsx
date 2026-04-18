@@ -338,6 +338,12 @@ const adminToolsItems = [
     icon: GraduationCap,
   },
   {
+    title: "Zenthium DC Referrals",
+    href: "/portal/admin/zenthium-referrals",
+    icon: Database,
+    badge: "NEW",
+  },
+  {
     title: "Fathom Meetings",
     href: "/portal/admin/fathom",
     icon: Video,
