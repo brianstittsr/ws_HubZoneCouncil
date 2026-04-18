@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -26,6 +27,7 @@ export interface HeroSlide {
   };
   isPublished: boolean;
   order: number;
+  backgroundImage?: string;
 }
 
 // Default slides - in production these would come from a database
@@ -41,6 +43,7 @@ const defaultSlides: HeroSlide[] = [
     secondaryCta: { text: "For OEM Buyers", href: "/oem" },
     isPublished: true,
     order: 1,
+    backgroundImage: "https://images.pexels.com/photos/1108101/pexels-photo-1108101.jpeg?auto=compress&cs=tinysrgb&w=1920&q=80",
   },
   {
     id: "2",
@@ -53,6 +56,7 @@ const defaultSlides: HeroSlide[] = [
     secondaryCta: { text: "Request Assessment", href: "/contact" },
     isPublished: true,
     order: 2,
+    backgroundImage: "https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1920&q=80",
   },
   {
     id: "3",
@@ -65,6 +69,7 @@ const defaultSlides: HeroSlide[] = [
     secondaryCta: { text: "Request Assessment", href: "/contact" },
     isPublished: true,
     order: 3,
+    backgroundImage: "https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg?auto=compress&cs=tinysrgb&w=1920&q=80",
   },
   {
     id: "4",
@@ -77,6 +82,7 @@ const defaultSlides: HeroSlide[] = [
     secondaryCta: { text: "Talk to our team", href: "/contact" },
     isPublished: true,
     order: 4,
+    backgroundImage: "https://images.pexels.com/photos/1427541/pexels-photo-1427541.jpeg?auto=compress&cs=tinysrgb&w=1920&q=80",
   },
   {
     id: "5",
@@ -89,6 +95,7 @@ const defaultSlides: HeroSlide[] = [
     secondaryCta: { text: "Learn More", href: "/zenthium" },
     isPublished: true,
     order: 5,
+    backgroundImage: "https://images.pexels.com/photos/325229/pexels-photo-325229.jpeg?auto=compress&cs=tinysrgb&w=1920&q=80",
   },
 ];
 
@@ -133,8 +140,22 @@ export function HeroCarousel({ slides = defaultSlides, autoPlayInterval = 6000 }
 
   return (
     <section className="relative overflow-hidden bg-black text-white">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#1a1a1a_1px,transparent_1px),linear-gradient(to_bottom,#1a1a1a_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)]" />
+      {/* Background Image */}
+      {currentSlide.backgroundImage && (
+        <Image
+          key={currentSlide.id}
+          src={currentSlide.backgroundImage}
+          alt=""
+          fill
+          priority
+          className="object-cover object-center transition-opacity duration-700 animate-in fade-in"
+          sizes="100vw"
+        />
+      )}
+      {/* Dark overlay over the image */}
+      <div className="absolute inset-0 bg-black/65" />
+      {/* Subtle grid pattern on top of overlay */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:4rem_4rem]" />
       
       <div className="relative py-20 md:py-32 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-4xl text-center">

@@ -53,6 +53,7 @@ interface SlideFormData {
   secondaryCtaText: string;
   secondaryCtaHref: string;
   isPublished: boolean;
+  backgroundImage: string;
 }
 
 const emptyFormData: SlideFormData = {
@@ -66,6 +67,7 @@ const emptyFormData: SlideFormData = {
   secondaryCtaText: "",
   secondaryCtaHref: "",
   isPublished: false,
+  backgroundImage: "",
 };
 
 export default function HeroManagementPage() {
@@ -114,6 +116,7 @@ export default function HeroManagementPage() {
         secondaryCtaText: slide.secondaryCta.text,
         secondaryCtaHref: slide.secondaryCta.href,
         isPublished: slide.isPublished,
+        backgroundImage: slide.backgroundImage ?? "",
       });
     } else {
       setEditingSlide(null);
@@ -142,6 +145,7 @@ export default function HeroManagementPage() {
         primaryCta: { text: formData.primaryCtaText, href: formData.primaryCtaHref },
         secondaryCta: { text: formData.secondaryCtaText, href: formData.secondaryCtaHref },
         isPublished: formData.isPublished,
+        backgroundImage: formData.backgroundImage.trim() || undefined,
       };
 
       let response;
@@ -483,6 +487,29 @@ export default function HeroManagementPage() {
                     value={formData.highlightedText}
                     onChange={(e) => setFormData({ ...formData, highlightedText: e.target.value })}
                   />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="backgroundImage">Background Image URL</Label>
+                  <Input
+                    id="backgroundImage"
+                    placeholder="https://images.pexels.com/photos/..."
+                    value={formData.backgroundImage}
+                    onChange={(e) => setFormData({ ...formData, backgroundImage: e.target.value })}
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    Optional. Paste a Pexels or CDN image URL. Recommended: 1920×1080, use
+                    <code className="mx-1 text-xs bg-muted px-1 rounded">?auto=compress&cs=tinysrgb&w=1920&q=80</code>
+                    for Pexels images.
+                  </p>
+                  {formData.backgroundImage && (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={formData.backgroundImage}
+                      alt="Preview"
+                      className="mt-2 h-24 w-full object-cover rounded border"
+                      onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+                    />
+                  )}
                 </div>
               </>
             )}

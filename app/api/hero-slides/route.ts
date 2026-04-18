@@ -60,6 +60,7 @@ export async function POST(request: NextRequest) {
       secondaryCta,
       isPublished = false,
       order,
+      backgroundImage,
     } = body;
 
     // Validate required fields
@@ -88,6 +89,7 @@ export async function POST(request: NextRequest) {
       secondaryCta: secondaryCta || { text: "", href: "" },
       isPublished,
       order: slideOrder,
+      ...(backgroundImage ? { backgroundImage } : {}),
       createdAt: Timestamp.now(),
       updatedAt: Timestamp.now(),
     };

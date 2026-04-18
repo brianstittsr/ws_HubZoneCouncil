@@ -903,6 +903,7 @@ export interface HeroSlideDoc {
   };
   isPublished: boolean;          // Whether visible on frontend
   order: number;                 // Display order
+  backgroundImage?: string;      // Optional Pexels/CDN image URL for slide background
   createdAt: Timestamp;
   updatedAt: Timestamp;
   createdBy?: string;            // User ID

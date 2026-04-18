@@ -90,6 +90,7 @@ export async function PATCH(
     if (body.secondaryCta !== undefined) updateData.secondaryCta = body.secondaryCta;
     if (body.isPublished !== undefined) updateData.isPublished = body.isPublished;
     if (body.order !== undefined) updateData.order = body.order;
+    if (body.backgroundImage !== undefined) updateData.backgroundImage = body.backgroundImage;
 
     await updateDoc(docRef, updateData);
 
