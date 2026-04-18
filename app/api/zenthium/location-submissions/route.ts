@@ -7,17 +7,17 @@ import { z } from "zod";
 const submissionSchema = z.object({
   submitterName: z.string().min(1, "Name is required"),
   submitterEmail: z.string().email("Valid email is required"),
-  submitterPhone: z.string().optional(),
-  submitterCompany: z.string().optional(),
+  submitterPhone: z.string().optional().default(""),
+  submitterCompany: z.string().optional().default(""),
 
   propertyName: z.string().min(1, "Property name is required"),
   propertyType: z.enum(["vacant_land", "warehouse", "industrial", "office", "data_center", "power_plant", "other"]),
-  propertyTypeOther: z.string().optional(),
+  propertyTypeOther: z.string().optional().default(""),
 
   address: z.string().min(1, "Address is required"),
   city: z.string().min(1, "City is required"),
   state: z.string().min(1, "State is required"),
-  zip: z.string().optional(),
+  zip: z.string().optional().default(""),
   country: z.string().default("US"),
 
   squareFootage: z.number().min(10000, "Minimum 10,000 sq ft required"),
@@ -25,35 +25,62 @@ const submissionSchema = z.object({
 
   powerAvailableMW: z.number().min(20, "Minimum 20 MW required"),
   powerType: z.enum(["grid", "behind_meter", "renewable", "combined", "unknown"]).optional(),
-  hasBackupPower: z.boolean().optional(),
+  hasBackupPower: z.boolean().optional().default(false),
 
   ceilingHeightFt: z.number().optional(),
-  isSingleStory: z.boolean(),
-  isFloor: z.boolean(),
+  isSingleStory: z.boolean().default(true),
+  isFloor: z.boolean().default(true),
 
-  fiberAvailable: z.boolean().optional(),
-  fiberProviders: z.string().optional(),
+  fiberAvailable: z.boolean().optional().default(false),
+  fiberProviders: z.string().optional().default(""),
 
-  waterAvailable: z.boolean().optional(),
-  waterSource: z.string().optional(),
+  waterAvailable: z.boolean().optional().default(false),
+  waterSource: z.string().optional().default(""),
 
-  coolingCapacity: z.string().optional(),
-  hvacInstalled: z.boolean().optional(),
+  coolingCapacity: z.string().optional().default(""),
+  hvacInstalled: z.boolean().optional().default(false),
 
-  zoningClassification: z.string().optional(),
-  isZonedIndustrial: z.boolean().optional(),
+  zoningClassification: z.string().optional().default(""),
 
   ownershipType: z.enum(["own", "lease", "option", "other"]).optional(),
-  askingPrice: z.string().optional(),
-  leaseRate: z.string().optional(),
-  timeline: z.string().optional(),
+  askingPrice: z.string().optional().default(""),
+  leaseRate: z.string().optional().default(""),
+  timeline: z.string().optional().default(""),
 
   environmentalClearance: z.enum(["clean", "phase1_done", "phase2_done", "unknown", "issues"]).optional(),
-  floodZone: z.boolean().optional(),
+  floodZone: z.boolean().optional().default(false),
 
-  coordinates: z.string().optional(),
-  additionalNotes: z.string().optional(),
+  coordinates: z.string().optional().default(""),
+  additionalNotes: z.string().optional().default(""),
+
+  directContactId: z.string().optional().default(""),
+  directContactName: z.string().optional().default(""),
+  directContactEmail: z.string().optional().default(""),
+  directContactPhone: z.string().optional().default(""),
+  directContactCompany: z.string().optional().default(""),
 });
+
+export async function GET() {
+  if (!adminDb) {
+    return NextResponse.json({ error: "Database not initialized" }, { status: 500 });
+  }
+  try {
+    const snap = await adminDb
+      .collection(COLLECTIONS.ZENTHIUM_LOCATION_SUBMISSIONS)
+      .orderBy("createdAt", "desc")
+      .get();
+    const submissions = snap.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+      createdAt: doc.data().createdAt?.toDate().toISOString(),
+      updatedAt: doc.data().updatedAt?.toDate().toISOString(),
+    }));
+    return NextResponse.json({ submissions });
+  } catch (error) {
+    console.error("[Zenthium] GET location-submissions error:", error);
+    return NextResponse.json({ error: "Failed to fetch submissions" }, { status: 500 });
+  }
+}
 
 export async function POST(request: NextRequest) {
   if (!adminDb) {
@@ -68,36 +95,20 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Validation failed", details: parsed.error.flatten() }, { status: 400 });
     }
 
+    const d = parsed.data;
     const now = Timestamp.now();
-    const ref = adminDb.collection(COLLECTIONS.ZENTHIUM_REFERRALS).doc();
 
-    await ref.set({
-      ...parsed.data,
-      source: "public_location_form",
+    const docData = {
+      ...d,
       status: "Submitted",
+      adminNotes: "",
+      source: "public_location_form",
       createdAt: now,
       updatedAt: now,
-      userId: "public",
-      title: `${parsed.data.propertyName} — ${parsed.data.city}, ${parsed.data.state}`,
-      description: parsed.data.additionalNotes ?? "",
-      poc: {
-        name: parsed.data.submitterName,
-        email: parsed.data.submitterEmail,
-        phone: parsed.data.submitterPhone ?? "",
-        company: parsed.data.submitterCompany ?? "",
-      },
-      directContact: { name: "", email: "", phone: "", company: "" },
-    });
+    };
 
-    const historyRef = adminDb.collection(COLLECTIONS.ZENTHIUM_REFERRAL_STATUS_HISTORY).doc();
-    await historyRef.set({
-      referralId: ref.id,
-      previousStatus: null,
-      newStatus: "Submitted",
-      changedBy: parsed.data.submitterEmail,
-      note: "Submitted via public location form",
-      createdAt: now,
-    });
+    const ref = adminDb.collection(COLLECTIONS.ZENTHIUM_LOCATION_SUBMISSIONS).doc();
+    await ref.set(docData);
 
     return NextResponse.json({ success: true, id: ref.id }, { status: 201 });
   } catch (error) {

@@ -20,6 +20,7 @@ import {
   CalendarClock,
   Search,
   Users,
+  Globe,
 } from "lucide-react";
 import { ReferralTable, type ReferralRow } from "@/components/zenthium/ReferralTable";
 import type { ZenthiumReferralStatus } from "@/types/zenthium";
@@ -95,7 +96,13 @@ export default function ZenthiumDashboardPage() {
             Manage data center site referrals submitted to Zenthium
           </p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-wrap">
+          <Button asChild variant="outline">
+            <Link href="/portal/admin/zenthium-referrals/submissions">
+              <Globe className="h-4 w-4 mr-2" />
+              Public Submissions
+            </Link>
+          </Button>
           <Button asChild variant="outline">
             <Link href="/portal/admin/zenthium-referrals/contacts">
               <Users className="h-4 w-4 mr-2" />

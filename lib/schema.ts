@@ -2261,6 +2261,7 @@ export const COLLECTIONS = {
   ZENTHIUM_MEETINGS: "zenthiumMeetings",
   ZENTHIUM_NOTIFICATIONS: "zenthiumNotifications",
   ZENTHIUM_DIRECT_CONTACTS: "zenthiumDirectContacts",
+  ZENTHIUM_LOCATION_SUBMISSIONS: "zenthiumLocationSubmissions",
 } as const;
 
 // ============================================================================
