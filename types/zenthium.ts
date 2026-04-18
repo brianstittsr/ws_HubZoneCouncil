@@ -99,3 +99,15 @@ export interface ZenthiumUser {
   role: ZenthiumUserRole;
   createdAt: Timestamp;
 }
+
+export interface ZenthiumDirectContact {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  company: string;
+  active: boolean;
+  sortOrder: number;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+}

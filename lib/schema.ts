@@ -2259,6 +2259,7 @@ export const COLLECTIONS = {
   ZENTHIUM_REFERRAL_STATUS_HISTORY: "zenthiumReferralStatusHistory",
   ZENTHIUM_MEETINGS: "zenthiumMeetings",
   ZENTHIUM_NOTIFICATIONS: "zenthiumNotifications",
+  ZENTHIUM_DIRECT_CONTACTS: "zenthiumDirectContacts",
 } as const;
 
 // ============================================================================

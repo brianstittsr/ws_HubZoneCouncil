@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,9 +9,25 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Loader2, ChevronLeft, ChevronRight, CheckCircle2, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
 import type { ZenthiumReferralInput } from "@/types/zenthium";
+
+interface DirectContactOption {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  company: string;
+  active: boolean;
+}
 
 const STEPS = [
   { id: 1, title: "Site Information", description: "Basic property details" },
@@ -57,6 +73,15 @@ export function ReferralForm({ userId }: ReferralFormProps) {
   const [form, setForm] = useState<ZenthiumReferralInput>({ ...DEFAULT_FORM, userId });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [directContactOptions, setDirectContactOptions] = useState<DirectContactOption[]>([]);
+  const [selectedDirectContactId, setSelectedDirectContactId] = useState<string>("");
+
+  useEffect(() => {
+    fetch("/api/zenthium/direct-contacts")
+      .then((r) => r.json())
+      .then((data) => setDirectContactOptions((data.contacts ?? []).filter((c: DirectContactOption) => c.active)))
+      .catch(console.error);
+  }, []);
 
   const set = (field: string, value: unknown) =>
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -288,6 +313,41 @@ export function ReferralForm({ userId }: ReferralFormProps) {
 
               <div className="border-t pt-4 mt-2">
                 <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-4">Direct Contact</p>
+
+                <div className="space-y-2 mb-4">
+                  <Label>Select Contact</Label>
+                  <Select
+                    value={selectedDirectContactId}
+                    onValueChange={(contactId) => {
+                      setSelectedDirectContactId(contactId);
+                      const found = directContactOptions.find((c) => c.id === contactId);
+                      if (found) {
+                        setForm((prev) => ({
+                          ...prev,
+                          directContact: {
+                            name: found.name,
+                            email: found.email,
+                            phone: found.phone,
+                            company: found.company,
+                          },
+                        }));
+                      }
+                    }}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Choose a Zenthium contact..." />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {directContactOptions.map((c) => (
+                        <SelectItem key={c.id} value={c.id}>
+                          {c.name}{c.company ? ` — ${c.company}` : ""}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <p className="text-xs text-muted-foreground">Fields below are auto-filled but can be overridden.</p>
+                </div>
+
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label>Name</Label>
