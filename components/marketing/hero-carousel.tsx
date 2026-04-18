@@ -4,8 +4,9 @@ import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, CheckCircle, Play, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, CheckCircle, ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ZenthiumLocationModal } from "@/components/zenthium/ZenthiumLocationModal";
 
 export interface HeroSlide {
   id: string;
@@ -17,6 +18,7 @@ export interface HeroSlide {
   primaryCta: {
     text: string;
     href: string;
+    modal?: "zenthium_location";
   };
   secondaryCta: {
     text: string;
@@ -76,6 +78,18 @@ const defaultSlides: HeroSlide[] = [
     isPublished: true,
     order: 4,
   },
+  {
+    id: "5",
+    badge: "Zenthium Data Center Partnership",
+    headline: "Own land or power?",
+    highlightedText: "Monetize It.",
+    subheadline: "Zenthium is actively seeking data center sites across North America. With 10+ GW of hyperscale demand, we bring committed Fortune 500 customers — you supply the power and space.",
+    benefits: ["10,000+ sq ft minimum", "20 MW power required", "15–20 year leases"],
+    primaryCta: { text: "Submit a Location", href: "/zenthium", modal: "zenthium_location" },
+    secondaryCta: { text: "Learn More", href: "/zenthium" },
+    isPublished: true,
+    order: 5,
+  },
 ];
 
 interface HeroCarouselProps {
@@ -87,6 +101,7 @@ export function HeroCarousel({ slides = defaultSlides, autoPlayInterval = 6000 }
   const publishedSlides = slides.filter(s => s.isPublished).sort((a, b) => a.order - b.order);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [zenthiumModalOpen, setZenthiumModalOpen] = useState(false);
 
   const goToNext = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % publishedSlides.length);
@@ -153,12 +168,19 @@ export function HeroCarousel({ slides = defaultSlides, autoPlayInterval = 6000 }
 
             {/* CTAs */}
             <div className="mt-10 flex justify-center">
-              <Button size="lg" className="text-lg px-8" asChild>
-                <Link href={currentSlide.primaryCta.href}>
+              {currentSlide.primaryCta.modal === "zenthium_location" ? (
+                <Button size="lg" className="text-lg px-8" onClick={() => setZenthiumModalOpen(true)}>
                   {currentSlide.primaryCta.text}
                   <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
+                </Button>
+              ) : (
+                <Button size="lg" className="text-lg px-8" asChild>
+                  <Link href={currentSlide.primaryCta.href}>
+                    {currentSlide.primaryCta.text}
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Link>
+                </Button>
+              )}
             </div>
           </div>
 
@@ -233,6 +255,8 @@ export function HeroCarousel({ slides = defaultSlides, autoPlayInterval = 6000 }
 
       {/* Bottom Gradient */}
       <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent" />
+
+      <ZenthiumLocationModal open={zenthiumModalOpen} onOpenChange={setZenthiumModalOpen} />
     </section>
   );
 }

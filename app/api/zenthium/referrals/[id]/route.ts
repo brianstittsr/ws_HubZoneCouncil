@@ -127,16 +127,31 @@ export async function PATCH(
         createdAt: now,
       });
 
-      const emailTarget = currentData.poc?.email;
-      if (emailTarget) {
-        const updatedReferral: ZenthiumReferral = {
-          ...currentData,
-          id,
-          createdAt: currentData.createdAt as unknown as ClientTimestamp,
-          updatedAt: now as unknown as ClientTimestamp,
-        };
-        sendStatusUpdateEmail(updatedReferral, parsed.data.status, emailTarget).catch(console.error);
-      }
+      const updatedReferral: ZenthiumReferral = {
+        ...currentData,
+        id,
+        createdAt: currentData.createdAt as unknown as ClientTimestamp,
+        updatedAt: now as unknown as ClientTimestamp,
+      };
+
+      // Collect all recipient emails: POC + directContact + all active direct contacts
+      const recipientSet = new Set<string>();
+      if (currentData.poc?.email) recipientSet.add(currentData.poc.email);
+      if (currentData.directContact?.email) recipientSet.add(currentData.directContact.email);
+
+      const directContactsSnap = await adminDb
+        .collection(COLLECTIONS.ZENTHIUM_DIRECT_CONTACTS)
+        .where("active", "==", true)
+        .get();
+      directContactsSnap.docs.forEach((doc) => {
+        const email = doc.data().email as string | undefined;
+        if (email) recipientSet.add(email);
+      });
+
+      const recipients = Array.from(recipientSet).filter(Boolean);
+      recipients.forEach((email) => {
+        sendStatusUpdateEmail(updatedReferral, parsed.data.status!, email).catch(console.error);
+      });
     }
 
     return NextResponse.json({ success: true });
