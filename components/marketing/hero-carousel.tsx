@@ -35,8 +35,8 @@ const defaultSlides: HeroSlide[] = [
   {
     id: "1",
     badge: "Supplier Readiness & OEM Qualification",
-    headline: "Become OEM-ready.",
-    highlightedText: "Qualify",
+    headline: "Close the gaps.",
+    highlightedText: "Win OEM Business.",
     subheadline: "We help manufacturers with 25–500 employees close readiness gaps across quality, delivery, and compliance—so you can win and keep OEM business.",
     benefits: ["Readiness Assessment", "Qualification Roadmap", "Hands-on Execution"],
     primaryCta: { text: "Request Assessment", href: "/contact" },
@@ -48,8 +48,8 @@ const defaultSlides: HeroSlide[] = [
   {
     id: "2",
     badge: "V+ EDGE™ Platform",
-    headline: "Execute the roadmap.",
-    highlightedText: "Improve",
+    headline: "Execute your roadmap.",
+    highlightedText: "Drive Real Results.",
     subheadline: "V+ EDGE helps you implement readiness improvements with modular execution across quality systems, operational discipline, and capability upgrades.",
     benefits: ["Modular Execution", "KPIs & Visibility", "No ERP Overhaul"],
     primaryCta: { text: "Explore V+ EDGE", href: "/v-edge" },
@@ -61,8 +61,8 @@ const defaultSlides: HeroSlide[] = [
   {
     id: "3",
     badge: "Affiliate Network",
-    headline: "Bring the right experts.",
-    highlightedText: "Faster",
+    headline: "Right expertise.",
+    highlightedText: "Delivered Faster.",
     subheadline: "We match readiness needs to targeted specialists—so the right work gets done at the right stage without wasting time.",
     benefits: ["Targeted Expertise", "Accountable Milestones", "Repeatable Delivery"],
     primaryCta: { text: "Join Affiliate Network", href: "/affiliates" },
@@ -74,8 +74,8 @@ const defaultSlides: HeroSlide[] = [
   {
     id: "4",
     badge: "For OEM Buyers",
-    headline: "Build supplier capacity.",
-    highlightedText: "Confidently",
+    headline: "Qualify more suppliers.",
+    highlightedText: "Reduce Risk.",
     subheadline: "OEMs use our supplier readiness pipeline to qualify suppliers faster, reduce risk, and expand domestic capacity with stage-based visibility.",
     benefits: ["Supplier Pipeline", "Risk Reduction", "Measured Readiness"],
     primaryCta: { text: "See OEM Program", href: "/oem" },
@@ -170,7 +170,7 @@ export function HeroCarousel({ slides = defaultSlides, autoPlayInterval = 6000 }
             {/* Headline */}
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
               {currentSlide.headline}{" "}
-              <span className="text-primary">{currentSlide.highlightedText}</span> Your Manufacturing.
+              <span className="text-primary">{currentSlide.highlightedText}</span>
             </h1>
 
             {/* Subheadline */}
