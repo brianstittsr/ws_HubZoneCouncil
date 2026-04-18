@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -158,8 +159,20 @@ export default function ZenthiumPage() {
     <div className="min-h-screen" style={{ backgroundColor: "#0a0a0a", color: "#fff" }}>
       {/* Hero Section */}
       <section className="relative overflow-hidden text-white" style={{ backgroundColor: "#0a0a0a" }}>
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#2a2000_1px,transparent_1px),linear-gradient(to_bottom,#2a2000_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)]" />
-        <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(245,166,35,0.12) 0%, transparent 65%)" }} />
+        {/* Background image */}
+        <Image
+          src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1920&q=80"
+          alt=""
+          fill
+          priority
+          className="object-cover object-center"
+          sizes="100vw"
+        />
+        {/* Dark overlay */}
+        <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(10,10,10,0.78) 0%, rgba(10,10,10,0.88) 60%, #0a0a0a 100%)" }} />
+        {/* Amber grid pattern */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#2a2000_1px,transparent_1px),linear-gradient(to_bottom,#2a2000_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)] opacity-40" />
+        <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(245,166,35,0.08) 0%, transparent 65%)" }} />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-36 text-center">
           <Badge variant="outline" className="mb-6 text-sm" style={{ borderColor: "rgba(245,166,35,0.6)", color: "#F5A623" }}>
             Strategic Partners Wanted
