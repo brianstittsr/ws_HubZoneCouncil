@@ -161,7 +161,7 @@ export default function ZenthiumPage() {
       <section className="relative overflow-hidden text-white" style={{ backgroundColor: "#0a0a0a" }}>
         {/* Background image */}
         <Image
-          src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1920&q=80"
+          src="https://images.pexels.com/photos/325229/pexels-photo-325229.jpeg?auto=compress&cs=tinysrgb&w=1920&q=80"
           alt=""
           fill
           priority
@@ -255,7 +255,7 @@ export default function ZenthiumPage() {
       {/* Full-bleed data center image banner */}
       <div className="relative w-full overflow-hidden" style={{ height: "420px" }}>
         <Image
-          src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1920&q=80"
+          src="https://images.pexels.com/photos/1148820/pexels-photo-1148820.jpeg?auto=compress&cs=tinysrgb&w=1920&q=80"
           alt="Hyperscale data center — global digital infrastructure"
           fill
           className="object-cover object-center"
@@ -315,7 +315,7 @@ export default function ZenthiumPage() {
               {/* Industrial property image */}
               <div className="relative w-full h-52 rounded-2xl overflow-hidden border" style={{ borderColor: "rgba(245,166,35,0.2)" }}>
                 <Image
-                  src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=900&q=80"
+                  src="https://images.pexels.com/photos/1267338/pexels-photo-1267338.jpeg?auto=compress&cs=tinysrgb&w=900&q=80"
                   alt="Industrial warehouse suitable for data center conversion"
                   fill
                   className="object-cover object-center"
@@ -352,9 +352,9 @@ export default function ZenthiumPage() {
           <p className="text-center text-xs font-bold uppercase tracking-widest mb-8" style={{ color: "#F5A623" }}>The types of sites we evaluate</p>
           <div className="grid grid-cols-3 gap-4">
             {[
-              { src: "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?auto=format&fit=crop&w=700&q=80", label: "Power Substations & Grid Assets", sub: "High-voltage infrastructure" },
-              { src: "https://images.unsplash.com/photo-1570128862111-d248b4df4df6?auto=format&fit=crop&w=700&q=80", label: "Vacant Industrial Land", sub: "Greenfield & brownfield parcels" },
-              { src: "https://images.unsplash.com/photo-1566193135038-4979a0ea6c98?auto=format&fit=crop&w=700&q=80", label: "Idle Warehouses & Mills", sub: "Adaptive reuse opportunities" },
+              { src: "https://images.pexels.com/photos/9875441/pexels-photo-9875441.jpeg?auto=compress&cs=tinysrgb&w=700&q=80", label: "Power Substations & Grid Assets", sub: "High-voltage infrastructure" },
+              { src: "https://images.pexels.com/photos/1624600/pexels-photo-1624600.jpeg?auto=compress&cs=tinysrgb&w=700&q=80", label: "Vacant Industrial Land", sub: "Greenfield & brownfield parcels" },
+              { src: "https://images.pexels.com/photos/236698/pexels-photo-236698.jpeg?auto=compress&cs=tinysrgb&w=700&q=80", label: "Idle Warehouses & Mills", sub: "Adaptive reuse opportunities" },
             ].map((img) => (
               <div key={img.label} className="relative rounded-2xl overflow-hidden" style={{ height: "220px" }}>
                 <Image
@@ -435,7 +435,7 @@ export default function ZenthiumPage() {
       {/* Full-bleed power grid banner */}
       <div className="relative w-full overflow-hidden" style={{ height: "360px" }}>
         <Image
-          src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=1920&q=80"
+          src="https://images.pexels.com/photos/433308/pexels-photo-433308.jpeg?auto=compress&cs=tinysrgb&w=1920&q=80"
           alt="High-voltage power transmission lines at dusk"
           fill
           className="object-cover object-bottom"
