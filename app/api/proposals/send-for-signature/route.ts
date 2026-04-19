@@ -173,9 +173,9 @@ function generateSigningEmail(params: {
           <!-- Header -->
           <tr>
             <td style="padding:40px 40px 20px 40px;text-align:center;background:linear-gradient(135deg,#1e293b 0%,#334155 100%);border-radius:12px 12px 0 0;">
-              <img src="https://strategicvalueplus.com/VPlus_logo.webp" alt="Strategic Value+" style="height:60px;width:auto;margin-bottom:16px;" />
+              <img src="https://hubzonecouncil.org/logo.jpg" alt="HubZone Council" style="height:60px;width:auto;margin-bottom:16px;" />
               <h1 style="margin:0;color:#C8A951;font-size:22px;font-weight:600;">Document Signature Request</h1>
-              <p style="margin:8px 0 0 0;color:#94a3b8;font-size:14px;">Strategic Value+ — Transforming U.S. Manufacturing</p>
+              <p style="margin:8px 0 0 0;color:#94a3b8;font-size:14px;">HubZone Council — Works for America</p>
             </td>
           </tr>
           <!-- Body -->

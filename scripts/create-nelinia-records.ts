@@ -2,7 +2,7 @@
  * Create Team Member and User Profile records for Nelinia
  * 
  * Firebase Auth UID: fesjhO4peyRYLOU5muIEnrQQMKz2
- * Email: nelinia@strategicvalueplus.com
+ * Email: admin@hubzonecouncil.org
  */
 
 import { initializeApp, getApps } from "firebase/app";
@@ -23,7 +23,7 @@ const db = getFirestore(app);
 
 async function createNeliniaRecords() {
   const firebaseUid = "fesjhO4peyRYLOU5muIEnrQQMKz2";
-  const email = "nelinia@strategicvalueplus.com";
+  const email = "admin@hubzonecouncil.org";
   
   try {
     console.log("🔧 Creating Team Member and User Profile for Nelinia...");

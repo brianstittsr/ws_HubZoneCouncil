@@ -182,9 +182,9 @@ function PageShell({ children }: { children: React.ReactNode }) {
       <header className="bg-[#1e3a5f] text-white py-5 px-6 shadow-lg border-b-4 border-[#C8A951]">
         <div className="max-w-lg mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Image src="/VPlus_logo.webp" alt="Strategic Value+" width={44} height={44} className="rounded" />
+            <Image src="/logo.jpg" alt="HubZone Council" width={44} height={44} className="rounded" />
             <div>
-              <p className="font-bold text-base leading-tight">Strategic Value+</p>
+              <p className="font-bold text-base leading-tight">HubZone Council</p>
               <p className="text-xs text-slate-300">Secure Payment Setup</p>
             </div>
           </div>
@@ -205,10 +205,10 @@ function PageShell({ children }: { children: React.ReactNode }) {
       <footer className="bg-[#1e3a5f] text-white py-5 px-6">
         <div className="max-w-lg mx-auto text-center">
           <div className="flex items-center justify-center gap-2 mb-2">
-            <Image src="/VPlus_logo.webp" alt="Strategic Value+" width={24} height={24} className="rounded" />
-            <p className="font-bold text-sm">Strategic Value+</p>
+            <Image src="/logo.jpg" alt="HubZone Council" width={24} height={24} className="rounded" />
+            <p className="font-bold text-sm">HubZone Council</p>
           </div>
-          <p className="text-xs text-slate-400">8 The Green #13351, Dover, DE 19901 &bull; strategicvalueplus.com</p>
+          <p className="text-xs text-slate-400">Washington, DC &bull; hubzonecouncil.org</p>
         </div>
       </footer>
     </div>

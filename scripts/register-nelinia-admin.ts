@@ -6,7 +6,7 @@
  * 2. Creates Team Member record with admin role
  * 3. Creates User Profile record
  * 
- * Email: nelinia@strategicvalueplus.com
+ * Email: admin@hubzonecouncil.org
  * Password: SVP2026!!
  * Role: admin
  */
@@ -30,8 +30,8 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 async function registerNeliniaAdmin() {
-  const email = "nelinia@strategicvalueplus.com";
-  const password = "SVP2026!!";
+  const email = "admin@hubzonecouncil.org";
+  const password = "HZC2026!!";
   const firstName = "Nelinia";
   const lastName = "Varenas";
   
@@ -86,7 +86,7 @@ async function registerNeliniaAdmin() {
       company: "Strategic Value Plus",
       jobTitle: "CEO",
       location: "Los Angeles, CA",
-      bio: "CEO of Strategic Value Plus with expertise in business strategy and operations.",
+      bio: "CEO of HubZone Council with expertise in business strategy and operations.",
       avatarUrl: "",
       role: "admin",
       isAffiliate: false,

@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "strategicvalueplus.com",
+        hostname: "hubzonecouncil.org",
       },
       {
         protocol: "https",

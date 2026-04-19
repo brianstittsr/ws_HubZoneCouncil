@@ -2,10 +2,10 @@ import { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Strategic Value+ | Transforming U.S. Manufacturing",
-    short_name: "Strategic Value+",
+    name: "HubZone Council | Works for America",
+    short_name: "HubZone Council",
     description:
-      "We help small- and mid-sized U.S. manufacturers win OEM contracts through supplier qualification, ISO certification, and operational readiness.",
+      "Supporting HUBZone businesses and federal contractors through education, networking, and advocacy to create economic opportunity.",
     start_url: "/",
     display: "standalone",
     background_color: "#000000",
@@ -25,9 +25,9 @@ export default function manifest(): MetadataRoute.Manifest {
         purpose: "any",
       },
       {
-        src: "/VPlus_logo.webp",
+        src: "/logo.jpg",
         sizes: "any",
-        type: "image/webp",
+        type: "image/jpeg",
       },
     ],
     categories: ["business", "productivity"],

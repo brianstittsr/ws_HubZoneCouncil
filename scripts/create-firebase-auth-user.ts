@@ -59,7 +59,7 @@ const displayName = process.argv[4];
 
 if (!email || !password || !displayName) {
   console.log("Usage: npx tsx scripts/create-firebase-auth-user.ts <email> <password> <displayName>");
-  console.log('Example: npx tsx scripts/create-firebase-auth-user.ts nelinia@strategicvalueplus.com "TempPass123!" "Nelinia Varenas"');
+  console.log('Example: npx tsx scripts/create-firebase-auth-user.ts admin@hubzonecouncil.org "TempPass123!" "Admin User"');
   process.exit(1);
 }
 

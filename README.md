@@ -1,10 +1,10 @@
-# Strategic Value+ Platform
+# HubZone Council Platform
 
-A modern **Next.js 14+** application serving as both a **marketing website** and an **intelligent business orchestration platform** for Strategic Value Plus.
+A modern **Next.js 14+** application serving as both a **marketing website** and a **member portal** for the HUBZone Contractors National Council.
 
 ## Overview
 
-Strategic Value+ helps small- and mid-sized U.S. manufacturers (25-500 employees) win OEM contracts through supplier qualification, ISO certification, and operational readiness.
+HubZone Council supports HUBZone businesses and federal contractors through education, networking, and advocacy to create economic opportunity.
 
 This platform unifies:
 - **Marketing Website** - Lead capture, service showcase, event promotion
@@ -169,9 +169,9 @@ Or use the Vercel Dashboard for automatic deployments from GitHub.
 
 ## License
 
-Proprietary - Strategic Value+ Solutions
+Proprietary - HUBZone Contractors National Council
 
 ## Contact
 
-- Website: [strategicvalueplus.com](https://strategicvalueplus.com)
-- Email: info@strategicvalueplus.com
+- Website: [hubzonecouncil.org](https://hubzonecouncil.org)
+- Email: info@hubzonecouncil.org

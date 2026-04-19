@@ -393,9 +393,9 @@ export default function SigningPage() {
       <header className="bg-[#1e3a5f] text-white py-6 px-6 shadow-lg border-b-4 border-[#C8A951]">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Image src="/VPlus_logo.webp" alt="Strategic Value+" width={50} height={50} className="rounded" />
+            <Image src="/logo.jpg" alt="HubZone Council" width={50} height={50} className="rounded" />
             <div>
-              <p className="font-bold text-lg">Strategic Value+</p>
+              <p className="font-bold text-lg">HubZone Council</p>
               <p className="text-xs text-gray-300">Secure Document Signing</p>
             </div>
           </div>
@@ -632,12 +632,12 @@ export default function SigningPage() {
       <footer className="bg-[#1e3a5f] text-white py-6 px-6 mt-12">
         <div className="max-w-5xl mx-auto text-center">
           <div className="flex items-center justify-center gap-2 mb-3">
-            <Image src="/VPlus_logo.webp" alt="Strategic Value+" width={30} height={30} className="rounded" />
-            <p className="font-bold text-lg">Strategic Value+</p>
+            <Image src="/logo.jpg" alt="HubZone Council" width={30} height={30} className="rounded" />
+            <p className="font-bold text-lg">HubZone Council</p>
           </div>
-          <p className="text-sm text-gray-300 mb-1">Transforming U.S. Manufacturing</p>
-          <p className="text-xs text-gray-400">8 The Green #13351, Dover, DE 19901</p>
-          <p className="text-xs text-gray-400 mt-1">strategicvalueplus.com</p>
+          <p className="text-sm text-gray-300 mb-1">Works for America</p>
+          <p className="text-xs text-gray-400">Washington, DC</p>
+          <p className="text-xs text-gray-400 mt-1">hubzonecouncil.org</p>
         </div>
       </footer>
     </div>

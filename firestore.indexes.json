@@ -198,6 +198,214 @@
         { "fieldPath": "affiliateId", "order": "ASCENDING" },
         { "fieldPath": "expiresAt", "order": "ASCENDING" }
       ]
+    },
+    {
+      "collectionGroup": "conferenceAbout",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "conferenceCollaborators",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "conferenceId", "order": "ASCENDING" },
+        { "fieldPath": "displayOrder", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "conferenceCollaborators",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "conferenceId", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "conferenceSpeakers",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "conferenceId", "order": "ASCENDING" },
+        { "fieldPath": "displayOrder", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "conferenceSpeakers",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "conferenceId", "order": "ASCENDING" },
+        { "fieldPath": "speakerType", "order": "ASCENDING" },
+        { "fieldPath": "displayOrder", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "conferenceSpeakers",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "conferenceId", "order": "ASCENDING" },
+        { "fieldPath": "isFeatured", "order": "ASCENDING" },
+        { "fieldPath": "displayOrder", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "conferenceSessions",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "conferenceId", "order": "ASCENDING" },
+        { "fieldPath": "day", "order": "ASCENDING" },
+        { "fieldPath": "displayOrder", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "conferenceSessions",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "conferenceId", "order": "ASCENDING" },
+        { "fieldPath": "day", "order": "ASCENDING" },
+        { "fieldPath": "startTime", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "conferenceSessions",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "conferenceId", "order": "ASCENDING" },
+        { "fieldPath": "sessionType", "order": "ASCENDING" },
+        { "fieldPath": "startTime", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "conferenceTickets",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "conferenceId", "order": "ASCENDING" },
+        { "fieldPath": "displayOrder", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "conferenceTickets",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "conferenceId", "order": "ASCENDING" },
+        { "fieldPath": "isActive", "order": "ASCENDING" },
+        { "fieldPath": "displayOrder", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "conferenceNews",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "conferenceId", "order": "ASCENDING" },
+        { "fieldPath": "isPublished", "order": "ASCENDING" },
+        { "fieldPath": "publishedAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "conferenceNews",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "conferenceId", "order": "ASCENDING" },
+        { "fieldPath": "category", "order": "ASCENDING" },
+        { "fieldPath": "publishedAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "conferenceNews",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "conferenceId", "order": "ASCENDING" },
+        { "fieldPath": "isFeatured", "order": "ASCENDING" },
+        { "fieldPath": "publishedAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "conferenceSponsors",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "conferenceId", "order": "ASCENDING" },
+        { "fieldPath": "sponsorTier", "order": "ASCENDING" },
+        { "fieldPath": "displayOrder", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "conferenceSponsors",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "conferenceId", "order": "ASCENDING" },
+        { "fieldPath": "isFeatured", "order": "ASCENDING" },
+        { "fieldPath": "displayOrder", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "conferenceSponsorshipPackages",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "conferenceId", "order": "ASCENDING" },
+        { "fieldPath": "isActive", "order": "ASCENDING" },
+        { "fieldPath": "displayOrder", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "conferenceSponsorshipPackages",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "conferenceId", "order": "ASCENDING" },
+        { "fieldPath": "tier", "order": "ASCENDING" },
+        { "fieldPath": "displayOrder", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "conferenceOrganizers",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "conferenceId", "order": "ASCENDING" },
+        { "fieldPath": "displayOrder", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "conferenceOrganizers",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "conferenceId", "order": "ASCENDING" },
+        { "fieldPath": "isMainOrganizer", "order": "ASCENDING" },
+        { "fieldPath": "displayOrder", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "conferenceVirtualAccess",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "conferenceId", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "conferenceVirtualAccess",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "conferenceId", "order": "ASCENDING" },
+        { "fieldPath": "sessionId", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "conferenceVirtualAccess",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "conferenceId", "order": "ASCENDING" },
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "conferenceVirtualAccess",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "attendeeEmail", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" }
+      ]
     }
   ],
   "fieldOverrides": []

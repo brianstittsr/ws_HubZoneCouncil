@@ -36,7 +36,7 @@ function createV1() {
   s1.addText('Toyota Battery Manufacturing NC', { x: 1, y: 2.2, w: 11, h: 0.8, fontSize: 44, bold: true, color: colors.primary, align: 'center' });
   s1.addShape(pptx.shapes.RECTANGLE, { x: 5.5, y: 3.1, w: 2, h: 0.08, fill: { color: colors.accent } });
   s1.addText('Supplier Qualification Brief', { x: 1, y: 3.3, w: 11, h: 0.5, fontSize: 24, color: colors.gray600, align: 'center' });
-  s1.addText('Prepared by Strategic Value+ Solutions | December 2025', { x: 1, y: 4.5, w: 11, h: 0.3, fontSize: 12, color: colors.gray500, align: 'center' });
+  s1.addText('Prepared by HubZone Council | 2026', { x: 1, y: 4.5, w: 11, h: 0.3, fontSize: 12, color: colors.gray500, align: 'center' });
   addLogoBar(s1); s1.addText('1', { x: 12.2, y: 5.0, w: 0.3, h: 0.3, fontSize: 10, color: colors.gray500 });
 
   // Slide 2-11: Content slides

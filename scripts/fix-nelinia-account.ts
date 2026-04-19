@@ -76,21 +76,21 @@ async function fixNeliniaAccount() {
     });
     
     // Update the email to the correct one
-    console.log("\n📝 Updating email to nelinia@strategicvalueplus.com...");
+    console.log("\n📝 Updating email to admin@hubzonecouncil.org...");
     const teamMemberRef = doc(db, "team_members", teamMemberId);
     await updateDoc(teamMemberRef, {
-      emailPrimary: "nelinia@strategicvalueplus.com",
+      emailPrimary: "admin@hubzonecouncil.org",
       updatedAt: Timestamp.now(),
     });
     
     console.log("✅ Email updated successfully!");
     
     // Now check if there's a Firebase Auth account with the correct email
-    console.log("\n🔍 Checking for Firebase Auth account with nelinia@strategicvalueplus.com...");
+    console.log("\n🔍 Checking for Firebase Auth account with admin@hubzonecouncil.org...");
     console.log("⚠️  Note: We cannot query Firebase Auth by email from client SDK");
     console.log("You'll need to:");
     console.log("1. Go to Firebase Console > Authentication");
-    console.log("2. Find the user with email nelinia@strategicvalueplus.com");
+    console.log("2. Find the user with email admin@hubzonecouncil.org");
     console.log("3. Copy their UID");
     console.log("4. Run this script again with the UID to link the accounts");
     
@@ -117,7 +117,7 @@ async function linkFirebaseUid(firebaseUid: string) {
     const snapshot = await getDocs(emailQuery);
     
     if (snapshot.empty) {
-      console.log("❌ No Team Member found with email nelinia@strategicvalueplus.com");
+      console.log("❌ No Team Member found with email admin@hubzonecouncil.org");
       return;
     }
     

@@ -1001,7 +1001,7 @@ Make it clear, professional, and highlight the value proposition and expected ou
   const generateProposalHTML = (proposal: Partial<Proposal>): string => {
     const typeLabel = PROPOSAL_TYPES.find(t => t.value === proposal.type)?.label || proposal.type;
     const dateStr = proposal.createdAt ? new Date(proposal.createdAt).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }) : new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
-    const logoUrl = `${window.location.origin}/VPlus_logo.webp`;
+    const logoUrl = `${window.location.origin}/logo.jpg`;
 
     // Build body sections
     const sections: string[] = [];

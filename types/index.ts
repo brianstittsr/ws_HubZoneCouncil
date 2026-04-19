@@ -1,4 +1,4 @@
-// Core Types for Strategic Value Plus Platform
+// Core Types for HubZone Council Platform
 
 // User roles
 export type UserRole = 'admin' | 'team' | 'affiliate' | 'customer' | 'partner';

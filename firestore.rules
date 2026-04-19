@@ -658,5 +658,89 @@ service cloud.firestore {
       allow update: if true; // Allow updates for signature completion
       allow delete: if isAuthenticated();
     }
+
+    // =========================================================================
+    // Conference Management System Collections
+    // =========================================================================
+
+    // Conference About - public read, admin write
+    match /conferenceAbout/{docId} {
+      allow read: if true;
+      allow create: if isAdmin();
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // Conference Collaborators - public read, admin write
+    match /conferenceCollaborators/{docId} {
+      allow read: if true;
+      allow create: if isAdmin();
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // Conference Speakers - public read, admin write
+    match /conferenceSpeakers/{docId} {
+      allow read: if true;
+      allow create: if isAdmin();
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // Conference Sessions/Schedule - public read, admin write
+    match /conferenceSessions/{docId} {
+      allow read: if true;
+      allow create: if isAdmin();
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // Conference Tickets - public read, admin write
+    match /conferenceTickets/{docId} {
+      allow read: if true;
+      allow create: if isAdmin();
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // Conference News - public read for published, admin write
+    match /conferenceNews/{docId} {
+      allow read: if true;
+      allow create: if isAdmin();
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // Conference Sponsors - public read, admin write
+    match /conferenceSponsors/{docId} {
+      allow read: if true;
+      allow create: if isAdmin();
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // Conference Sponsorship Packages - public read, admin write
+    match /conferenceSponsorshipPackages/{docId} {
+      allow read: if true;
+      allow create: if isAdmin();
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // Conference Organizers - public read, admin write
+    match /conferenceOrganizers/{docId} {
+      allow read: if true;
+      allow create: if isAdmin();
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // Conference Virtual Access - authenticated read (links are private), admin write
+    match /conferenceVirtualAccess/{docId} {
+      allow read: if isAuthenticated();
+      allow create: if isAdmin();
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
   }
 }

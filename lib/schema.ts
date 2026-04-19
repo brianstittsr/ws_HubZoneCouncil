@@ -1,5 +1,5 @@
 /**
- * Firestore Database Schema for Strategic Value Plus Platform
+ * Firestore Database Schema for HubZone Council Platform
  * 
  * This file defines the database collections, document structures,
  * and helper types for Firestore integration.
@@ -2137,6 +2137,264 @@ export interface ContactFormSubmissionDoc {
 }
 
 // ============================================================================
+// Conference Management System Types
+// ============================================================================
+
+/** Conference / Event About Info document */
+export interface ConferenceAboutDoc {
+  id: string;
+  eventName: string;
+  tagline?: string;
+  description: string;
+  shortDescription?: string;
+  startDate: Timestamp;
+  endDate: Timestamp;
+  timezone: string;
+  locationType: "virtual" | "in-person" | "hybrid";
+  venue?: string;
+  address?: string;
+  city?: string;
+  state?: string;
+  country?: string;
+  virtualLink?: string;
+  bannerImageUrl?: string;
+  logoUrl?: string;
+  websiteUrl?: string;
+  theme?: string;
+  expectedAttendees?: number;
+  status: "draft" | "published" | "cancelled" | "completed";
+  isFeatured?: boolean;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+}
+
+/** Conference Collaborator document */
+export interface ConferenceCollaboratorDoc {
+  id: string;
+  conferenceId: string;
+  name: string;
+  organization: string;
+  role: string;
+  bio?: string;
+  email?: string;
+  phone?: string;
+  websiteUrl?: string;
+  linkedinUrl?: string;
+  photoUrl?: string;
+  isPublic: boolean;
+  displayOrder: number;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+}
+
+/** Conference Speaker document */
+export interface ConferenceSpeakerDoc {
+  id: string;
+  conferenceId: string;
+  firstName: string;
+  lastName: string;
+  title: string;
+  organization: string;
+  bio: string;
+  photoUrl?: string;
+  email?: string;
+  phone?: string;
+  websiteUrl?: string;
+  linkedinUrl?: string;
+  twitterHandle?: string;
+  speakerType: "keynote" | "featured" | "panelist" | "workshop" | "lightning" | "other";
+  sessionIds?: string[];
+  isPublic: boolean;
+  isFeatured: boolean;
+  displayOrder: number;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+}
+
+/** Conference Session/Schedule item document */
+export interface ConferenceSessionDoc {
+  id: string;
+  conferenceId: string;
+  title: string;
+  description?: string;
+  sessionType: "keynote" | "panel" | "workshop" | "breakout" | "networking" | "break" | "lunch" | "opening" | "closing" | "other";
+  day: number;
+  startTime: Timestamp;
+  endTime: Timestamp;
+  room?: string;
+  track?: string;
+  speakerIds?: string[];
+  speakerNames?: string[];
+  maxAttendees?: number;
+  currentAttendees?: number;
+  isPublic: boolean;
+  requiresRegistration: boolean;
+  isVirtual: boolean;
+  virtualPlatform?: "zoom" | "teams" | "meet" | "webex" | "youtube" | "other";
+  virtualLink?: string;
+  virtualMeetingId?: string;
+  virtualPasscode?: string;
+  virtualAccessType: "public" | "registered" | "ticket-required";
+  allowedTicketTypes?: string[];
+  tags?: string[];
+  materialUrl?: string;
+  recordingUrl?: string;
+  displayOrder: number;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+}
+
+/** Conference Ticket/Registration tier document */
+export interface ConferenceTicketDoc {
+  id: string;
+  conferenceId: string;
+  name: string;
+  description?: string;
+  price: number;
+  currency: string;
+  ticketType: "free" | "paid" | "vip" | "student" | "virtual" | "in-person" | "combo";
+  availableQuantity?: number;
+  soldQuantity: number;
+  saleStartDate?: Timestamp;
+  saleEndDate?: Timestamp;
+  perks?: string[];
+  includesMeals?: boolean;
+  includesHousing?: boolean;
+  includesRecordings?: boolean;
+  isPublic: boolean;
+  isActive: boolean;
+  stripeProductId?: string;
+  stripePriceId?: string;
+  registrationFormUrl?: string;
+  displayOrder: number;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+}
+
+/** Conference News / Announcement document */
+export interface ConferenceNewsDoc {
+  id: string;
+  conferenceId: string;
+  title: string;
+  content: string;
+  excerpt?: string;
+  imageUrl?: string;
+  category: "announcement" | "update" | "speaker-spotlight" | "sponsor-news" | "logistics" | "general";
+  authorName: string;
+  authorId?: string;
+  publishedAt?: Timestamp;
+  isPublished: boolean;
+  isFeatured: boolean;
+  tags?: string[];
+  slug?: string;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+}
+
+/** Conference Sponsor document */
+export interface ConferenceSponsorDoc {
+  id: string;
+  conferenceId: string;
+  name: string;
+  description?: string;
+  logoUrl?: string;
+  websiteUrl?: string;
+  contactName?: string;
+  contactEmail?: string;
+  contactPhone?: string;
+  sponsorshipPackageId?: string;
+  packageName?: string;
+  sponsorTier: "platinum" | "gold" | "silver" | "bronze" | "community" | "media" | "in-kind" | "custom";
+  contributionAmount?: number;
+  isPublic: boolean;
+  isFeatured: boolean;
+  displayOrder: number;
+  contractSignedAt?: Timestamp;
+  paymentReceivedAt?: Timestamp;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+}
+
+/** Conference Sponsorship Package document */
+export interface ConferenceSponsorshipPackageDoc {
+  id: string;
+  conferenceId: string;
+  name: string;
+  tier: "platinum" | "gold" | "silver" | "bronze" | "community" | "media" | "in-kind" | "custom";
+  price: number;
+  currency: string;
+  description: string;
+  maxSponsors?: number;
+  currentSponsors: number;
+  benefits: Array<{
+    label: string;
+    included: boolean;
+    details?: string;
+  }>;
+  isPublic: boolean;
+  isActive: boolean;
+  highlightColor?: string;
+  displayOrder: number;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+}
+
+/** Conference Organizer document */
+export interface ConferenceOrganizerDoc {
+  id: string;
+  conferenceId: string;
+  organizationName: string;
+  logoUrl?: string;
+  websiteUrl?: string;
+  description?: string;
+  email?: string;
+  phone?: string;
+  address?: string;
+  city?: string;
+  state?: string;
+  country?: string;
+  primaryContactName: string;
+  primaryContactEmail: string;
+  primaryContactPhone?: string;
+  primaryContactTitle?: string;
+  socialLinks?: {
+    linkedin?: string;
+    twitter?: string;
+    facebook?: string;
+    instagram?: string;
+    youtube?: string;
+  };
+  isMainOrganizer: boolean;
+  organizerType: "lead" | "co-organizer" | "supporting" | "fiscal-sponsor";
+  displayOrder: number;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+}
+
+/** Conference Virtual Access grant — per-attendee access record for a virtual session */
+export interface ConferenceVirtualAccessDoc {
+  id: string;
+  conferenceId: string;
+  sessionId: string;
+  sessionTitle: string;
+  attendeeEmail: string;
+  attendeeName?: string;
+  ticketType?: string;
+  ticketId?: string;
+  virtualPlatform: "zoom" | "teams" | "meet" | "webex" | "youtube" | "other";
+  virtualLink: string;
+  virtualMeetingId?: string;
+  virtualPasscode?: string;
+  accessCode?: string;
+  status: "active" | "revoked" | "expired";
+  sentAt?: Timestamp;
+  expiresAt?: Timestamp;
+  notes?: string;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+}
+
+// ============================================================================
 // Collection Names
 // ============================================================================
 
@@ -2262,6 +2520,17 @@ export const COLLECTIONS = {
   ZENTHIUM_NOTIFICATIONS: "zenthiumNotifications",
   ZENTHIUM_DIRECT_CONTACTS: "zenthiumDirectContacts",
   ZENTHIUM_LOCATION_SUBMISSIONS: "zenthiumLocationSubmissions",
+  // Conference Management System
+  CONFERENCE_ABOUT: "conferenceAbout",
+  CONFERENCE_COLLABORATORS: "conferenceCollaborators",
+  CONFERENCE_SPEAKERS: "conferenceSpeakers",
+  CONFERENCE_SESSIONS: "conferenceSessions",
+  CONFERENCE_TICKETS: "conferenceTickets",
+  CONFERENCE_NEWS: "conferenceNews",
+  CONFERENCE_SPONSORS: "conferenceSponsors",
+  CONFERENCE_SPONSORSHIP_PACKAGES: "conferenceSponsorshipPackages",
+  CONFERENCE_ORGANIZERS: "conferenceOrganizers",
+  CONFERENCE_VIRTUAL_ACCESS: "conferenceVirtualAccess",
 } as const;
 
 // ============================================================================
@@ -2390,6 +2659,17 @@ export const tractionIssuesCollection = () => getCollection<TractionIssueDoc>(CO
 export const tractionTodosCollection = () => getCollection<TractionTodoDoc>(COLLECTIONS.TRACTION_TODOS);
 export const tractionMeetingsCollection = () => getCollection<TractionMeetingDoc>(COLLECTIONS.TRACTION_MEETINGS);
 export const tractionTeamMembersCollection = () => getCollection<TractionTeamMemberDoc>(COLLECTIONS.TRACTION_TEAM_MEMBERS);
+
+// Conference Management collection references
+export const conferenceAboutCollection = () => getCollection<ConferenceAboutDoc>(COLLECTIONS.CONFERENCE_ABOUT);
+export const conferenceCollaboratorsCollection = () => getCollection<ConferenceCollaboratorDoc>(COLLECTIONS.CONFERENCE_COLLABORATORS);
+export const conferenceSpeakersCollection = () => getCollection<ConferenceSpeakerDoc>(COLLECTIONS.CONFERENCE_SPEAKERS);
+export const conferenceSessionsCollection = () => getCollection<ConferenceSessionDoc>(COLLECTIONS.CONFERENCE_SESSIONS);
+export const conferenceTicketsCollection = () => getCollection<ConferenceTicketDoc>(COLLECTIONS.CONFERENCE_TICKETS);
+export const conferenceNewsCollection = () => getCollection<ConferenceNewsDoc>(COLLECTIONS.CONFERENCE_NEWS);
+export const conferenceSponsorsCollection = () => getCollection<ConferenceSponsorDoc>(COLLECTIONS.CONFERENCE_SPONSORS);
+export const conferenceSponsorshipPackagesCollection = () => getCollection<ConferenceSponsorshipPackageDoc>(COLLECTIONS.CONFERENCE_SPONSORSHIP_PACKAGES);
+export const conferenceOrganizersCollection = () => getCollection<ConferenceOrganizerDoc>(COLLECTIONS.CONFERENCE_ORGANIZERS);
 
 // Webinars collection reference
 import type { WebinarDoc } from "./types/webinar";

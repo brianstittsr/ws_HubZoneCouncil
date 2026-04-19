@@ -2,7 +2,7 @@
 
 This Service Agreement is made between:
 
-**Strategic Value Plus (SVP) (Service Provider)**: a LLC, a company registered in Dover, DE, with its principal place of business at 8 The Green #13351 Dover, DE 19901.
+**HubZone Council (Service Provider)**: a nonprofit organization registered in Washington, DC, with its principal place of business in the United States.
 
 **Client**: {{client_name}}, a company registered in {{client_state}}, with its principal place of business at {{client_address}}, {{client_city}}, {{client_state}}, {{client_zip}}.
 

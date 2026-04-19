@@ -547,20 +547,39 @@ export function PortalSidebar() {
       <SidebarHeader className="border-b border-sidebar-border">
         <Link href="/portal" className="flex items-center gap-2 px-2 py-4">
           <NextImage
-            src="/VPlus_logo.webp"
-            alt="Strategic Value+ Logo"
+            src="/logo.jpg"
+            alt="HubZone Council Logo"
             width={40}
             height={40}
             style={{ width: 'auto', height: 'auto' }}
           />
           <div className="flex flex-col">
-            <span className="text-lg font-bold leading-none">Strategic Value+</span>
-            <span className="text-xs text-sidebar-foreground/60">Business Portal</span>
+            <span className="text-lg font-bold leading-none">HubZone Council</span>
+            <span className="text-xs text-sidebar-foreground/60">Member Portal</span>
           </div>
         </Link>
       </SidebarHeader>
 
       <SidebarContent>
+        {/* ── CONFERENCE MANAGEMENT – Pinned Feature ── */}
+        {isAdmin && (
+          <div className="px-3 pt-3 pb-1">
+            <Link
+              href="/portal/admin/conference"
+              className={cn(
+                "flex items-center gap-3 w-full rounded-lg px-3 py-2.5 font-semibold text-sm transition-all",
+                pathname.startsWith("/portal/admin/conference")
+                  ? "bg-primary text-primary-foreground shadow-sm"
+                  : "bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20"
+              )}
+            >
+              <CalendarDays className="h-4 w-4 shrink-0" />
+              <span className="flex-1">Conference Mgmt</span>
+              <Badge className="text-[10px] h-4 px-1.5 bg-primary/20 text-primary border-0 font-semibold">NEW</Badge>
+            </Link>
+          </div>
+        )}
+
         {/* Reusable Section Renderer - Organized by Role */}
         {([
           { key: "dashboard" as const, label: "Dashboard", items: dashboardItems, roles: ["admin", "team", "team_member", "affiliate", "consultant", "superadmin"] },

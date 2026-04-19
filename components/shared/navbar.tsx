@@ -72,21 +72,21 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-white">
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 flex h-16 items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
           <Image
-            src="/VPlus_logo.webp"
-            alt="Strategic Value+ Logo"
+            src="/logo.jpg"
+            alt="HubZone Council Logo"
             width={48}
             height={48}
-            className="h-12 w-auto"
+            className="h-12 w-auto rounded-md bg-white"
             priority
           />
           <div className="flex flex-col">
-            <span className="text-lg font-bold leading-none">Strategic Value+</span>
-            <span className="text-xs text-muted-foreground">Transforming U.S. Manufacturing</span>
+            <span className="text-lg font-bold leading-none">HubZone Council</span>
+            <span className="text-xs text-muted-foreground">Works for America</span>
           </div>
         </Link>
 

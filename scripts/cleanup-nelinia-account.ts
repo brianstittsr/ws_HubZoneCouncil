@@ -26,7 +26,7 @@ const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0
 const db = getFirestore(app);
 
 async function cleanupNeliniaAccount() {
-  const email = "nelinia@strategicvalueplus.com";
+  const email = "admin@hubzonecouncil.org";
   let deletedCount = 0;
   
   try {
@@ -72,7 +72,7 @@ async function cleanupNeliniaAccount() {
     console.log("\n⚠️  MANUAL STEP REQUIRED:");
     console.log("To delete the Firebase Auth account:");
     console.log("1. Go to Firebase Console → Authentication");
-    console.log("2. Find user: nelinia@strategicvalueplus.com");
+    console.log("2. Find user: admin@hubzonecouncil.org");
     console.log("3. Click the three dots → Delete account");
     console.log("\nAfter deleting the Auth account, run:");
     console.log("npx tsx scripts/register-nelinia-admin.ts");

@@ -339,7 +339,7 @@ function generateSignerConfirmationEmail(params: {
         <table role="presentation" style="width:600px;max-width:100%;border-collapse:collapse;background-color:#ffffff;border-radius:12px;box-shadow:0 4px 6px rgba(0,0,0,0.1);">
           <tr>
             <td style="padding:40px 40px 20px 40px;text-align:center;background:linear-gradient(135deg,#1e293b 0%,#334155 100%);border-radius:12px 12px 0 0;">
-              <img src="https://strategicvalueplus.com/VPlus_logo.webp" alt="Strategic Value+" style="height:60px;width:auto;margin-bottom:16px;" />
+              <img src="https://hubzonecouncil.org/logo.jpg" alt="HubZone Council" style="height:60px;width:auto;margin-bottom:16px;" />
               <h1 style="margin:0;color:#22c55e;font-size:22px;font-weight:600;">Document Signed Successfully</h1>
               <p style="margin:8px 0 0 0;color:#94a3b8;font-size:14px;">Your signed copy is ready</p>
             </td>

@@ -28,7 +28,7 @@ async function createMergedPresentation() {
   const pptx = new pptxgen();
   pptx.layout = 'LAYOUT_WIDE';
   pptx.title = 'BelPak - Toyota Battery Manufacturing NC - Combined Presentation';
-  pptx.author = 'Strategic Value Plus';
+  pptx.author = 'HubZone Council';
 
   let slideNum = 1;
 
@@ -41,7 +41,7 @@ async function createMergedPresentation() {
   s1.addText('Toyota Battery Manufacturing NC', { x: 1, y: 2.2, w: 11, h: 0.8, fontSize: 44, bold: true, color: colors.primary, align: 'center' });
   s1.addShape(pptx.shapes.RECTANGLE, { x: 5.5, y: 3.1, w: 2, h: 0.08, fill: { color: colors.accent } });
   s1.addText('Supplier Qualification Brief', { x: 1, y: 3.3, w: 11, h: 0.5, fontSize: 24, color: colors.gray600, align: 'center' });
-  s1.addText('Prepared by Strategic Value+ Solutions | December 2025', { x: 1, y: 4.5, w: 11, h: 0.3, fontSize: 12, color: colors.gray500, align: 'center' });
+  s1.addText('Prepared by HubZone Council | 2026', { x: 1, y: 4.5, w: 11, h: 0.3, fontSize: 12, color: colors.gray500, align: 'center' });
   addLogoBar(s1); s1.addText(String(slideNum++), { x: 12.2, y: 5.0, w: 0.3, h: 0.3, fontSize: 10, color: colors.gray500 });
 
   // V1 Slide 2
@@ -122,7 +122,7 @@ async function createMergedPresentation() {
   let v2s8 = pptx.addSlide(); addHeader(pptx, v2s8, "Total investment ranges from $200K-$400K over 18-24 months", slideNum++);
   let v2s9 = pptx.addSlide(); addHeader(pptx, v2s9, "Several critical risks must be addressed before proceeding", slideNum++);
   let v2s10 = pptx.addSlide(); addHeader(pptx, v2s10, "Phase 0 Discovery must answer critical questions", slideNum++);
-  let v2s11 = pptx.addSlide(); addHeader(pptx, v2s11, "Strategic Value+ team supports BelPak's Toyota qualification journey", slideNum++);
+  let s11 = pptx.addSlide(); addHeader(pptx, s11, "HubZone Council supports your federal contracting journey", 11);slideNum++;
 
   // V2 Slide 12: Thank You
   let v2s12 = pptx.addSlide();

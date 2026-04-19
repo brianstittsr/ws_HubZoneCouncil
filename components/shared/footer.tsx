@@ -41,20 +41,20 @@ export function Footer() {
           <div className="col-span-2 md:col-span-4 lg:col-span-1 space-y-4">
             <Link href="/" className="flex items-center gap-2">
               <Image
-                src="/VPlus_logo.webp"
-                alt="Strategic Value+ Logo"
+                src="/logo.jpg"
+                alt="HubZone Council Logo"
                 width={40}
                 height={40}
                 className="h-10 w-auto"
               />
               <div className="flex flex-col">
-                <span className="text-lg font-bold leading-none">Strategic Value+</span>
-                <span className="text-xs text-gray-400">Transforming U.S. Manufacturing</span>
+                <span className="text-lg font-bold leading-none">HubZone Council</span>
+                <span className="text-xs text-gray-400">Works for America</span>
               </div>
             </Link>
             <p className="text-sm text-gray-400 max-w-xs">
-              Helping small- and mid-sized U.S. manufacturers win OEM contracts through 
-              supplier qualification, ISO certification, and operational readiness.
+              Supporting HUBZone businesses and federal contractors through education, 
+              networking, and advocacy to create economic opportunity.
             </p>
             <div className="flex gap-4">
               <Link href="https://linkedin.com" className="text-gray-400 hover:text-primary transition-colors">
@@ -120,15 +120,15 @@ export function Footer() {
                 <span>United States</span>
               </li>
               <li>
-                <Link href="mailto:info@strategicvalueplus.com" className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors">
+                <Link href="mailto:info@hubzonecouncil.org" className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors">
                   <Mail className="h-4 w-4" />
-                  info@strategicvalueplus.com
+                  info@hubzonecouncil.org
                 </Link>
               </li>
               <li>
-                <Link href="tel:+1-302-215-4700" className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors">
+                <Link href="tel:+1-202-555-0100" className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors">
                   <Phone className="h-4 w-4" />
-                  (302) 215-4700
+                  (202) 555-0100
                 </Link>
               </li>
             </ul>
@@ -140,7 +140,7 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-gray-400">
-            © {new Date().getFullYear()} Strategic Value+ Solutions. All rights reserved.
+            © {new Date().getFullYear()} HUBZone Contractors National Council. All rights reserved.
           </p>
           <div className="flex gap-6">
             {footerLinks.legal.map((link) => (

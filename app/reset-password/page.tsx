@@ -162,8 +162,8 @@ function ResetPasswordContent() {
             <div className="relative">
               <div className="absolute -inset-2 bg-gradient-to-r from-[#C8A951] to-[#a08840] rounded-full blur-lg opacity-30 group-hover:opacity-50 transition-opacity" />
               <Image
-                src="/VPlus_logo.webp"
-                alt="Strategic Value+ Logo"
+                src="/logo.jpg"
+                alt="HubZone Council Logo"
                 width={80}
                 height={80}
                 className="relative h-20 w-auto"
@@ -171,8 +171,8 @@ function ResetPasswordContent() {
               />
             </div>
             <div className="text-center">
-              <h1 className="text-2xl font-bold text-foreground">Strategic Value+</h1>
-              <p className="text-sm text-muted-foreground">Transforming U.S. Manufacturing</p>
+              <h1 className="text-2xl font-bold text-foreground">HubZone Council</h1>
+              <p className="text-sm text-muted-foreground">Works for America</p>
             </div>
           </Link>
         </div>
