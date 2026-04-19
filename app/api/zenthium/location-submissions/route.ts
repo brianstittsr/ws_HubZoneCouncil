@@ -4,60 +4,45 @@ import { COLLECTIONS } from "@/lib/schema";
 import { Timestamp } from "firebase-admin/firestore";
 import { z } from "zod";
 
+const contactSchema = z.object({
+  name: z.string().optional().default(""),
+  email: z.string().optional().default(""),
+  phone: z.string().optional().default(""),
+  company: z.string().optional().default(""),
+});
+
 const submissionSchema = z.object({
-  submitterName: z.string().min(1, "Name is required"),
-  submitterEmail: z.string().email("Valid email is required"),
-  submitterPhone: z.string().optional().default(""),
-  submitterCompany: z.string().optional().default(""),
-
+  title: z.string().min(1, "Title is required"),
   propertyName: z.string().min(1, "Property name is required"),
-  propertyType: z.enum(["vacant_land", "warehouse", "industrial", "office", "data_center", "power_plant", "other"]),
-  propertyTypeOther: z.string().optional().default(""),
 
-  address: z.string().min(1, "Address is required"),
-  city: z.string().min(1, "City is required"),
-  state: z.string().min(1, "State is required"),
-  zip: z.string().optional().default(""),
-  country: z.string().default("US"),
-
-  squareFootage: z.number().min(10000, "Minimum 10,000 sq ft required"),
-  acreage: z.number().optional(),
-
-  powerAvailableMW: z.number().min(20, "Minimum 20 MW required"),
-  powerType: z.enum(["grid", "behind_meter", "renewable", "combined", "unknown"]).optional(),
-  hasBackupPower: z.boolean().optional().default(false),
-
-  ceilingHeightFt: z.number().optional(),
-  isSingleStory: z.boolean().default(true),
-  isFloor: z.boolean().default(true),
-
-  fiberAvailable: z.boolean().optional().default(false),
-  fiberProviders: z.string().optional().default(""),
-
-  waterAvailable: z.boolean().optional().default(false),
-  waterSource: z.string().optional().default(""),
-
-  coolingCapacity: z.string().optional().default(""),
-  hvacInstalled: z.boolean().optional().default(false),
-
-  zoningClassification: z.string().optional().default(""),
-
-  ownershipType: z.enum(["own", "lease", "option", "other"]).optional(),
-  askingPrice: z.string().optional().default(""),
-  leaseRate: z.string().optional().default(""),
-  timeline: z.string().optional().default(""),
-
-  environmentalClearance: z.enum(["clean", "phase1_done", "phase2_done", "unknown", "issues"]).optional(),
-  floodZone: z.boolean().optional().default(false),
+  address: z.object({
+    street: z.string().optional().default(""),
+    city: z.string().min(1, "City is required"),
+    state: z.string().min(1, "State is required"),
+    zip: z.string().optional().default(""),
+    country: z.string().optional().default("US"),
+  }),
 
   coordinates: z.string().optional().default(""),
-  additionalNotes: z.string().optional().default(""),
+  parcelNumber: z.string().optional().default(""),
+  acreage: z.number().optional(),
+  squareFootage: z.number().optional(),
+  powerCapacityMW: z.number().optional(),
 
-  directContactId: z.string().optional().default(""),
-  directContactName: z.string().optional().default(""),
-  directContactEmail: z.string().optional().default(""),
-  directContactPhone: z.string().optional().default(""),
-  directContactCompany: z.string().optional().default(""),
+  utilities: z.string().optional().default(""),
+  fiberAvailability: z.string().optional().default(""),
+  waterAvailability: z.string().optional().default(""),
+  zoning: z.string().optional().default(""),
+
+  ownership: z.string().optional().default(""),
+  pricing: z.string().optional().default(""),
+  timeline: z.string().optional().default(""),
+
+  description: z.string().min(1, "Description is required"),
+  environmentalNotes: z.string().optional().default(""),
+
+  poc: contactSchema.optional().default({ name: "", email: "", phone: "", company: "" }),
+  directContact: contactSchema.optional().default({ name: "", email: "", phone: "", company: "" }),
 });
 
 export async function GET() {
