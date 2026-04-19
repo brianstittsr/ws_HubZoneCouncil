@@ -85,12 +85,14 @@ export async function getZoomMeetingDetails(
   }
 }
 
-function mockMeeting(options: CreateMeetingOptions): ZoomMeetingResult {
-  const id = `mock-${Date.now()}`;
+const FIXED_ZOOM_JOIN_URL = "https://us06web.zoom.us/j/3089165132?pwd=LrHx577NdRlRPyoS2bba1w4qYhuMRh.1";
+const FIXED_ZOOM_MEETING_ID = "3089165132";
+
+function mockMeeting(_options: CreateMeetingOptions): ZoomMeetingResult {
   return {
-    meetingId: id,
-    joinUrl: `https://zoom.us/j/${id}?mock=true`,
-    startUrl: `https://zoom.us/s/${id}?mock=true`,
-    password: "zenthium",
+    meetingId: FIXED_ZOOM_MEETING_ID,
+    joinUrl: FIXED_ZOOM_JOIN_URL,
+    startUrl: FIXED_ZOOM_JOIN_URL,
+    password: "",
   };
 }

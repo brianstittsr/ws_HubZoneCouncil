@@ -88,10 +88,11 @@ export async function POST(request: NextRequest) {
     };
     const fullMeeting: ZenthiumMeeting = { id: meetingRef.id, ...meetingData };
 
-    const recipients = [referralData.poc?.email, referralData.directContact?.email].filter(Boolean);
-    recipients.forEach((email) => {
-      sendMeetingScheduledEmail(fullReferral, fullMeeting, email).catch(console.error);
-    });
+    const pocEmail =
+      referralData.poc?.email ||
+      referralData.directContact?.email ||
+      "noreply@zenthium.com";
+    sendMeetingScheduledEmail(fullReferral, fullMeeting, pocEmail).catch(console.error);
 
     return NextResponse.json({ id: meetingRef.id, zoomJoinUrl: zoomResult.joinUrl }, { status: 201 });
   } catch (error) {
