@@ -1,21 +1,14 @@
 import type { ZenthiumReferral, ZenthiumMeeting, ZenthiumReferralStatus } from "@/types/zenthium";
+import { sendEmail } from "@/lib/email";
 
-const SVP_TEAM = [
-  { email: "bstitt@strategicvalueplus.com",  name: "Brian Stitt" },
-  { email: "nhallums@strategicvalueplus.com", name: "Nate Hallums" },
-  { email: "nelinia@strategicvalueplus.com",  name: "Nelenia Varinas" },
-  { email: "rdickan@strategicvalueplus.com",  name: "Roy Dickan" },
+const SVP_TEAM_EMAILS = [
+  "bstitt@strategicvalueplus.com",
+  "nhallums@strategicvalueplus.com",
+  "nelinia@strategicvalueplus.com",
+  "rdickan@strategicvalueplus.com",
 ];
 
 const ZOOM_LINK = "https://us06web.zoom.us/j/3089165132?pwd=LrHx577NdRlRPyoS2bba1w4qYhuMRh.1";
-
-interface EmailPayload {
-  to: string;
-  cc?: { email: string; name?: string }[];
-  subject: string;
-  html: string;
-  attachments?: { content: string; filename: string; type: string; disposition: string }[];
-}
 
 function buildIcal(meeting: ZenthiumMeeting, referralTitle: string): string {
   const dtStamp = new Date().toISOString().replace(/[-:.]/g, "").slice(0, 15) + "Z";
@@ -54,62 +47,26 @@ function buildIcal(meeting: ZenthiumMeeting, referralTitle: string): string {
   ].join("\r\n");
 }
 
-async function sendViaSendGrid(payload: EmailPayload): Promise<void> {
-  const apiKey = process.env.ZENTHIUM_EMAIL_API_KEY;
-  if (!apiKey) {
-    console.warn("[Zenthium Email] ZENTHIUM_EMAIL_API_KEY not set — skipping send");
-    return;
-  }
-
-  const body: Record<string, unknown> = {
-    personalizations: [
-      {
-        to: [{ email: payload.to }],
-        ...(payload.cc?.length ? { cc: payload.cc } : {}),
-      },
-    ],
-    from: { email: process.env.ZENTHIUM_FROM_EMAIL ?? "noreply@zenthium.com", name: "Zenthium Referral Portal" },
-    subject: payload.subject,
-    content: [{ type: "text/html", value: payload.html }],
-  };
-
-  if (payload.attachments?.length) {
-    body.attachments = payload.attachments;
-  }
-
-  const res = await fetch("https://api.sendgrid.com/v3/mail/send", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
-  });
-
-  if (!res.ok) {
-    const err = await res.text();
-    console.error("[Zenthium Email] SendGrid error:", err);
-  }
-}
-
 export async function sendNewReferralEmail(referral: ZenthiumReferral): Promise<void> {
-  const recipients = [referral.poc.email, referral.directContact.email].filter(Boolean);
+  const recipients = [
+    referral.poc?.email,
+    referral.directContact?.email,
+    ...SVP_TEAM_EMAILS,
+  ].filter((e): e is string => Boolean(e));
 
-  await Promise.all(
-    recipients.map((email) =>
-      sendViaSendGrid({
-        to: email,
-        subject: `New Zenthium Referral Submitted: ${referral.title}`,
-        html: `
-          <h2>New Data Center Referral Submitted</h2>
-          <p><strong>Property:</strong> ${referral.propertyName}</p>
-          <p><strong>Location:</strong> ${referral.address.city}, ${referral.address.state}</p>
-          <p><strong>Description:</strong> ${referral.description}</p>
-          <p>Log in to the portal to review the full submission.</p>
-        `,
-      })
-    )
-  );
+  await sendEmail({
+    to: recipients,
+    subject: `New Zenthium Referral Submitted: ${referral.title}`,
+    html: `
+      <div style="font-family:sans-serif;max-width:600px;margin:0 auto;">
+        <h2>New Data Center Referral Submitted</h2>
+        <p><strong>Property:</strong> ${referral.propertyName}</p>
+        <p><strong>Location:</strong> ${referral.address?.city ?? ""}, ${referral.address?.state ?? ""}</p>
+        <p><strong>Description:</strong> ${referral.description}</p>
+        <p>Log in to the portal to review the full submission.</p>
+      </div>
+    `,
+  });
 }
 
 export async function sendStatusUpdateEmail(
@@ -117,14 +74,16 @@ export async function sendStatusUpdateEmail(
   newStatus: ZenthiumReferralStatus,
   recipientEmail: string
 ): Promise<void> {
-  await sendViaSendGrid({
+  await sendEmail({
     to: recipientEmail,
     subject: `Referral Status Update: ${referral.title}`,
     html: `
-      <h2>Your Referral Status Has Been Updated</h2>
-      <p><strong>Property:</strong> ${referral.propertyName}</p>
-      <p><strong>New Status:</strong> ${newStatus}</p>
-      <p>Log in to the portal to view details.</p>
+      <div style="font-family:sans-serif;max-width:600px;margin:0 auto;">
+        <h2>Your Referral Status Has Been Updated</h2>
+        <p><strong>Property:</strong> ${referral.propertyName}</p>
+        <p><strong>New Status:</strong> ${newStatus}</p>
+        <p>Log in to the portal to view details.</p>
+      </div>
     `,
   });
 }
@@ -135,10 +94,14 @@ export async function sendMeetingScheduledEmail(
   pocEmail: string
 ): Promise<void> {
   const zoomUrl = meeting.zoomJoinUrl ?? ZOOM_LINK;
-  const icalContent = buildIcal(meeting, referral.title ?? referral.propertyName ?? "");
+  const referralTitle = referral.title ?? referral.propertyName ?? "";
+  const icalContent = buildIcal(meeting, referralTitle);
   const icalBase64 = Buffer.from(icalContent).toString("base64");
 
-  const ccRecipients = SVP_TEAM.map((m) => ({ email: m.email, name: m.name }));
+  const toRecipients = [
+    pocEmail,
+    ...SVP_TEAM_EMAILS,
+  ].filter((e): e is string => Boolean(e) && e !== "noreply@zenthium.com");
 
   const html = `
     <div style="font-family:sans-serif;max-width:600px;margin:0 auto;">
@@ -158,17 +121,15 @@ export async function sendMeetingScheduledEmail(
     </div>
   `;
 
-  await sendViaSendGrid({
-    to: pocEmail,
-    cc: ccRecipients,
-    subject: `Meeting Scheduled: ${meeting.title} — ${referral.propertyName ?? referral.title ?? ""}`,
+  await sendEmail({
+    to: toRecipients,
+    subject: `Meeting Scheduled: ${meeting.title} — ${referralTitle}`,
     html,
     attachments: [
       {
-        content: icalBase64,
-        filename: "meeting-invite.ics",
-        type: "text/calendar; method=REQUEST",
-        disposition: "attachment",
+        name: "meeting-invite.ics",
+        contentType: "text/calendar",
+        contentBytes: icalBase64,
       },
     ],
   });
