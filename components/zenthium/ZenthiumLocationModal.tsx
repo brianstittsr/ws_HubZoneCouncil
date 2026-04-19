@@ -193,7 +193,7 @@ export function ZenthiumLocationModal({ open, onOpenChange, onSuccess }: Zenthiu
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="max-w-3xl w-[90vw] max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-5xl w-[95vw] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-xl">
             <MapPin className="h-5 w-5 text-primary" />
@@ -279,7 +279,7 @@ export function ZenthiumLocationModal({ open, onOpenChange, onSuccess }: Zenthiu
                     <Label htmlFor="m-street">Street Address</Label>
                     <Input id="m-street" value={form.address.street} onChange={(e) => setAddress("street", e.target.value)} placeholder="1234 Industrial Blvd" />
                   </div>
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                     <div className="space-y-2">
                       <Label htmlFor="m-city">City *</Label>
                       <Input id="m-city" value={form.address.city} onChange={(e) => setAddress("city", e.target.value)} placeholder="Phoenix" />
@@ -323,7 +323,7 @@ export function ZenthiumLocationModal({ open, onOpenChange, onSuccess }: Zenthiu
               {/* ── STEP 2: Infrastructure ── */}
               {step === 2 && (
                 <>
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                     <div className="space-y-2">
                       <Label htmlFor="m-power">Power Capacity (MW)</Label>
                       <Input id="m-power" type="number" min={0} step={0.1} value={form.powerCapacityMW ?? ""} onChange={(e) => set("powerCapacityMW", e.target.value ? Number(e.target.value) : undefined)} placeholder="50" />
@@ -370,7 +370,7 @@ export function ZenthiumLocationModal({ open, onOpenChange, onSuccess }: Zenthiu
               {step === 4 && (
                 <>
                   <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Point of Contact (POC)</p>
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                     <div className="space-y-2">
                       <Label>Name</Label>
                       <Input value={form.poc.name} onChange={(e) => setPoc("name", e.target.value)} placeholder="Jane Smith" />
@@ -418,7 +418,7 @@ export function ZenthiumLocationModal({ open, onOpenChange, onSuccess }: Zenthiu
                       </Select>
                       <p className="text-xs text-muted-foreground">Fields below are auto-filled but can be overridden.</p>
                     </div>
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                       <div className="space-y-2">
                         <Label>Name</Label>
                         <Input value={form.directContact.name} onChange={(e) => setDirectContact("name", e.target.value)} placeholder="John Doe" />
