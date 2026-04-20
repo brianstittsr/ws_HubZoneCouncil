@@ -167,10 +167,10 @@ export function ConferenceLandingPage() {
         <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
           {/* Event badge */}
           <div className="flex flex-wrap justify-center gap-3 mb-8">
-            <Badge className="bg-primary/20 text-primary border border-primary/30 text-sm px-4 py-1.5 font-medium">
+            <Badge className="bg-[#c9a227]/20 text-[#c9a227] border border-[#c9a227]/30 text-sm px-4 py-1.5 font-medium">
               National Conference · 2026
             </Badge>
-            <Badge variant="outline" className="border-white/20 text-white/80 text-sm px-4 py-1.5">
+            <Badge variant="outline" className="border-white/30 text-white text-sm px-4 py-1.5">
               <MapPin className="h-3 w-3 mr-1" />
               Chantilly, VA
             </Badge>
@@ -178,51 +178,51 @@ export function ConferenceLandingPage() {
 
           {/* Main headline */}
           <div className="text-center max-w-5xl mx-auto">
-            <p className="text-primary font-semibold text-lg mb-3 uppercase tracking-widest">
+            <p className="text-[#c9a227] font-semibold text-lg mb-3 uppercase tracking-widest">
               HUBZone Contractors National Council Presents
             </p>
             <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold leading-tight mb-6">
               2026 National<br />
-              <span className="text-primary">HUBZone</span> Conference
+              <span className="text-[#c9a227]">HUBZone</span> Conference
             </h1>
-            <p className="text-xl md:text-2xl text-white/70 font-medium mb-4">
+            <p className="text-xl md:text-2xl text-white/80 font-medium mb-4">
               Advancing Opportunity, Advocacy & Growth
             </p>
-            <p className="text-base md:text-lg text-white/60 max-w-3xl mx-auto mb-10">
+            <p className="text-base md:text-lg text-white/70 max-w-3xl mx-auto mb-10">
               The nation&apos;s premier event dedicated to strengthening small businesses in Historically Underutilized Business Zones and the communities they serve.
             </p>
 
             {/* Event info bar */}
-            <div className="flex flex-wrap justify-center gap-6 mb-10 text-sm text-white/70">
+            <div className="flex flex-wrap justify-center gap-6 mb-10 text-sm text-white/80">
               <div className="flex items-center gap-2">
-                <Calendar className="h-4 w-4 text-primary" />
+                <Calendar className="h-4 w-4 text-[#c9a227]" />
                 <span>2026</span>
               </div>
               <div className="flex items-center gap-2">
-                <MapPin className="h-4 w-4 text-primary" />
+                <MapPin className="h-4 w-4 text-[#c9a227]" />
                 <span>Westfields Marriott · Chantilly, VA</span>
               </div>
               <div className="flex items-center gap-2">
-                <Users className="h-4 w-4 text-primary" />
+                <Users className="h-4 w-4 text-[#c9a227]" />
                 <span>500+ Attendees Expected</span>
               </div>
             </div>
 
             {/* CTA buttons */}
             <div className="flex flex-wrap justify-center gap-4">
-              <Button size="lg" className="text-base px-8 py-6 bg-primary hover:bg-primary/90 shadow-lg shadow-primary/30" asChild>
+              <Button size="lg" className="text-base px-8 py-6 bg-[#c9a227] hover:bg-[#b89420] text-[#1a2b4a] font-semibold shadow-lg shadow-[#c9a227]/30 border-0" asChild>
                 <a href={eventDetails.registerUrl} target="_blank" rel="noopener noreferrer">
                   Register Today
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </a>
               </Button>
-              <Button size="lg" variant="outline" className="text-base px-8 py-6 border-white/30 text-white hover:bg-white/10" asChild>
+              <Button size="lg" variant="outline" className="text-base px-8 py-6 border-white/40 text-white bg-white/5 hover:bg-white/15 hover:text-white" asChild>
                 <a href={eventDetails.hotelUrl} target="_blank" rel="noopener noreferrer">
                   <Building2 className="mr-2 h-5 w-5" />
                   Book Hotel
                 </a>
               </Button>
-              <Button size="lg" variant="outline" className="text-base px-8 py-6 border-primary/40 text-primary hover:bg-primary/10" asChild>
+              <Button size="lg" variant="outline" className="text-base px-8 py-6 border-[#c9a227]/60 text-[#c9a227] bg-[#c9a227]/10 hover:bg-[#c9a227]/20 hover:text-[#c9a227]" asChild>
                 <a href={eventDetails.sponsorUrl} target="_blank" rel="noopener noreferrer">
                   Become a Sponsor
                 </a>
@@ -235,8 +235,8 @@ export function ConferenceLandingPage() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto text-center">
               {stats.map((stat) => (
                 <div key={stat.label}>
-                  <p className="text-3xl font-bold text-primary">{stat.value}</p>
-                  <p className="text-xs text-white/50 mt-1">{stat.label}</p>
+                  <p className="text-3xl font-bold text-[#c9a227]">{stat.value}</p>
+                  <p className="text-xs text-white/60 mt-1">{stat.label}</p>
                 </div>
               ))}
             </div>
@@ -342,14 +342,14 @@ export function ConferenceLandingPage() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {tickets.map((ticket) => (
+              {tickets.map((ticket) => (
               <Card
                 key={ticket.type}
-                className={`relative flex flex-col ${ticket.highlight ? "border-primary shadow-lg shadow-primary/10 scale-105" : "border"}`}
+                className={`relative flex flex-col ${ticket.highlight ? "border-[#c9a227] shadow-lg shadow-[#c9a227]/10 scale-105" : "border"}`}
               >
                 {ticket.highlight && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                    <Badge className="bg-primary text-white px-4 py-1 shadow-md">Most Popular</Badge>
+                    <Badge className="bg-[#c9a227] text-[#1a2b4a] px-4 py-1 shadow-md font-semibold">Most Popular</Badge>
                   </div>
                 )}
                 <CardContent className="p-7 flex flex-col flex-1">
@@ -361,7 +361,7 @@ export function ConferenceLandingPage() {
                     {ticket.tiers.map((tier) => (
                       <div key={tier.label} className="flex items-center justify-between bg-muted/50 rounded-lg px-3 py-2">
                         <span className="text-sm text-muted-foreground">{tier.label}</span>
-                        <span className="font-bold text-lg text-primary">{tier.price}</span>
+                        <span className="font-bold text-lg text-[#c9a227]">{tier.price}</span>
                       </div>
                     ))}
                   </div>
@@ -370,14 +370,14 @@ export function ConferenceLandingPage() {
                   <ul className="space-y-2 mb-8 flex-1">
                     {ticket.includes.map((item, i) => (
                       <li key={i} className="flex items-center gap-2 text-sm">
-                        <CheckCircle className="h-4 w-4 text-green-500 shrink-0" />
+                        <CheckCircle className="h-4 w-4 text-[#c9a227] shrink-0" />
                         <span className="text-muted-foreground">{item}</span>
                       </li>
                     ))}
                   </ul>
 
                   <Button
-                    className={`w-full ${ticket.highlight ? "bg-primary hover:bg-primary/90" : ""}`}
+                    className={`w-full ${ticket.highlight ? "bg-[#c9a227] hover:bg-[#b89420] text-[#1a2b4a] font-semibold" : "border-[#1e3a5f] text-[#1e3a5f] hover:bg-[#1e3a5f] hover:text-white"}`}
                     variant={ticket.highlight ? "default" : "outline"}
                     asChild
                   >
@@ -398,12 +398,12 @@ export function ConferenceLandingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <Badge variant="outline" className="mb-4 text-primary border-primary/30">Venue & Hotel</Badge>
+              <Badge variant="outline" className="mb-4 text-[#c9a227] border-[#c9a227]/30">Venue & Hotel</Badge>
               <h2 className="text-4xl font-bold mb-6">
-                Westfields <span className="text-primary">Marriott</span>
+                Westfields <span className="text-[#c9a227]">Marriott</span>
               </h2>
               <div className="flex items-start gap-3 mb-4">
-                <MapPin className="h-5 w-5 text-primary mt-1 shrink-0" />
+                <MapPin className="h-5 w-5 text-[#c9a227] mt-1 shrink-0" />
                 <div>
                   <p className="font-semibold">14750 Conference Center Dr</p>
                   <p className="text-muted-foreground">Chantilly, VA 20151</p>
@@ -413,13 +413,13 @@ export function ConferenceLandingPage() {
                 Experience world-class conference facilities at the Westfields Marriott in Chantilly, Virginia—conveniently located near Dulles International Airport and the nation&apos;s capital. A special room block has been reserved for conference attendees.
               </p>
               <div className="flex flex-wrap gap-4">
-                <Button asChild>
+                <Button className="bg-[#1e3a5f] hover:bg-[#152a45] text-white" asChild>
                   <a href={eventDetails.hotelUrl} target="_blank" rel="noopener noreferrer">
                     <Building2 className="mr-2 h-4 w-4" />
                     Book Hotel Accommodations
                   </a>
                 </Button>
-                <Button variant="outline" asChild>
+                <Button variant="outline" className="border-[#1e3a5f] text-[#1e3a5f] hover:bg-[#1e3a5f] hover:text-white" asChild>
                   <a
                     href="https://maps.google.com/?q=14750+Conference+Center+Dr+Chantilly+VA+20151"
                     target="_blank"
