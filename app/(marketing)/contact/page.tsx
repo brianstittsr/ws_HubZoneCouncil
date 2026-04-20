@@ -169,19 +169,19 @@ export default function ContactPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="py-16 md:py-24 bg-black text-white">
+      <section className="py-16 md:py-24 bg-[#1e3a5f] text-white">
         <div className="container">
           <div className="max-w-3xl mx-auto text-center">
-            <Badge variant="outline" className="mb-6 border-primary/50 text-primary">
-              Get in Touch
+            <Badge variant="outline" className="mb-6 border-[#c9a227]/50 text-[#c9a227]">
+              Contact Us
             </Badge>
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-              Let's Start Your{" "}
-              <span className="text-primary">Transformation</span>
+              Connect With{" "}
+              <span className="text-[#c9a227]">HubZone Council</span>
             </h1>
-            <p className="mt-6 text-lg text-gray-300">
-              Ready to become an OEM-qualified supplier? Schedule a free assessment 
-              or reach out to discuss how we can help your manufacturing business grow.
+            <p className="mt-6 text-lg text-white/80">
+              We're here to help your HUBZone business navigate federal contracting, 
+              connect with prime contractors, and win government contracts.
             </p>
           </div>
         </div>
@@ -195,9 +195,9 @@ export default function ContactPage() {
             <div className="lg:col-span-2">
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-2xl">Request a Free Assessment</CardTitle>
+                  <CardTitle className="text-2xl">Get In Touch</CardTitle>
                   <CardDescription>
-                    Fill out the form below and one of our experts will contact you within 24 hours.
+                    Have questions about HUBZone programs or our services? Fill out the form below and we'll get back to you within 24 hours.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -314,41 +314,35 @@ export default function ContactPage() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex items-start gap-3">
-                    <Mail className="h-5 w-5 text-primary mt-0.5" />
-                    <div>
-                      <p className="font-medium">Email</p>
-                      <Link
-                        href="mailto:info@strategicvalueplus.com"
-                        className="text-muted-foreground hover:text-primary"
-                      >
-                        info@strategicvalueplus.com
-                      </Link>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
                     <Phone className="h-5 w-5 text-primary mt-0.5" />
                     <div>
                       <p className="font-medium">Phone</p>
                       <Link
-                        href="tel:+1-302-215-4700"
+                        href="tel:+1-240-442-1787"
                         className="text-muted-foreground hover:text-primary"
                       >
-                        (302) 215-4700
+                        240-442-1787
+                      </Link>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <Mail className="h-5 w-5 text-primary mt-0.5" />
+                    <div>
+                      <p className="font-medium">E-Mail</p>
+                      <Link
+                        href="mailto:info@hubzonecouncil.org"
+                        className="text-muted-foreground hover:text-primary"
+                      >
+                        info@hubzonecouncil.org
                       </Link>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <MapPin className="h-5 w-5 text-primary mt-0.5" />
                     <div>
-                      <p className="font-medium">Location</p>
-                      <p className="text-muted-foreground">United States</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <Clock className="h-5 w-5 text-primary mt-0.5" />
-                    <div>
-                      <p className="font-medium">Business Hours</p>
-                      <p className="text-muted-foreground">Mon-Fri: 8am - 6pm EST</p>
+                      <p className="font-medium">Address</p>
+                      <p className="text-muted-foreground">PO Box 355</p>
+                      <p className="text-muted-foreground">Oakland, MD 21550</p>
                     </div>
                   </div>
                 </CardContent>
