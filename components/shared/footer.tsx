@@ -4,27 +4,6 @@ import { Linkedin, Twitter, Youtube, Mail, Phone, MapPin } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
 const footerLinks = {
-  services: [
-    { title: "V+ EDGE™", href: "/v-edge" },
-    { title: "Supplier Readiness", href: "/" },
-    { title: "For OEM Buyers", href: "/oem" },
-    { title: "Join Affiliate Network", href: "/affiliates" },
-    { title: "AntiFragile", href: "/antifragile" },
-    { title: "Contact", href: "/contact" },
-  ],
-  company: [
-    { title: "About Us", href: "/about" },
-    { title: "Leadership", href: "/leadership" },
-    { title: "Core Team", href: "/company" },
-    { title: "Affiliates", href: "/affiliates" },
-    { title: "OEM Buyers", href: "/oem" },
-  ],
-  resources: [
-    { title: "V+ EDGE", href: "/v-edge" },
-    { title: "About", href: "/about" },
-    { title: "Leadership", href: "/leadership" },
-    { title: "Contact", href: "/contact" },
-  ],
   legal: [
     { title: "Privacy Policy", href: "/privacy" },
     { title: "Terms of Service", href: "/terms" },
@@ -36,9 +15,9 @@ export function Footer() {
   return (
     <footer className="bg-black text-white">
       <div className="container py-12 md:py-16">
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8">
+        <div className="flex flex-col md:flex-row justify-between items-start gap-8">
           {/* Brand Column */}
-          <div className="col-span-2 md:col-span-4 lg:col-span-1 space-y-4">
+          <div className="space-y-4 max-w-md">
             <Link href="/" className="flex items-center gap-2">
               <Image
                 src="/logo.jpg"
@@ -52,7 +31,7 @@ export function Footer() {
                 <span className="text-xs text-gray-400">Works for America</span>
               </div>
             </Link>
-            <p className="text-sm text-gray-400 max-w-xs">
+            <p className="text-sm text-gray-400">
               Supporting HUBZone businesses and federal contractors through education, 
               networking, and advocacy to create economic opportunity.
             </p>
@@ -69,55 +48,15 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Services */}
-          <div className="space-y-4">
-            <h3 className="font-semibold text-accent">Services</h3>
-            <ul className="space-y-2">
-              {footerLinks.services.map((link) => (
-                <li key={link.title}>
-                  <Link href={link.href} className="text-sm text-gray-400 hover:text-white transition-colors">
-                    {link.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Company */}
-          <div className="space-y-4">
-            <h3 className="font-semibold text-accent">Company</h3>
-            <ul className="space-y-2">
-              {footerLinks.company.map((link) => (
-                <li key={link.title}>
-                  <Link href={link.href} className="text-sm text-gray-400 hover:text-white transition-colors">
-                    {link.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Resources */}
-          <div className="space-y-4">
-            <h3 className="font-semibold text-accent">Resources</h3>
-            <ul className="space-y-2">
-              {footerLinks.resources.map((link) => (
-                <li key={link.title}>
-                  <Link href={link.href} className="text-sm text-gray-400 hover:text-white transition-colors">
-                    {link.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
           {/* Contact */}
           <div className="space-y-4">
-            <h3 className="font-semibold text-accent">Contact</h3>
+            <h3 className="font-semibold text-accent">Contact Us</h3>
             <ul className="space-y-3">
-              <li className="flex items-start gap-2 text-sm text-gray-400">
-                <MapPin className="h-4 w-4 mt-0.5 shrink-0" />
-                <span>United States</span>
+              <li>
+                <Link href="tel:+1-240-442-1787" className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors">
+                  <Phone className="h-4 w-4" />
+                  240-442-1787
+                </Link>
               </li>
               <li>
                 <Link href="mailto:info@hubzonecouncil.org" className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors">
@@ -125,11 +64,9 @@ export function Footer() {
                   info@hubzonecouncil.org
                 </Link>
               </li>
-              <li>
-                <Link href="tel:+1-202-555-0100" className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors">
-                  <Phone className="h-4 w-4" />
-                  (202) 555-0100
-                </Link>
+              <li className="flex items-start gap-2 text-sm text-gray-400">
+                <MapPin className="h-4 w-4 mt-0.5 shrink-0" />
+                <span>PO Box 355<br />Oakland, MD 21550</span>
               </li>
             </ul>
           </div>

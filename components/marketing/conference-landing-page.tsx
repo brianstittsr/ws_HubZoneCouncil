@@ -111,36 +111,42 @@ const tracks = [
     title: "Federal Contracting Access",
     description: "Expand access to federal contracting opportunities and build the strategies needed to win government contracts in HUBZone-designated areas.",
     color: "bg-blue-500/10 text-blue-600",
+    image: "https://images.pexels.com/photos/1181406/pexels-photo-1181406.jpeg?auto=compress&cs=tinysrgb&w=800&q=80",
   },
   {
     icon: Lightbulb,
     title: "Policy & Advocacy",
     description: "Engage directly with policymakers and federal agency representatives shaping the future of the HUBZone program and small business legislation.",
     color: "bg-purple-500/10 text-purple-600",
+    image: "https://images.pexels.com/photos/3760069/pexels-photo-3760069.jpeg?auto=compress&cs=tinysrgb&w=800&q=80",
   },
   {
     icon: Handshake,
     title: "Networking & Matchmaking",
     description: "Connect with federal buyers, prime contractors, and fellow HUBZone businesses through structured matchmaking and informal networking sessions.",
     color: "bg-green-500/10 text-green-600",
+    image: "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800&q=80",
   },
   {
     icon: Building2,
     title: "Supply Chain & Manufacturing",
     description: "Strengthen American supply chains, revitalize manufacturing, and build resilient local economies in distressed communities.",
     color: "bg-orange-500/10 text-orange-600",
+    image: "https://images.pexels.com/photos/236093/pexels-photo-236093.jpeg?auto=compress&cs=tinysrgb&w=800&q=80",
   },
   {
     icon: Users,
     title: "Workforce Development",
     description: "Address economic inequity and workforce gaps through collaborative strategies that empower HUBZone communities and their residents.",
     color: "bg-pink-500/10 text-pink-600",
+    image: "https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800&q=80",
   },
   {
     icon: Award,
     title: "Innovation & Growth",
     description: "Discover cutting-edge tools, programs, and partnerships that drive industrial innovation and inclusive prosperity for HUBZone businesses.",
     color: "bg-cyan-500/10 text-cyan-600",
+    image: "https://images.pexels.com/photos/3184405/pexels-photo-3184405.jpeg?auto=compress&cs=tinysrgb&w=800&q=80",
   },
 ];
 
@@ -331,11 +337,24 @@ export function ConferenceLandingPage() {
             {tracks.map((track) => {
               const Icon = track.icon;
               return (
-                <Card key={track.title} className="hover:shadow-md transition-shadow border-0 bg-background">
-                  <CardContent className="p-6">
-                    <div className={`inline-flex p-3 rounded-xl mb-4 ${track.color}`}>
-                      <Icon className="h-6 w-6" />
+                <Card key={track.title} className="hover:shadow-lg transition-shadow border-0 bg-background overflow-hidden">
+                  {/* Track Image */}
+                  <div className="relative h-40 w-full">
+                    <Image
+                      src={track.image}
+                      alt={track.title}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                    <div className="absolute bottom-3 left-3">
+                      <div className={`inline-flex p-2 rounded-lg ${track.color} bg-white/90`}>
+                        <Icon className="h-5 w-5" />
+                      </div>
                     </div>
+                  </div>
+                  <CardContent className="p-6">
                     <h3 className="font-bold text-lg mb-2">{track.title}</h3>
                     <p className="text-muted-foreground text-sm leading-relaxed">{track.description}</p>
                   </CardContent>
