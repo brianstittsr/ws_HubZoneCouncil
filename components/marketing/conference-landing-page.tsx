@@ -167,11 +167,11 @@ export function ConferenceLandingPage() {
     <div className="min-h-screen bg-background">
       {/* ── HERO ─────────────────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden text-white min-h-[92vh] flex items-center">
-        {/* Background image - Steven F. Udvar-Hazy Center, Chantilly VA */}
+        {/* Background image - Business professionals at conference */}
         <div className="absolute inset-0">
           <Image
-            src="https://images.pexels.com/photos/3850218/pexels-photo-3850218.jpeg?auto=compress&cs=tinysrgb&w=1920&q=80"
-            alt="Steven F. Udvar-Hazy Center - Chantilly, VA"
+            src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=1920&q=80"
+            alt="Business professionals collaborating at conference"
             fill
             priority
             className="object-cover"
