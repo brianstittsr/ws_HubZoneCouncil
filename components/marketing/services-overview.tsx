@@ -24,14 +24,14 @@ const services = [
     ],
   },
   {
-    title: "V+ EDGE™",
-    tagline: "Execute the roadmap.",
+    title: "HUBZone Programs",
+    tagline: "Grow with purpose.",
     description:
-      "A modular execution platform that supports readiness work across quality systems, operations discipline, and capability upgrades.",
+      "Educational programs and certification support to help HUBZone businesses succeed in federal contracting and grow their capabilities.",
     icon: Wrench,
     color: "text-secondary",
     bgColor: "bg-secondary/10",
-    href: "/v-edge",
+    href: "/programs",
     features: [
       "Modular implementation for rapid progress",
       "KPIs and visibility for accountability",

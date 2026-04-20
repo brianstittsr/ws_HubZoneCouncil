@@ -46,10 +46,10 @@ export interface PopupConfig {
 
 // Default configuration
 export const defaultPopupConfig: PopupConfig = {
-  enabled: true,
-  title: "Strategic Value+ Solutions",
-  subtitle: "Request a supplier readiness assessment to identify gaps and define the fastest path to OEM qualification.",
-  description: "Tell us what you're aiming to qualify for and where you're stuck. We'll follow up with next steps.",
+  enabled: false,
+  title: "HubZone Council",
+  subtitle: "Join the HUBZone Contractors National Council to access resources, networking, and advocacy for federal contracting success.",
+  description: "Tell us about your business and how we can help. We'll follow up with next steps.",
   buttonText: "Request Assessment",
   successMessage: "Thank you! We'll be in touch within 24 hours.",
   triggerDelay: 0,
@@ -206,8 +206,6 @@ export function ContactPopup({ config = defaultPopupConfig }: ContactPopupProps)
         <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
           <DialogHeader className="space-y-4">
             <div className="flex items-center gap-2">
-              <span className="text-4xl font-bold text-primary">V</span>
-              <sup className="text-primary text-xl">+</sup>
               <DialogTitle className="text-xl text-primary font-semibold">
                 {config.title}
               </DialogTitle>

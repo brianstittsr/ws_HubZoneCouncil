@@ -9,7 +9,7 @@ import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 const testimonials = [
   {
     quote:
-      "Strategic Value+ helped us achieve ISO 9001 certification in just 90 days. We've since won three major OEM contracts worth over $2M annually.",
+      "HubZone Council connected us with prime contractors and helped us navigate the federal certification process. We've since won multiple federal contracts.",
     author: "Michael Chen",
     title: "CEO",
     company: "Precision Components Inc.",
@@ -19,7 +19,7 @@ const testimonials = [
   },
   {
     quote:
-      "The V+ EDGE platform transformed our operations. We reduced cycle time by 40% and improved quality metrics across the board. The ROI was evident within the first quarter.",
+      "The networking events and educational resources from HubZone Council helped us build relationships with federal agencies. Our federal revenue has grown significantly.",
     author: "Sarah Williams",
     title: "VP Operations",
     company: "Advanced Manufacturing Solutions",
@@ -69,7 +69,7 @@ export function Testimonials() {
             What Our Clients Say
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            Real results from real manufacturers who transformed their operations with Strategic Value+.
+            Real success stories from HUBZone businesses who grew through our programs and connections.
           </p>
         </div>
 
