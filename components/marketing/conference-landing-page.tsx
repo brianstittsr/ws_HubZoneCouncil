@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -165,7 +166,20 @@ export function ConferenceLandingPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* ── HERO ─────────────────────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-[#0a1628] text-white min-h-[92vh] flex items-center">
+      <section className="relative overflow-hidden text-white min-h-[92vh] flex items-center">
+        {/* Background image - Steven F. Udvar-Hazy Center, Chantilly VA */}
+        <div className="absolute inset-0">
+          <Image
+            src="https://images.pexels.com/photos/3850218/pexels-photo-3850218.jpeg?auto=compress&cs=tinysrgb&w=1920&q=80"
+            alt="Steven F. Udvar-Hazy Center - Chantilly, VA"
+            fill
+            priority
+            className="object-cover"
+            sizes="100vw"
+          />
+          {/* Dark overlay for text readability */}
+          <div className="absolute inset-0 bg-[#0a1628]/80" />
+        </div>
         {/* Subtle pattern overlay */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff06_1px,transparent_1px),linear-gradient(to_bottom,#ffffff06_1px,transparent_1px)] bg-[size:4rem_4rem]" />
         {/* Gradient glow */}
