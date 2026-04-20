@@ -173,21 +173,48 @@ export function ConferenceLandingPage() {
     <div className="min-h-screen bg-background">
       {/* ── HERO ─────────────────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden text-white min-h-[92vh] flex items-center">
-        {/* Background image - Business professionals at conference */}
-        <div className="absolute inset-0">
+        {/* Layer 1: Audience listening to speaker (back layer) */}
+        <div className="absolute inset-0 animate-kenburns-slow">
+          <Image
+            src="https://images.pexels.com/photos/2774556/pexels-photo-2774556.jpeg?auto=compress&cs=tinysrgb&w=1920&q=80"
+            alt="Conference audience listening to speaker"
+            fill
+            priority
+            className="object-cover scale-110"
+            sizes="100vw"
+          />
+        </div>
+        
+        {/* Layer 2: People networking/meeting (middle layer) */}
+        <div className="absolute inset-0 animate-kenburns-medium opacity-70">
           <Image
             src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=1920&q=80"
-            alt="Business professionals collaborating at conference"
+            alt="Professionals networking at conference"
+            fill
+            priority
+            className="object-cover scale-110"
+            sizes="100vw"
+          />
+        </div>
+        
+        {/* Layer 3: Hotel exterior (front layer with Ken Burns effect) */}
+        <div className="absolute inset-0 animate-kenburns-zoom">
+          <Image
+            src="https://images.pexels.com/photos/2506990/pexels-photo-2506990.jpeg?auto=compress&cs=tinysrgb&w=1920&q=80"
+            alt="Westfields Marriott Washington Dulles Hotel"
             fill
             priority
             className="object-cover"
             sizes="100vw"
           />
-          {/* Dark overlay for text readability */}
-          <div className="absolute inset-0 bg-[#0a1628]/80" />
         </div>
+        
+        {/* Dark overlay for text readability */}
+        <div className="absolute inset-0 bg-[#0a1628]/75" />
+        
         {/* Subtle pattern overlay */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff06_1px,transparent_1px),linear-gradient(to_bottom,#ffffff06_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+        
         {/* Gradient glow */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-blue-600/20 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-primary/10 rounded-full blur-3xl pointer-events-none" />
