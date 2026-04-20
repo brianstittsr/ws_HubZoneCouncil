@@ -32,12 +32,18 @@ const eventDetails = {
   name: "2026 National HUBZone Conference",
   tagline: "Advancing Opportunity, Advocacy & Growth",
   fullName: "HUBZone Contractors National Conference",
-  dates: "2026",
+  dates: "July 21-22, 2026",
+  startDate: "July 21, 2026",
+  endDate: "July 22, 2026",
+  startTime: "7:00 AM",
+  endTime: "5:00 PM",
   venue: "Westfields Marriott",
   address: "14750 Conference Center Dr, Chantilly, VA 20151",
-  hotelUrl: "https://book.passkey.com/event/51134479/owner/13564/home",
+  hotelUrl: "https://book.passkey.com/event/51134479/owner/13564/home?utm_campaign=298709199",
   registerUrl: "https://hubzonecouncil.org/event-6249547",
   sponsorUrl: "https://hubzonecouncil.org/event-6458966/Registration",
+  contactPhone: "240-442-1787",
+  contactEmail: "info@hubzonecouncil.org",
 };
 
 const tickets = [
@@ -50,13 +56,14 @@ const tickets = [
     cta: "Register Today",
     href: eventDetails.registerUrl,
     highlight: false,
-    description: "Full access to all sessions, workshops, policy discussions, and networking events.",
+    description: "Full access to all sessions, workshops, policy discussions, networking events, and meals.",
     includes: [
       "All general sessions",
       "Workshop access",
       "Networking reception",
       "Conference materials",
       "Lunch & refreshments",
+      "July 21-22, 2026",
     ],
   },
   {
@@ -68,30 +75,31 @@ const tickets = [
     cta: "Register as Exhibitor",
     href: eventDetails.registerUrl,
     highlight: true,
-    description: "Showcase your business with a dedicated exhibit booth plus full conference access.",
+    description: "8x8 exhibit space with 6ft table, 2 chairs, and 2 conference tickets included.",
     includes: [
-      "Dedicated exhibit space",
+      "8x8 dedicated exhibit space",
+      "6ft table + 2 chairs",
+      "2 conference tickets",
       "All general sessions",
       "Matchmaking opportunities",
       "Premium placement in program",
-      "2 attendee registrations",
     ],
   },
   {
-    type: "Sponsor",
+    type: "Government",
     tiers: [
-      { label: "Various packages", price: "Custom" },
+      { label: "Full Registration", price: "$250" },
     ],
-    cta: "Become a Sponsor",
-    href: eventDetails.sponsorUrl,
+    cta: "Govt Registration",
+    href: eventDetails.registerUrl,
     highlight: false,
-    description: "Maximize your brand visibility with tailored sponsorship packages.",
+    description: "For federal, state, and local government representatives. Includes full access and dedicated matchmaking table.",
     includes: [
-      "Brand recognition throughout event",
-      "Speaking opportunities",
-      "Featured in marketing materials",
-      "Priority exhibit placement",
-      "Multiple registrations included",
+      "Full access to all activities",
+      "All meals included",
+      "Dedicated matchmaking table",
+      "Networking with HUBZone businesses",
+      "Conference materials",
     ],
   },
 ];
@@ -196,7 +204,7 @@ export function ConferenceLandingPage() {
             <div className="flex flex-wrap justify-center gap-6 mb-10 text-sm text-white/80">
               <div className="flex items-center gap-2">
                 <Calendar className="h-4 w-4 text-[#c9a227]" />
-                <span>2026</span>
+                <span>July 21-22, 2026 · 7:00 AM - 5:00 PM</span>
               </div>
               <div className="flex items-center gap-2">
                 <MapPin className="h-4 w-4 text-[#c9a227]" />
