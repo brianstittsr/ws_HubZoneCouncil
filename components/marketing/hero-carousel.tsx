@@ -43,7 +43,7 @@ const defaultSlides: HeroSlide[] = [
     secondaryCta: { text: "Learn More", href: "/about" },
     isPublished: true,
     order: 1,
-    backgroundImage: "https://images.pexels.com/photos/1108101/pexels-photo-1108101.jpeg?auto=compress&cs=tinysrgb&w=1920&q=80",
+    backgroundImage: "https://images.pexels.com/photos/1560939/pexels-photo-1560939.jpeg?auto=compress&cs=tinysrgb&w=1920&q=80",
   },
   {
     id: "2",
@@ -56,7 +56,7 @@ const defaultSlides: HeroSlide[] = [
     secondaryCta: { text: "Request Assessment", href: "/contact" },
     isPublished: true,
     order: 2,
-    backgroundImage: "https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1920&q=80",
+    backgroundImage: "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=1920&q=80",
   },
   {
     id: "3",
@@ -69,7 +69,7 @@ const defaultSlides: HeroSlide[] = [
     secondaryCta: { text: "Request Assessment", href: "/contact" },
     isPublished: true,
     order: 3,
-    backgroundImage: "https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg?auto=compress&cs=tinysrgb&w=1920&q=80",
+    backgroundImage: "https://images.pexels.com/photos/3184296/pexels-photo-3184296.jpeg?auto=compress&cs=tinysrgb&w=1920&q=80",
   },
   {
     id: "4",
@@ -82,7 +82,7 @@ const defaultSlides: HeroSlide[] = [
     secondaryCta: { text: "Talk to our team", href: "/contact" },
     isPublished: true,
     order: 4,
-    backgroundImage: "https://images.pexels.com/photos/1427541/pexels-photo-1427541.jpeg?auto=compress&cs=tinysrgb&w=1920&q=80",
+    backgroundImage: "https://images.pexels.com/photos/3182822/pexels-photo-3182822.jpeg?auto=compress&cs=tinysrgb&w=1920&q=80",
   },
   {
     id: "5",
