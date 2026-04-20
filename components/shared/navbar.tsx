@@ -45,17 +45,9 @@ export function Navbar() {
           </Link>
         </nav>
 
-        {/* CTA Buttons */}
+        {/* CTA Buttons - Hidden */}
         <div className="hidden lg:flex items-center gap-3">
-          <Button variant="ghost" asChild>
-            <Link href="/sign-in">Sign In</Link>
-          </Button>
-          <Button variant="outline" asChild>
-            <Link href="/sign-up">Sign Up</Link>
-          </Button>
-          <Button asChild>
-            <Link href="/contact">Get Assessment</Link>
-          </Button>
+          {/* Sign In, Sign Up, and Get Assessment buttons hidden per request */}
         </div>
 
         {/* Mobile Menu */}
@@ -85,7 +77,8 @@ export function Navbar() {
                 </Link>
               </div>
 
-              <div className="border-t pt-4 space-y-2">
+              {/* Mobile CTA buttons hidden */}
+              <div className="hidden border-t pt-4 space-y-2">
                 <Button variant="outline" className="w-full" asChild>
                   <Link href="/sign-in" onClick={() => setMobileOpen(false)}>
                     Sign In

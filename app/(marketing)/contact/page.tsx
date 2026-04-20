@@ -485,46 +485,6 @@ export default function ContactPage() {
                 </CardContent>
               </Card>
 
-              {/* Connect */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>Connect With Us</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex gap-3">
-                    <Button variant="outline" size="icon" asChild>
-                      <Link href="https://linkedin.com">
-                        <Linkedin className="h-5 w-5" />
-                      </Link>
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* What to Expect */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>What to Expect</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <div className="flex items-start gap-2">
-                    <CheckCircle className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                    <p className="text-sm">Response within 24 hours</p>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <CheckCircle className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                    <p className="text-sm">Free initial assessment</p>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <CheckCircle className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                    <p className="text-sm">Customized recommendations</p>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <CheckCircle className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                    <p className="text-sm">No obligation to proceed</p>
-                  </div>
-                </CardContent>
-              </Card>
             </div>
           </div>
         </div>
