@@ -43,7 +43,7 @@ const defaultSlides: HeroSlide[] = [
     secondaryCta: { text: "Learn More", href: "/about" },
     isPublished: true,
     order: 1,
-    backgroundImage: "https://images.pexels.com/photos/1560939/pexels-photo-1560939.jpeg?auto=compress&cs=tinysrgb&w=1920&q=80",
+    backgroundImage: "https://images.pexels.com/photos/2506990/pexels-photo-2506990.jpeg?auto=compress&cs=tinysrgb&w=1920&q=80",
   },
   {
     id: "2",
