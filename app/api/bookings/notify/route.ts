@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { sendEmail } from "@/lib/email";
 
 interface BookingNotificationRequest {
   bookingId: string;
@@ -12,6 +13,11 @@ interface BookingNotificationRequest {
   duration: number;
   notes?: string;
 }
+
+const ADMIN_NOTIFICATION_EMAILS = [
+  "brianstittsr@gmail.com",
+  "info@legacy83business.com",
+];
 
 export async function POST(request: NextRequest) {
   try {
@@ -29,13 +35,6 @@ export async function POST(request: NextRequest) {
       notes,
     } = body;
 
-    // In production, you would integrate with an email service like:
-    // - SendGrid
-    // - Resend
-    // - AWS SES
-    // - Nodemailer with SMTP
-    
-    // For now, we'll log the notification and return success
     console.log("=== BOOKING NOTIFICATION ===");
     console.log(`Booking ID: ${bookingId}`);
     console.log(`Team Member: ${teamMemberName} (${teamMemberEmail})`);
@@ -44,6 +43,31 @@ export async function POST(request: NextRequest) {
     console.log(`Date/Time: ${date} at ${time} (${duration} min)`);
     if (notes) console.log(`Notes: ${notes}`);
     console.log("============================");
+
+    const commonDetails = `
+      <ul>
+        <li><strong>Booking ID:</strong> ${bookingId}</li>
+        <li><strong>Team Member:</strong> ${teamMemberName} (${teamMemberEmail})</li>
+        <li><strong>Client:</strong> ${clientName} (${clientEmail})</li>
+        <li><strong>Meeting Type:</strong> ${meetingType}</li>
+        <li><strong>Date:</strong> ${date}</li>
+        <li><strong>Time:</strong> ${time}</li>
+        <li><strong>Duration:</strong> ${duration} minutes</li>
+        ${notes ? `<li><strong>Notes:</strong> ${notes}</li>` : ''}
+      </ul>
+    `;
+
+    // Admin notification
+    const adminEmailContent = {
+      to: ADMIN_NOTIFICATION_EMAILS,
+      subject: `New Booking: ${meetingType} with ${clientName}`,
+      html: `
+        <h2>New Booking Received</h2>
+        <p>A new meeting has been booked:</p>
+        ${commonDetails}
+        <p>View this booking in the admin portal.</p>
+      `,
+    };
 
     // Email to team member
     const teamMemberEmailContent = {
@@ -84,19 +108,34 @@ export async function POST(request: NextRequest) {
       `,
     };
 
-    // TODO: Implement actual email sending
-    // Example with Resend:
-    // const resend = new Resend(process.env.RESEND_API_KEY);
-    // await resend.emails.send(teamMemberEmailContent);
-    // await resend.emails.send(clientEmailContent);
+    const results = await Promise.allSettled([
+      sendEmail(adminEmailContent),
+      sendEmail(teamMemberEmailContent),
+      sendEmail(clientEmailContent),
+    ]);
+
+    const failures = results
+      .map((result, index) => ({ result, index }))
+      .filter(({ result }) => result.status === "rejected" || (result.status === "fulfilled" && !result.value.success))
+      .map(({ result, index }) => {
+        const target = index === 0 ? "admin" : index === 1 ? "teamMember" : "client";
+        const message = result.status === "rejected" ? String(result.reason) : (result.value as { error?: string }).error || "Unknown";
+        return { target, message };
+      });
+
+    if (failures.length > 0) {
+      console.error("Booking email failures:", failures);
+    }
 
     return NextResponse.json({
-      success: true,
-      message: "Notification logged successfully",
+      success: failures.length === 0,
+      message: failures.length === 0 ? "Notifications sent" : "Some notifications failed",
       emails: {
+        admin: adminEmailContent,
         teamMember: teamMemberEmailContent,
         client: clientEmailContent,
       },
+      failures: failures.length > 0 ? failures : undefined,
     });
   } catch (error) {
     console.error("Booking notification error:", error);
