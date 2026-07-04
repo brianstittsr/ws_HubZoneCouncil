@@ -2543,6 +2543,57 @@ export interface ConferenceCheckInDoc {
   createdAt: Timestamp;
 }
 
+/** A single wiki knowledge entry about the conference (Karpathy-style wiki chunk) */
+export interface ConferenceWikiEntryDoc {
+  id: string;
+  conferenceId?: string;
+  title: string;
+  content: string;
+  category?: string;
+  tags?: string[];
+  sourceDocumentId?: string;
+  sourceDocumentName?: string;
+  sourceUrl?: string;
+  isPublic: boolean;
+  displayOrder?: number;
+  embedding?: number[];
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+}
+
+/** Source document uploaded to feed the conference wiki */
+export interface ConferenceWikiDocumentDoc {
+  id: string;
+  conferenceId?: string;
+  name: string;
+  fileName?: string;
+  contentType?: string;
+  contentText?: string;
+  storageUrl?: string;
+  size?: number;
+  status: "pending" | "processing" | "processed" | "error";
+  processingError?: string;
+  extractedEntryCount?: number;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+}
+
+/** Logged visitor question and AI response for the conference assistant */
+export interface ConferenceChatLogDoc {
+  id: string;
+  sessionId?: string;
+  userId?: string;
+  userEmail?: string;
+  question: string;
+  answer: string;
+  model?: string;
+  sources?: string[];
+  wasHelpful?: boolean | null;
+  ipAddress?: string;
+  userAgent?: string;
+  createdAt: Timestamp;
+}
+
 // ============================================================================
 // Collection Names
 // ============================================================================
@@ -2687,6 +2738,10 @@ export const COLLECTIONS = {
   CONFERENCE_ROOMS: "conferenceRooms",
   CONFERENCE_DISCOUNT_CODES: "conferenceDiscountCodes",
   CONFERENCE_CHECK_INS: "conferenceCheckIns",
+  // Conference AI Wiki
+  CONFERENCE_WIKI_ENTRIES: "conferenceWikiEntries",
+  CONFERENCE_WIKI_DOCUMENTS: "conferenceWikiDocuments",
+  CONFERENCE_CHAT_LOGS: "conferenceChatLogs",
 } as const;
 
 // ============================================================================
@@ -2827,6 +2882,11 @@ export const conferenceSponsorsCollection = () => getCollection<ConferenceSponso
 export const conferenceSponsorRequestsCollection = () => getCollection<ConferenceSponsorRequestDoc>(COLLECTIONS.CONFERENCE_SPONSOR_REQUESTS);
 export const conferenceSponsorshipPackagesCollection = () => getCollection<ConferenceSponsorshipPackageDoc>(COLLECTIONS.CONFERENCE_SPONSORSHIP_PACKAGES);
 export const conferenceOrganizersCollection = () => getCollection<ConferenceOrganizerDoc>(COLLECTIONS.CONFERENCE_ORGANIZERS);
+
+// Conference AI Wiki collection references
+export const conferenceWikiEntriesCollection = () => getCollection<ConferenceWikiEntryDoc>(COLLECTIONS.CONFERENCE_WIKI_ENTRIES);
+export const conferenceWikiDocumentsCollection = () => getCollection<ConferenceWikiDocumentDoc>(COLLECTIONS.CONFERENCE_WIKI_DOCUMENTS);
+export const conferenceChatLogsCollection = () => getCollection<ConferenceChatLogDoc>(COLLECTIONS.CONFERENCE_CHAT_LOGS);
 
 // Webinars collection reference
 import type { WebinarDoc } from "./types/webinar";

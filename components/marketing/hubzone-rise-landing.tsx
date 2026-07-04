@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import { ConferenceChatWidget } from "@/components/marketing/conference-chat-widget";
 import {
   ArrowRight,
   MapPin,
@@ -761,6 +762,8 @@ export function HubZoneRiseLandingPage() {
           </div>
         </div>
       </section>
+
+      <ConferenceChatWidget />
     </div>
   );
 }

@@ -294,6 +294,17 @@ const aiToolsItems = [
 // ============================================================================
 const adminToolsItems = [
   {
+    title: "Conference Mgmt",
+    href: "/portal/admin/conference",
+    icon: CalendarDays,
+  },
+  {
+    title: "Conference Wiki",
+    href: "/portal/admin/conference/wiki",
+    icon: BookOpen,
+    badge: "AI",
+  },
+  {
     title: "Team Members",
     href: "/portal/admin/team-members",
     icon: UserCog,
