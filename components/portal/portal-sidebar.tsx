@@ -99,6 +99,16 @@ import { cn } from "@/lib/utils";
 import { GraduationCap, Paintbrush, BookOpen, Network, Briefcase, Ticket, LayoutGrid } from "lucide-react";
 
 // ============================================================================
+// NAV ITEM TYPE
+// ============================================================================
+type NavItem = {
+  title: string;
+  href: string;
+  icon: React.ElementType;
+  badge?: string;
+};
+
+// ============================================================================
 // SECTION DEFINITIONS - Organized by Role Access
 // ============================================================================
 export const SECTIONS = {
@@ -218,23 +228,7 @@ const conferenceManagementItems = [
 // ============================================================================
 // NETWORKING - Affiliate-focused collaboration (Everyone)
 // ============================================================================
-const networkingItems = [
-  {
-    title: "Networking Hub",
-    href: "/portal/networking",
-    icon: Handshake,
-  },
-  {
-    title: "Affiliates",
-    href: "/portal/affiliates",
-    icon: Network,
-  },
-  {
-    title: "Referrals",
-    href: "/portal/referrals",
-    icon: Heart,
-  },
-];
+const networkingItems: NavItem[] = [];
 
 // ============================================================================
 // SALES & CRM - Business development (Team, Admin)
@@ -292,61 +286,7 @@ const resourcesItems = [
 // ============================================================================
 // AI TOOLS - AI-powered features (Everyone)
 // ============================================================================
-const aiToolsItems = [
-  {
-    title: "Ask IntellEDGE",
-    href: "/portal/ask",
-    icon: Sparkles,
-  },
-  {
-    title: "CMMC Analyzer",
-    href: "/portal/cmmc/analyzer",
-    icon: Shield,
-    badge: "NEW",
-  },
-  {
-    title: "AI Workforce",
-    href: "/portal/ai-workforce",
-    icon: Bot,
-    badge: "AI",
-  },
-  {
-    title: "Proposal Creator",
-    href: "/portal/proposals",
-    icon: FileText,
-    badge: "AI",
-  },
-  {
-    title: "LinkedIn Content",
-    href: "/portal/linkedin-content",
-    icon: Linkedin,
-    badge: "AI",
-  },
-  {
-    title: "Apollo Search",
-    href: "/portal/apollo-search",
-    icon: Search,
-    badge: "AI",
-  },
-  {
-    title: "Supplier Search",
-    href: "/portal/supplier-search",
-    icon: Factory,
-    badge: "AI",
-  },
-  {
-    title: "SVP Tools",
-    href: "/portal/svp-tools",
-    icon: Sparkles,
-    badge: "AI",
-  },
-  {
-    title: "Webinar Creator",
-    href: "/portal/admin/webinar-creator",
-    icon: Video,
-    badge: "NEW",
-  },
-];
+const aiToolsItems: NavItem[] = [];
 
 // ============================================================================
 // ADMIN TOOLS - Platform management (Admin only)
@@ -555,14 +495,6 @@ export function PortalSidebar() {
     return () => unsubscribe();
   }, []);
   
-  // Define nav item type
-  type NavItem = {
-    title: string;
-    href: string;
-    icon: React.ElementType;
-    badge?: string;
-  };
-
   // Filter nav items based on role-based visibility
   const filterNavItems = (items: NavItem[]) => {
     return items.filter((item: NavItem) => {
