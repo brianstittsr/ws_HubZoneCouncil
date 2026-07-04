@@ -32,7 +32,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Plus, Loader2, ArrowLeft, Mic2, Star, Wand2 } from "lucide-react";
+import { Plus, Loader2, ArrowLeft, Mic2, Star, Wand2, Upload } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
 import { SpeakerWizardDialog } from "@/components/conference/admin-speaker-wizard";
@@ -48,6 +48,7 @@ type FormData = {
   organization: string;
   bio: string;
   photoUrl: string;
+  photoBase64: string;
   email: string;
   phone: string;
   websiteUrl: string;
@@ -67,6 +68,7 @@ const defaultForm: FormData = {
   organization: "",
   bio: "",
   photoUrl: "",
+  photoBase64: "",
   email: "",
   phone: "",
   websiteUrl: "",
@@ -128,6 +130,7 @@ export default function SpeakersPage() {
       organization: item.organization,
       bio: item.bio,
       photoUrl: item.photoUrl ?? "",
+      photoBase64: item.photoBase64 ?? "",
       email: item.email ?? "",
       phone: item.phone ?? "",
       websiteUrl: item.websiteUrl ?? "",
@@ -139,6 +142,26 @@ export default function SpeakersPage() {
       displayOrder: String(item.displayOrder),
     });
     setDialogOpen(true);
+  }
+
+  function handlePhotoChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    if (file.size > 2 * 1024 * 1024) {
+      toast.error("Photo must be under 2MB");
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const result = e.target?.result as string;
+      setForm((prev) => ({ ...prev, photoBase64: result, photoUrl: "" }));
+    };
+    reader.onerror = () => toast.error("Failed to read photo");
+    reader.readAsDataURL(file);
+  }
+
+  function clearPhoto() {
+    setForm((prev) => ({ ...prev, photoBase64: "", photoUrl: "" }));
   }
 
   async function handleSave() {
@@ -221,8 +244,8 @@ export default function SpeakersPage() {
                 <CardHeader className="pb-2">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-3">
-                    {item.photoUrl ? (
-                      <img src={item.photoUrl} alt={`${item.firstName} ${item.lastName}`} className="h-12 w-12 rounded-full object-cover" />
+                    {item.photoBase64 || item.photoUrl ? (
+                      <img src={item.photoBase64 || item.photoUrl} alt={`${item.firstName} ${item.lastName}`} className="h-12 w-12 rounded-full object-cover" />
                     ) : (
                       <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center text-sm font-medium">
                         {item.firstName.charAt(0)}{item.lastName.charAt(0)}
@@ -313,8 +336,46 @@ export default function SpeakersPage() {
               <Textarea rows={3} value={form.bio} onChange={(e) => setForm({ ...form, bio: e.target.value })} />
             </div>
             <div className="space-y-2">
-              <Label>Photo URL</Label>
-              <Input value={form.photoUrl} onChange={(e) => setForm({ ...form, photoUrl: e.target.value })} placeholder="https://..." />
+              <Label>Speaker Photo</Label>
+              <div className="flex items-center gap-4">
+                {(form.photoBase64 || form.photoUrl) ? (
+                  <img
+                    src={form.photoBase64 || form.photoUrl}
+                    alt="Speaker preview"
+                    className="h-16 w-16 rounded-full object-cover border"
+                  />
+                ) : (
+                  <div className="h-16 w-16 rounded-full bg-muted flex items-center justify-center text-xs text-muted-foreground">
+                    No photo
+                  </div>
+                )}
+                <div className="flex-1 space-y-2">
+                  <Label
+                    htmlFor="photo-upload"
+                    className="flex items-center justify-center gap-2 cursor-pointer border border-input rounded-md px-3 py-2 text-sm hover:bg-accent"
+                  >
+                    <Upload className="h-4 w-4" />
+                    Upload photo
+                    <input
+                      id="photo-upload"
+                      type="file"
+                      accept="image/*"
+                      className="sr-only"
+                      onChange={handlePhotoChange}
+                    />
+                  </Label>
+                  {(form.photoBase64 || form.photoUrl) && (
+                    <Button type="button" variant="ghost" size="sm" onClick={clearPhoto} className="h-auto px-2 py-1 text-xs">
+                      Clear photo
+                    </Button>
+                  )}
+                </div>
+              </div>
+              <p className="text-xs text-muted-foreground">Max 2MB. JPG, PNG, or WebP recommended.</p>
+            </div>
+            <div className="space-y-2">
+              <Label>Photo URL (optional)</Label>
+              <Input value={form.photoUrl} onChange={(e) => setForm({ ...form, photoUrl: e.target.value, photoBase64: "" })} placeholder="https://..." />
             </div>
             <div className="space-y-2">
               <Label>Website URL</Label>

@@ -106,8 +106,8 @@ export default function SpeakerDetailPage() {
       <Card>
         <CardContent className="p-6">
           <div className="flex items-start gap-6">
-            {speaker.photoUrl ? (
-              <img src={speaker.photoUrl} alt={`${speaker.firstName} ${speaker.lastName}`} className="h-24 w-24 rounded-full object-cover" />
+            {speaker.photoBase64 || speaker.photoUrl ? (
+              <img src={speaker.photoBase64 || speaker.photoUrl} alt={`${speaker.firstName} ${speaker.lastName}`} className="h-24 w-24 rounded-full object-cover" />
             ) : (
               <div className="h-24 w-24 rounded-full bg-muted flex items-center justify-center text-2xl font-medium">
                 {initials}

@@ -10,7 +10,7 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
-import { ChevronLeft, ChevronRight, Loader2, Check, User, FileText, Sparkles, Send } from "lucide-react";
+import { ChevronLeft, ChevronRight, Loader2, Check, User, FileText, Sparkles, Send, Upload } from "lucide-react";
 
 const steps = [
   { label: "Profile", icon: User },
@@ -47,6 +47,7 @@ export function SpeakerWizardDialog({ open, onClose, onSaved }: SpeakerWizardDia
     organization: "",
     bio: "",
     photoUrl: "",
+    photoBase64: "",
     email: "",
     phone: "",
     websiteUrl: "",
@@ -59,6 +60,26 @@ export function SpeakerWizardDialog({ open, onClose, onSaved }: SpeakerWizardDia
   });
 
   const progress = ((step + 1) / steps.length) * 100;
+
+  function handlePhotoChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    if (file.size > 2 * 1024 * 1024) {
+      toast.error("Photo must be under 2MB");
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const result = e.target?.result as string;
+      setForm((prev) => ({ ...prev, photoBase64: result, photoUrl: "" }));
+    };
+    reader.onerror = () => toast.error("Failed to read photo");
+    reader.readAsDataURL(file);
+  }
+
+  function clearPhoto() {
+    setForm((prev) => ({ ...prev, photoBase64: "", photoUrl: "" }));
+  }
 
   const isStep0Valid = form.firstName && form.lastName && form.title && form.organization;
   const isStep1Valid = form.bio;
@@ -88,6 +109,7 @@ export function SpeakerWizardDialog({ open, onClose, onSaved }: SpeakerWizardDia
         organization: "",
         bio: "",
         photoUrl: "",
+        photoBase64: "",
         email: "",
         phone: "",
         websiteUrl: "",
@@ -171,8 +193,46 @@ export function SpeakerWizardDialog({ open, onClose, onSaved }: SpeakerWizardDia
                 <Textarea rows={4} value={form.bio} onChange={(e) => setForm({ ...form, bio: e.target.value })} />
               </div>
               <div className="space-y-2">
-                <Label>Photo URL</Label>
-                <Input value={form.photoUrl} onChange={(e) => setForm({ ...form, photoUrl: e.target.value })} placeholder="https://..." />
+                <Label>Speaker Photo</Label>
+                <div className="flex items-center gap-4">
+                  {(form.photoBase64 || form.photoUrl) ? (
+                    <img
+                      src={form.photoBase64 || form.photoUrl}
+                      alt="Speaker preview"
+                      className="h-16 w-16 rounded-full object-cover border"
+                    />
+                  ) : (
+                    <div className="h-16 w-16 rounded-full bg-muted flex items-center justify-center text-xs text-muted-foreground">
+                      No photo
+                    </div>
+                  )}
+                  <div className="flex-1 space-y-2">
+                    <Label
+                      htmlFor="wizard-photo-upload"
+                      className="flex items-center justify-center gap-2 cursor-pointer border border-input rounded-md px-3 py-2 text-sm hover:bg-accent"
+                    >
+                      <Upload className="h-4 w-4" />
+                      Upload photo
+                      <input
+                        id="wizard-photo-upload"
+                        type="file"
+                        accept="image/*"
+                        className="sr-only"
+                        onChange={handlePhotoChange}
+                      />
+                    </Label>
+                    {(form.photoBase64 || form.photoUrl) && (
+                      <Button type="button" variant="ghost" size="sm" onClick={clearPhoto} className="h-auto px-2 py-1 text-xs">
+                        Clear photo
+                      </Button>
+                    )}
+                  </div>
+                </div>
+                <p className="text-xs text-muted-foreground">Max 2MB. JPG, PNG, or WebP recommended.</p>
+              </div>
+              <div className="space-y-2">
+                <Label>Photo URL (optional)</Label>
+                <Input value={form.photoUrl} onChange={(e) => setForm({ ...form, photoUrl: e.target.value, photoBase64: "" })} placeholder="https://..." />
               </div>
               <div className="space-y-2">
                 <Label>Website URL</Label>

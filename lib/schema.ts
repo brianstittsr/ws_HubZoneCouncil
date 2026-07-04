@@ -2198,6 +2198,7 @@ export interface ConferenceSpeakerDoc {
   organization: string;
   bio: string;
   photoUrl?: string;
+  photoBase64?: string;
   email?: string;
   phone?: string;
   websiteUrl?: string;
