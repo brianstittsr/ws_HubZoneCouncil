@@ -19,6 +19,7 @@ import {
   MapPin,
   CreditCard,
   Mail,
+  BookOpen,
 } from "lucide-react";
 
 const modules = [
@@ -29,6 +30,14 @@ const modules = [
     icon: Info,
     color: "bg-blue-500/10 text-blue-600",
     badge: "Core",
+  },
+  {
+    title: "Conference Wiki",
+    description: "Manage the AI knowledge base, documents, and chat logs.",
+    href: "/portal/admin/conference/wiki",
+    icon: BookOpen,
+    color: "bg-violet-500/10 text-violet-600",
+    badge: "AI",
   },
   {
     title: "Collaborators",

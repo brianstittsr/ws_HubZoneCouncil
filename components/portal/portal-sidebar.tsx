@@ -82,6 +82,10 @@ import {
   Database,
   Video,
   Flame,
+  Mic2,
+  ClipboardList,
+  Mail,
+  MapPin,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -114,9 +118,12 @@ export const SECTIONS = {
   // AI Tools (Everyone)
   aiTools: { label: "AI Tools", roles: ["admin", "team", "affiliate", "consultant"] },
   
+  // Conference Management (Admin + Team leads)
+  conferenceManagement: { label: "Conference Management", roles: ["admin", "superadmin", "team"] },
+
   // Admin Only
-  adminTools: { label: "Admin Tools", roles: ["admin"] },
-  systemSettings: { label: "System Settings", roles: ["admin"] },
+  adminTools: { label: "Admin Tools", roles: ["admin", "superadmin"] },
+  systemSettings: { label: "System Settings", roles: ["admin", "superadmin"] },
 } as const;
 
 // ============================================================================
@@ -149,10 +156,62 @@ const myWorkItems = [
     href: "/portal/rocks",
     icon: CheckSquare,
   },
+];
+
+// ============================================================================
+// CONFERENCE MANAGEMENT - 2026 National HUBZone Conference
+// ============================================================================
+const conferenceManagementItems = [
   {
-    title: "Events",
-    href: "/portal/admin/events",
+    title: "Conference Hub",
+    href: "/portal/admin/conference",
+    icon: CalendarDays,
+  },
+  {
+    title: "Speakers",
+    href: "/portal/admin/conference/speakers",
+    icon: Mic2,
+  },
+  {
+    title: "Event Schedule",
+    href: "/portal/admin/conference/sessions",
+    icon: Calendar,
+  },
+  {
+    title: "Registration",
+    href: "/portal/admin/conference/registrations",
+    icon: ClipboardList,
+  },
+  {
+    title: "Tickets",
+    href: "/portal/admin/conference/tickets",
     icon: Ticket,
+  },
+  {
+    title: "Sponsors",
+    href: "/portal/admin/conference/sponsors",
+    icon: Building2,
+  },
+  {
+    title: "Sponsor Requests",
+    href: "/portal/admin/conference/sponsor-requests",
+    icon: Mail,
+  },
+  {
+    title: "Venue & Rooms",
+    href: "/portal/admin/conference/venue",
+    icon: MapPin,
+  },
+  {
+    title: "Payments",
+    href: "/portal/admin/conference/payments",
+    icon: CreditCard,
+  },
+  {
+    title: "Conference Wiki",
+    href: "/portal/admin/conference/wiki",
+    icon: BookOpen,
+    badge: "AI",
   },
 ];
 
@@ -294,17 +353,6 @@ const aiToolsItems = [
 // ============================================================================
 const adminToolsItems = [
   {
-    title: "Conference Mgmt",
-    href: "/portal/admin/conference",
-    icon: CalendarDays,
-  },
-  {
-    title: "Conference Wiki",
-    href: "/portal/admin/conference/wiki",
-    icon: BookOpen,
-    badge: "AI",
-  },
-  {
     title: "Team Members",
     href: "/portal/admin/team-members",
     icon: UserCog,
@@ -437,6 +485,7 @@ const AVAILABLE_ROLES = [
 export const ALL_NAV_ITEMS = [
   ...dashboardItems.map(item => ({ ...item, section: "Dashboard" })),
   ...myWorkItems.map(item => ({ ...item, section: "My Work" })),
+  ...conferenceManagementItems.map(item => ({ ...item, section: "Conference Management" })),
   ...networkingItems.map(item => ({ ...item, section: "Networking" })),
   ...salesCrmItems.map(item => ({ ...item, section: "Sales & CRM" })),
   ...resourcesItems.map(item => ({ ...item, section: "Resources" })),
@@ -541,6 +590,7 @@ export function PortalSidebar() {
   const [openSections, setOpenSections] = useState({
     dashboard: true,
     myWork: true,
+    conferenceManagement: true,
     networking: true,
     salesCrm: true,
     resources: true,
@@ -572,29 +622,11 @@ export function PortalSidebar() {
       </SidebarHeader>
 
       <SidebarContent>
-        {/* ── CONFERENCE MANAGEMENT – Pinned Feature ── */}
-        {isAdmin && (
-          <div className="px-3 pt-3 pb-1">
-            <Link
-              href="/portal/admin/conference"
-              className={cn(
-                "flex items-center gap-3 w-full rounded-lg px-3 py-2.5 font-semibold text-sm transition-all",
-                pathname.startsWith("/portal/admin/conference")
-                  ? "bg-primary text-primary-foreground shadow-sm"
-                  : "bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20"
-              )}
-            >
-              <CalendarDays className="h-4 w-4 shrink-0" />
-              <span className="flex-1">Conference Mgmt</span>
-              <Badge className="text-[10px] h-4 px-1.5 bg-primary/20 text-primary border-0 font-semibold">NEW</Badge>
-            </Link>
-          </div>
-        )}
-
         {/* Reusable Section Renderer - Organized by Role */}
         {([
           { key: "dashboard" as const, label: "Dashboard", items: dashboardItems, roles: ["admin", "team", "team_member", "affiliate", "consultant", "superadmin"] },
           { key: "myWork" as const, label: "My Work", items: myWorkItems, roles: ["admin", "team", "team_member", "affiliate", "consultant", "superadmin"] },
+          { key: "conferenceManagement" as const, label: "Conference Management", items: conferenceManagementItems, roles: ["admin", "team", "team_member", "superadmin"] },
           { key: "networking" as const, label: "Networking", items: networkingItems, roles: ["admin", "team", "team_member", "affiliate", "consultant", "superadmin"] },
           { key: "salesCrm" as const, label: "Sales & CRM", items: salesCrmItems, roles: ["admin", "team", "team_member", "superadmin"] },
           { key: "resources" as const, label: "Resources", items: resourcesItems, roles: ["admin", "team", "team_member", "affiliate", "consultant", "superadmin"] },
