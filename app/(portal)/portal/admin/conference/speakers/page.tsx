@@ -32,7 +32,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Plus, Pencil, Trash2, Loader2, ArrowLeft, Mic2, Star, Wand2 } from "lucide-react";
+import { Plus, Loader2, ArrowLeft, Mic2, Star, Wand2 } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
 import { SpeakerWizardDialog } from "@/components/conference/admin-speaker-wizard";
@@ -216,8 +216,9 @@ export default function SpeakersPage() {
       ) : (
         <div className="grid gap-3 md:grid-cols-2">
           {items.map((item) => (
-            <Card key={item.id}>
-              <CardHeader className="pb-2">
+            <Link key={item.id} href={`/portal/admin/conference/speakers/${item.id}`}>
+              <Card className="h-full hover:border-primary/50 transition-colors cursor-pointer">
+                <CardHeader className="pb-2">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-3">
                     {item.photoUrl ? (
@@ -243,12 +244,12 @@ export default function SpeakersPage() {
               </CardHeader>
               <CardContent className="pt-0">
                 {item.bio && <p className="text-xs text-muted-foreground line-clamp-2">{item.bio}</p>}
-                <div className="flex gap-2 mt-2">
-                  <Button variant="outline" size="sm" onClick={() => openEdit(item)}><Pencil className="h-3 w-3 mr-1" />Edit</Button>
-                  <Button variant="outline" size="sm" className="text-destructive hover:text-destructive" onClick={() => setDeleteId(item.id)}><Trash2 className="h-3 w-3 mr-1" />Remove</Button>
+                <div className="flex items-center gap-2 mt-2 text-xs text-muted-foreground">
+                  <span>Click to view details</span>
                 </div>
               </CardContent>
             </Card>
+          </Link>
           ))}
         </div>
       )}

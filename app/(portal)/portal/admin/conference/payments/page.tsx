@@ -104,8 +104,11 @@ export default function PaymentsAdminPage() {
                       <span className="font-medium">Ticket:</span> {reg.ticketName}
                     </p>
                   </div>
-                  <div className="text-right">
+                  <div className="text-right flex flex-col items-end gap-2">
                     <p className="font-bold text-[#c9a227]">${reg.amountPaid.toFixed(2)}</p>
+                    <Button asChild variant="outline" size="sm">
+                      <Link href={`/portal/admin/conference/registrations/${reg.id}`}>View</Link>
+                    </Button>
                     {reg.stripePaymentIntentId && (
                       <p className="text-xs text-muted-foreground truncate max-w-[200px]">
                         {reg.stripePaymentIntentId}

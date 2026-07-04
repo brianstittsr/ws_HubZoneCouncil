@@ -32,7 +32,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Plus, Pencil, Trash2, Loader2, ArrowLeft, Building2, Star } from "lucide-react";
+import { Plus, Loader2, ArrowLeft, Building2, Star } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
 import type { ConferenceSponsorDoc } from "@/lib/schema";
@@ -232,10 +232,11 @@ export default function SponsorsPage() {
               </h2>
               <div className="grid gap-3 md:grid-cols-2">
                 {grouped[tier].map((item) => (
-                  <Card key={item.id} className={tierStyles[item.sponsorTier].border}>
-                    <CardHeader className="pb-2">
-                      <div className="flex items-start justify-between">
-                        <div className="flex items-center gap-3">
+                  <Link key={item.id} href={`/portal/admin/conference/sponsors/${item.id}`}>
+                    <Card className={`h-full hover:border-primary/50 transition-colors cursor-pointer ${tierStyles[item.sponsorTier].border}`}>
+                      <CardHeader className="pb-2">
+                        <div className="flex items-start justify-between">
+                          <div className="flex items-center gap-3">
                           {item.logoUrl ? (
                             <img src={item.logoUrl} alt={item.name} className="h-10 w-10 object-contain rounded" />
                           ) : (
@@ -254,9 +255,8 @@ export default function SponsorsPage() {
                             )}
                           </div>
                         </div>
-                        <div className="flex gap-1">
-                          <Button variant="outline" size="icon" className="h-7 w-7" onClick={() => openEdit(item)}><Pencil className="h-3 w-3" /></Button>
-                          <Button variant="outline" size="icon" className="h-7 w-7 text-destructive hover:text-destructive" onClick={() => setDeleteId(item.id)}><Trash2 className="h-3 w-3" /></Button>
+                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                          <span>View details</span>
                         </div>
                       </div>
                     </CardHeader>
@@ -266,6 +266,7 @@ export default function SponsorsPage() {
                       </CardContent>
                     )}
                   </Card>
+                </Link>
                 ))}
               </div>
             </div>

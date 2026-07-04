@@ -164,7 +164,10 @@ export default function RegistrationsAdminPage() {
                       <span className="font-medium">Paid:</span> ${reg.amountPaid.toFixed(2)}
                     </p>
                   </div>
-                  <div>
+                  <div className="flex items-center gap-2">
+                    <Button asChild variant="outline" size="sm">
+                      <Link href={`/portal/admin/conference/registrations/${reg.id}`}>View</Link>
+                    </Button>
                     {reg.status === "confirmed" && (
                       <Button size="sm" onClick={() => checkIn(reg.id)}>
                         Check In

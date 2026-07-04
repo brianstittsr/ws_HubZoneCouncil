@@ -32,7 +32,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Plus, Pencil, Trash2, Loader2, ArrowLeft, CalendarDays, Clock, Video, ExternalLink } from "lucide-react";
+import { Plus, Loader2, ArrowLeft, CalendarDays, Clock, Video, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
 import type { ConferenceSessionDoc } from "@/lib/schema";
@@ -265,10 +265,11 @@ export default function SessionsPage() {
               <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">Day {day}</h2>
               <div className="space-y-2">
                 {grouped[Number(day)].map((item) => (
-                  <Card key={item.id}>
-                    <CardContent className="py-3">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
+                  <Link key={item.id} href={`/portal/admin/conference/sessions/${item.id}`}>
+                    <Card className="hover:border-primary/50 transition-colors cursor-pointer">
+                      <CardContent className="py-3">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
                           <div className="text-xs text-muted-foreground w-28 shrink-0 flex items-center gap-1">
                             <Clock className="h-3 w-3" />
                             {toTimeStr(item.startTime).split("T")[1] ?? ""} – {toTimeStr(item.endTime).split("T")[1] ?? ""}
@@ -290,13 +291,13 @@ export default function SessionsPage() {
                             )}
                           </div>
                         </div>
-                        <div className="flex gap-2 shrink-0">
-                          <Button variant="outline" size="icon" onClick={() => openEdit(item)}><Pencil className="h-3 w-3" /></Button>
-                          <Button variant="outline" size="icon" className="text-destructive hover:text-destructive" onClick={() => setDeleteId(item.id)}><Trash2 className="h-3 w-3" /></Button>
+                        <div className="flex items-center gap-2 shrink-0 text-xs text-muted-foreground">
+                          <span>View details</span>
                         </div>
                       </div>
                     </CardContent>
                   </Card>
+                </Link>
                 ))}
               </div>
             </div>

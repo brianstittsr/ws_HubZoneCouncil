@@ -269,6 +269,9 @@ export default function VenueAdminPage() {
                         </p>
                       </div>
                       <div className="flex items-center gap-2">
+                        <Button asChild variant="outline" size="sm">
+                          <Link href={`/portal/admin/conference/venue/${venue.id}`}>View</Link>
+                        </Button>
                         <Button size="icon" variant="ghost" onClick={() => openVenueDialog(venue)}>
                           <Pencil className="h-4 w-4" />
                         </Button>
@@ -304,6 +307,9 @@ export default function VenueAdminPage() {
                         </p>
                       </div>
                       <div className="flex items-center gap-2">
+                        <Button asChild variant="outline" size="sm">
+                          <Link href={`/portal/admin/conference/venue/${room.venueId}/rooms/${room.id}`}>View</Link>
+                        </Button>
                         <Button size="icon" variant="ghost" onClick={() => openRoomDialog(room)}>
                           <Pencil className="h-4 w-4" />
                         </Button>

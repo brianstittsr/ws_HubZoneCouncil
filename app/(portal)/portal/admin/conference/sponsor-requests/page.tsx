@@ -129,6 +129,9 @@ export default function SponsorRequestsPage() {
                         <SelectItem value="declined">Declined</SelectItem>
                       </SelectContent>
                     </Select>
+                    <Button asChild variant="outline" size="sm">
+                      <Link href={`/portal/admin/conference/sponsor-requests/${item.id}`}>View</Link>
+                    </Button>
                     <Button variant="outline" size="icon" className="text-destructive hover:text-destructive" onClick={() => setDeleteId(item.id)}>
                       <Trash2 className="h-4 w-4" />
                     </Button>

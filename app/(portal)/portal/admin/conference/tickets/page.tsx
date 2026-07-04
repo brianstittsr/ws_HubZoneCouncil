@@ -32,7 +32,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Plus, Pencil, Trash2, Loader2, ArrowLeft, Ticket } from "lucide-react";
+import { Plus, Loader2, ArrowLeft, Ticket } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
 import type { ConferenceTicketDoc } from "@/lib/schema";
@@ -228,9 +228,10 @@ export default function TicketsPage() {
       ) : (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {items.map((item) => (
-            <Card key={item.id} className={!item.isActive ? "opacity-60" : ""}>
-              <CardHeader className="pb-2">
-                <div className="flex items-start justify-between">
+            <Link key={item.id} href={`/portal/admin/conference/tickets/${item.id}`}>
+              <Card className={`h-full hover:border-primary/50 transition-colors cursor-pointer ${!item.isActive ? "opacity-60" : ""}`}>
+                <CardHeader className="pb-2">
+                  <div className="flex items-start justify-between">
                   <div>
                     <div className="flex items-center gap-2">
                       <CardTitle className="text-base">{item.name}</CardTitle>
@@ -256,12 +257,12 @@ export default function TicketsPage() {
                     {item.perks.length > 3 && <li className="text-xs">+{item.perks.length - 3} more</li>}
                   </ul>
                 )}
-                <div className="flex gap-2 pt-1">
-                  <Button variant="outline" size="sm" onClick={() => openEdit(item)}><Pencil className="h-3 w-3 mr-1" />Edit</Button>
-                  <Button variant="outline" size="sm" className="text-destructive hover:text-destructive" onClick={() => setDeleteId(item.id)}><Trash2 className="h-3 w-3 mr-1" />Delete</Button>
+                <div className="flex items-center gap-2 pt-1 text-xs text-muted-foreground">
+                  <span>Click to view details</span>
                 </div>
               </CardContent>
             </Card>
+          </Link>
           ))}
         </div>
       )}
