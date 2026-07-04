@@ -1,8 +1,20 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { Skeleton } from "@/components/ui/skeleton";
+import { db } from "@/lib/firebase";
+import {
+  COLLECTIONS,
+  type ConferenceRegistrationDoc,
+  type ConferenceSpeakerApplicationDoc,
+  type ConferenceSponsorRequestDoc,
+} from "@/lib/schema";
+import { collection, getDocs, Timestamp } from "firebase/firestore";
 import {
   Info,
   Users,
@@ -20,6 +32,12 @@ import {
   CreditCard,
   Mail,
   BookOpen,
+  TrendingUp,
+  AlertCircle,
+  CheckCircle2,
+  Clock,
+  DollarSign,
+  MessageSquare,
 } from "lucide-react";
 
 const modules = [
