@@ -2,14 +2,14 @@ import { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "HubZone Council | Works for America",
-    short_name: "HubZone Council",
+    name: "HUBZone on the Rise | 2026 National HUBZone Conference",
+    short_name: "HUBZone on the Rise",
     description:
-      "Supporting HUBZone businesses and federal contractors through education, networking, and advocacy to create economic opportunity.",
+      "Official conference platform for the 2026 National HUBZone Conference, July 21-22, 2026 in Chantilly, Virginia. Register, explore speakers, and connect.",
     start_url: "/",
     display: "standalone",
-    background_color: "#000000",
-    theme_color: "#37ca37",
+    background_color: "#1a2b4a",
+    theme_color: "#c9a227",
     orientation: "portrait-primary",
     icons: [
       {

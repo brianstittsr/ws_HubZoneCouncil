@@ -24,7 +24,7 @@ export default function SponsorsPage() {
       try {
         const q = query(
           collection(db, COLLECTIONS.CONFERENCE_SPONSORS),
-          where("isActive", "==", true)
+          where("isPublic", "==", true)
         );
         const snapshot = await getDocs(q);
         const data = snapshot.docs.map((doc) => ({
@@ -41,7 +41,17 @@ export default function SponsorsPage() {
     fetchSponsors();
   }, []);
 
-  const tiers = ["Platinum", "Gold", "Silver", "Bronze"];
+  const tiers: ConferenceSponsorDoc["sponsorTier"][] = ["platinum", "gold", "silver", "bronze"];
+  const tierLabels: Record<string, string> = {
+    platinum: "Platinum",
+    gold: "Gold",
+    silver: "Silver",
+    bronze: "Bronze",
+    community: "Community",
+    media: "Media",
+    "in-kind": "In-Kind",
+    custom: "Custom",
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -83,14 +93,14 @@ export default function SponsorsPage() {
             <div className="text-center py-12">Loading sponsors...</div>
           ) : sponsors.length > 0 ? (
             tiers.map((tier) => {
-              const tierSponsors = sponsors.filter((s) => s.level === tier);
+              const tierSponsors = sponsors.filter((s) => s.sponsorTier === tier);
               if (tierSponsors.length === 0) return null;
 
               return (
                 <div key={tier} className="mb-16 last:mb-0">
                   <div className="flex items-center gap-3 mb-8">
                     <Award className="h-6 w-6 text-[#c9a227]" />
-                    <h2 className="text-2xl font-bold text-[#1e3a5f]">{tier} Sponsors</h2>
+                    <h2 className="text-2xl font-bold text-[#1e3a5f]">{tierLabels[tier]} Sponsors</h2>
                   </div>
                   <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {tierSponsors.map((sponsor) => (
@@ -111,9 +121,9 @@ export default function SponsorsPage() {
                             )}
                           </div>
                           <h3 className="font-semibold text-center">{sponsor.name}</h3>
-                          {sponsor.website && (
+                          {sponsor.websiteUrl && (
                             <a
-                              href={sponsor.website}
+                              href={sponsor.websiteUrl}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="text-[#c9a227] hover:underline text-sm block text-center mt-2"

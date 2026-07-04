@@ -15,6 +15,9 @@ import {
   UserCog,
   Video,
   ArrowRight,
+  ClipboardList,
+  MapPin,
+  CreditCard,
 } from "lucide-react";
 
 const modules = [
@@ -57,6 +60,38 @@ const modules = [
     icon: Ticket,
     color: "bg-pink-500/10 text-pink-600",
     badge: null,
+  },
+  {
+    title: "Registrations",
+    description: "View attendee registrations, payment status, and check-ins.",
+    href: "/portal/admin/conference/registrations",
+    icon: ClipboardList,
+    color: "bg-emerald-500/10 text-emerald-600",
+    badge: "NEW",
+  },
+  {
+    title: "Speaker Applications",
+    description: "Review and approve public speaker applications.",
+    href: "/portal/admin/conference/speaker-applications",
+    icon: Mic2,
+    color: "bg-lime-500/10 text-lime-600",
+    badge: "NEW",
+  },
+  {
+    title: "Venue & Rooms",
+    description: "Manage conference venues, hotels, and session rooms.",
+    href: "/portal/admin/conference/venue",
+    icon: MapPin,
+    color: "bg-violet-500/10 text-violet-600",
+    badge: "NEW",
+  },
+  {
+    title: "Payments",
+    description: "Track Stripe payments, revenue, and refunds.",
+    href: "/portal/admin/conference/payments",
+    icon: CreditCard,
+    color: "bg-amber-500/10 text-amber-600",
+    badge: "NEW",
   },
   {
     title: "Event News",
@@ -105,9 +140,9 @@ export default function ConferenceAdminHubPage() {
     <div className="p-6 space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Conference Management</h1>
+          <h1 className="text-2xl font-bold tracking-tight">HUBZone on the Rise — Conference Management</h1>
           <p className="text-muted-foreground mt-1">
-            Manage all aspects of your conference from a single hub.
+            Manage registrations, speakers, sessions, venue, payments, and more for the 2026 National HUBZone Conference.
           </p>
         </div>
       </div>

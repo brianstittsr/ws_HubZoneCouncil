@@ -4,6 +4,14 @@ import { Linkedin, Twitter, Youtube, Mail, Phone, MapPin } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
 const footerLinks = {
+  conference: [
+    { title: "Schedule", href: "/conference/schedule" },
+    { title: "Speakers", href: "/conference/speakers" },
+    { title: "Tickets", href: "/conference/tickets" },
+    { title: "Venue", href: "/conference/venue" },
+    { title: "Sponsorship", href: "/conference/sponsorship" },
+    { title: "Become a Speaker", href: "/conference/speakers/apply" },
+  ],
   legal: [
     { title: "Privacy Policy", href: "/privacy" },
     { title: "Terms of Service", href: "/terms" },
@@ -13,7 +21,7 @@ const footerLinks = {
 
 export function Footer() {
   return (
-    <footer className="bg-black text-white">
+    <footer className="bg-[#0a1628] text-white">
       <div className="container py-12 md:py-16">
         <div className="flex flex-col md:flex-row justify-between items-start gap-8">
           {/* Brand Column */}
@@ -21,19 +29,19 @@ export function Footer() {
             <Link href="/" className="flex items-center gap-2">
               <Image
                 src="/logo.jpg"
-                alt="HubZone Council Logo"
+                alt="HUBZone on the Rise Logo"
                 width={40}
                 height={40}
                 className="h-10 w-auto"
               />
               <div className="flex flex-col">
-                <span className="text-lg font-bold leading-none">HubZone Council</span>
-                <span className="text-xs text-gray-400">Works for America</span>
+                <span className="text-lg font-bold leading-none">HUBZone on the Rise</span>
+                <span className="text-xs text-gray-400">2026 National Conference</span>
               </div>
             </Link>
             <p className="text-sm text-gray-400">
-              Supporting HUBZone businesses and federal contractors through education, 
-              networking, and advocacy to create economic opportunity.
+              The 2026 National HUBZone Conference brings together government, industry, 
+              academia, and small businesses to build America&apos;s next 250 years.
             </p>
             <div className="flex gap-4">
               <Link href="https://linkedin.com" className="text-gray-400 hover:text-primary transition-colors">
@@ -48,9 +56,26 @@ export function Footer() {
             </div>
           </div>
 
+          {/* Conference Links */}
+          <div className="space-y-4">
+            <h3 className="font-semibold text-[#c9a227]">Conference</h3>
+            <ul className="space-y-2">
+              {footerLinks.conference.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-gray-400 hover:text-white transition-colors"
+                  >
+                    {link.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
           {/* Contact */}
           <div className="space-y-4">
-            <h3 className="font-semibold text-accent">Contact Us</h3>
+            <h3 className="font-semibold text-[#c9a227]">Contact Us</h3>
             <ul className="space-y-3">
               <li>
                 <Link href="tel:+1-240-442-1787" className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors">
@@ -77,7 +102,7 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-gray-400">
-            © {new Date().getFullYear()} HUBZone Contractors National Council. All rights reserved.
+            © {new Date().getFullYear()} HUBZone Contractors National Council. HUBZone on the Rise. All rights reserved.
           </p>
           <div className="flex gap-6">
             {footerLinks.legal.map((link) => (

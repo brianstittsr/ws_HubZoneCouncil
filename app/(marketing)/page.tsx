@@ -1,5 +1,5 @@
-import { ConferenceLandingPage } from "@/components/marketing/conference-landing-page";
+import { HubZoneRiseLandingPage } from "@/components/marketing/hubzone-rise-landing";
 
 export default function HomePage() {
-  return <ConferenceLandingPage />;
+  return <HubZoneRiseLandingPage />;
 }

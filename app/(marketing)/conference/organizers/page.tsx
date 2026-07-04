@@ -135,7 +135,7 @@ export default function OrganizersPage() {
                       {organizer.photoUrl ? (
                         <Image
                           src={organizer.photoUrl}
-                          alt={organizer.name}
+                          alt={organizer.primaryContactName || organizer.organizationName}
                           fill
                           className="object-cover"
                         />
@@ -145,9 +145,9 @@ export default function OrganizersPage() {
                         </div>
                       )}
                     </div>
-                    <h3 className="font-semibold text-lg">{organizer.name}</h3>
-                    <p className="text-[#c9a227] text-sm mb-2">{organizer.role}</p>
-                    <p className="text-muted-foreground text-sm">{organizer.department}</p>
+                    <h3 className="font-semibold text-lg">{organizer.primaryContactName || organizer.organizationName}</h3>
+                    <p className="text-[#c9a227] text-sm mb-2">{organizer.primaryContactTitle}</p>
+                    <p className="text-muted-foreground text-sm">{organizer.organizationName}</p>
                   </CardContent>
                 </Card>
               ))}

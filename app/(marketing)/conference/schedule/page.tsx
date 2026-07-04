@@ -2,16 +2,39 @@
 
 import { useState, useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Clock, MapPin, Users, Calendar } from "lucide-react";
 import { db } from "@/lib/firebase";
-import { collection, getDocs, query, where, orderBy } from "firebase/firestore";
+import { collection, getDocs, query, where, orderBy, Timestamp } from "firebase/firestore";
 import { COLLECTIONS } from "@/lib/schema";
-import type { ConferenceSessionDoc } from "@/lib/schema";
+
+const CONFERENCE_ID = "hubzone-rise-2026";
+
+type SessionDisplay = {
+  id: string;
+  conferenceId: string;
+  title: string;
+  description?: string;
+  sessionType: string;
+  day: number;
+  startTime: Timestamp;
+  endTime: Timestamp;
+  room?: string;
+  track?: string;
+  speakerNames?: string[];
+  isPublic: boolean;
+  displayOrder: number;
+};
+
+function formatTime(ts: Timestamp | undefined): string {
+  if (!ts || typeof ts.toDate !== "function") return "";
+  const date = ts.toDate();
+  return date.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true });
+}
 
 export default function SchedulePage() {
-  const [sessions, setSessions] = useState<ConferenceSessionDoc[]>([]);
+  const [sessions, setSessions] = useState<SessionDisplay[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -23,14 +46,15 @@ export default function SchedulePage() {
       try {
         const q = query(
           collection(db, COLLECTIONS.CONFERENCE_SESSIONS),
-          where("isPublished", "==", true),
+          where("conferenceId", "==", CONFERENCE_ID),
+          where("isPublic", "==", true),
           orderBy("startTime")
         );
         const snapshot = await getDocs(q);
         const data = snapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
-        })) as ConferenceSessionDoc[];
+        })) as SessionDisplay[];
         setSessions(data);
       } catch (error) {
         console.error("Error fetching sessions:", error);
@@ -41,8 +65,8 @@ export default function SchedulePage() {
     fetchSessions();
   }, []);
 
-  const day1Sessions = sessions.filter((s) => s.day === "day1");
-  const day2Sessions = sessions.filter((s) => s.day === "day2");
+  const day1Sessions = sessions.filter((s) => s.day === 1);
+  const day2Sessions = sessions.filter((s) => s.day === 2);
 
   return (
     <div className="min-h-screen bg-background">
@@ -105,26 +129,26 @@ export default function SchedulePage() {
   );
 }
 
-function SessionCard({ session }: { session: ConferenceSessionDoc }) {
+function SessionCard({ session }: { session: SessionDisplay }) {
   return (
     <Card className="border-l-4 border-l-[#c9a227]">
       <CardContent className="p-6">
         <div className="flex flex-col md:flex-row md:items-start gap-4">
           <div className="flex items-center gap-2 text-muted-foreground min-w-[120px]">
             <Clock className="h-4 w-4" />
-            <span className="text-sm">{session.startTime} - {session.endTime}</span>
+            <span className="text-sm">{formatTime(session.startTime)} - {formatTime(session.endTime)}</span>
           </div>
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-2">
-              <Badge variant="outline">{session.type}</Badge>
-              <Badge variant="secondary">{session.track}</Badge>
+              <Badge variant="outline">{session.sessionType}</Badge>
+              {session.track && <Badge variant="secondary">{session.track}</Badge>}
             </div>
             <h3 className="font-semibold text-lg mb-2">{session.title}</h3>
             <p className="text-muted-foreground text-sm mb-3">{session.description}</p>
             <div className="flex items-center gap-4 text-sm text-muted-foreground">
               <span className="flex items-center gap-1">
                 <Users className="h-4 w-4" />
-                {session.speakers?.join(", ") || "TBA"}
+                {session.speakerNames?.join(", ") || "TBA"}
               </span>
               <span className="flex items-center gap-1">
                 <MapPin className="h-4 w-4" />

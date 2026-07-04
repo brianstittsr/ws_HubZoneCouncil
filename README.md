@@ -115,9 +115,6 @@ OPENAI_API_KEY="sk-..."
 GHL_API_KEY="..."
 FIREFLIES_API_KEY="..."
 MATTERMOST_URL="..."
-
-# Accessibility (UserWay)
-NEXT_PUBLIC_USERWAY_ACCOUNT_ID="your-userway-account-id"
 ```
 
 ## Development

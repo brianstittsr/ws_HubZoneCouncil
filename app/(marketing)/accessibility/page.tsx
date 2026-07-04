@@ -123,9 +123,8 @@ export default function AccessibilityPage() {
               compliance where feasible.
             </p>
             <p className="text-muted-foreground">
-              We use the UserWay accessibility widget to provide additional accessibility 
-              features and allow users to customize their browsing experience according to 
-              their needs.
+              We build accessibility features directly into the site so all users can
+              customize their browsing experience without needing a third-party widget.
             </p>
           </div>
         </div>
@@ -176,46 +175,6 @@ export default function AccessibilityPage() {
                 </CardContent>
               </Card>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* UserWay Widget */}
-      <section className="py-16 md:py-20 bg-muted/30">
-        <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-2xl font-bold mb-6">Accessibility Widget</h2>
-            <p className="text-muted-foreground mb-6">
-              We use UserWay to provide an accessibility widget that allows you to customize 
-              your browsing experience. Look for the accessibility icon (usually in the corner 
-              of the screen) to access features like:
-            </p>
-            <div className="grid sm:grid-cols-2 gap-4 text-left max-w-xl mx-auto">
-              <div className="flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 text-primary" />
-                <span>Increase text size</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 text-primary" />
-                <span>Change contrast</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 text-primary" />
-                <span>Highlight links</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 text-primary" />
-                <span>Pause animations</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 text-primary" />
-                <span>Reading guide</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 text-primary" />
-                <span>Text-to-speech</span>
-              </div>
-            </div>
           </div>
         </div>
       </section>

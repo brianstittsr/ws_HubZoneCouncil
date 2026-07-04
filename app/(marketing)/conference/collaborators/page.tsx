@@ -87,13 +87,13 @@ export default function CollaboratorsPage() {
                       )}
                       <div>
                         <h3 className="font-semibold text-lg">{collab.name}</h3>
-                        <p className="text-sm text-muted-foreground">{collab.type}</p>
+                        <p className="text-sm text-muted-foreground">{collab.role} • {collab.organization}</p>
                       </div>
                     </div>
-                    <p className="text-muted-foreground text-sm mb-4">{collab.description}</p>
-                    {collab.website && (
+                    <p className="text-muted-foreground text-sm mb-4">{collab.bio}</p>
+                    {collab.websiteUrl && (
                       <a
-                        href={collab.website}
+                        href={collab.websiteUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-[#c9a227] hover:underline text-sm"

@@ -2181,6 +2181,7 @@ export interface ConferenceCollaboratorDoc {
   websiteUrl?: string;
   linkedinUrl?: string;
   photoUrl?: string;
+  logoUrl?: string;
   isPublic: boolean;
   displayOrder: number;
   createdAt: Timestamp;
@@ -2345,6 +2346,7 @@ export interface ConferenceOrganizerDoc {
   conferenceId: string;
   organizationName: string;
   logoUrl?: string;
+  photoUrl?: string;
   websiteUrl?: string;
   description?: string;
   email?: string;
@@ -2392,6 +2394,137 @@ export interface ConferenceVirtualAccessDoc {
   notes?: string;
   createdAt: Timestamp;
   updatedAt: Timestamp;
+}
+
+/** Conference attendee registration */
+export interface ConferenceRegistrationDoc {
+  id: string;
+  conferenceId: string;
+  ticketId: string;
+  ticketName: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone?: string;
+  organization?: string;
+  title?: string;
+  dietaryRestrictions?: string;
+  accessibilityNeeds?: string;
+  isMember?: boolean;
+  couponCode?: string;
+  discountAmount?: number;
+  amountPaid: number;
+  currency: string;
+  status: "pending" | "confirmed" | "cancelled" | "checked-in";
+  stripePaymentIntentId?: string;
+  stripeCheckoutSessionId?: string;
+  stripeCustomerId?: string;
+  checkedInAt?: Timestamp;
+  qrCodeUrl?: string;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+}
+
+/** Public speaker application awaiting admin review */
+export interface ConferenceSpeakerApplicationDoc {
+  id: string;
+  conferenceId: string;
+  firstName: string;
+  lastName: string;
+  title: string;
+  organization: string;
+  bio: string;
+  photoUrl?: string;
+  email: string;
+  phone?: string;
+  linkedinUrl?: string;
+  websiteUrl?: string;
+  proposedSessionTitle: string;
+  proposedSessionDescription: string;
+  preferredTrack?: string;
+  sessionFormat?: "keynote" | "panel" | "workshop" | "breakout" | "lightning";
+  coSpeakerNames?: string;
+  travelNeeds?: string;
+  avNeeds?: string;
+  availability?: string;
+  status: "pending" | "approved" | "rejected" | "waitlisted";
+  adminNotes?: string;
+  speakerId?: string;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+}
+
+/** Conference venue / hotel / location */
+export interface ConferenceVenueDoc {
+  id: string;
+  conferenceId: string;
+  name: string;
+  description?: string;
+  address?: string;
+  city?: string;
+  state?: string;
+  zip?: string;
+  country?: string;
+  phone?: string;
+  websiteUrl?: string;
+  bookingUrl?: string;
+  isPrimary: boolean;
+  latitude?: number;
+  longitude?: number;
+  photoUrl?: string;
+  mapEmbedUrl?: string;
+  displayOrder: number;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+}
+
+/** Conference room or space within a venue */
+export interface ConferenceRoomDoc {
+  id: string;
+  conferenceId: string;
+  venueId: string;
+  name: string;
+  description?: string;
+  floor?: string;
+  capacity?: number;
+  roomType?: "ballroom" | "breakout" | "boardroom" | "exhibit" | "networking" | "other";
+  photoUrl?: string;
+  isPublic: boolean;
+  displayOrder: number;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+}
+
+/** Conference discount / promo code */
+export interface ConferenceDiscountCodeDoc {
+  id: string;
+  conferenceId: string;
+  code: string;
+  description?: string;
+  discountType: "percentage" | "fixed";
+  discountValue: number;
+  appliesToTicketIds?: string[];
+  maxUses?: number;
+  currentUses: number;
+  validFrom?: Timestamp;
+  validUntil?: Timestamp;
+  isActive: boolean;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+}
+
+/** Conference check-in record for an attendee */
+export interface ConferenceCheckInDoc {
+  id: string;
+  conferenceId: string;
+  registrationId: string;
+  attendeeEmail: string;
+  attendeeName: string;
+  ticketName: string;
+  checkedInBy?: string;
+  checkedInAt: Timestamp;
+  notes?: string;
+  createdAt: Timestamp;
 }
 
 // ============================================================================
@@ -2531,6 +2664,12 @@ export const COLLECTIONS = {
   CONFERENCE_SPONSORSHIP_PACKAGES: "conferenceSponsorshipPackages",
   CONFERENCE_ORGANIZERS: "conferenceOrganizers",
   CONFERENCE_VIRTUAL_ACCESS: "conferenceVirtualAccess",
+  CONFERENCE_REGISTRATIONS: "conferenceRegistrations",
+  CONFERENCE_SPEAKER_APPLICATIONS: "conferenceSpeakerApplications",
+  CONFERENCE_VENUES: "conferenceVenues",
+  CONFERENCE_ROOMS: "conferenceRooms",
+  CONFERENCE_DISCOUNT_CODES: "conferenceDiscountCodes",
+  CONFERENCE_CHECK_INS: "conferenceCheckIns",
 } as const;
 
 // ============================================================================

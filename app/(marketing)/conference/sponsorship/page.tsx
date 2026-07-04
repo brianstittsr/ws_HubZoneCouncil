@@ -49,15 +49,15 @@ export default function SponsorshipPage() {
       price: 25000,
       description: "Premier visibility and exclusive benefits",
       benefits: [
-        "Premium booth space (20x20)",
-        "Keynote speaking opportunity",
-        "Logo on all conference materials",
-        "20 complimentary registrations",
-        "VIP reception access",
-        "Full-page program ad",
-        "Social media promotion",
+        { label: "Premium booth space (20x20)", included: true },
+        { label: "Keynote speaking opportunity", included: true },
+        { label: "Logo on all conference materials", included: true },
+        { label: "20 complimentary registrations", included: true },
+        { label: "VIP reception access", included: true },
+        { label: "Full-page program ad", included: true },
+        { label: "Social media promotion", included: true },
       ],
-      tier: "Platinum",
+      tier: "platinum" as const,
       icon: Crown,
     },
     {
@@ -66,15 +66,15 @@ export default function SponsorshipPage() {
       price: 15000,
       description: "High visibility and networking opportunities",
       benefits: [
-        "Large booth space (10x20)",
-        "Panel speaking opportunity",
-        "Logo on conference website",
-        "10 complimentary registrations",
-        "Networking event access",
-        "Half-page program ad",
-        "Social media mentions",
+        { label: "Large booth space (10x20)", included: true },
+        { label: "Panel speaking opportunity", included: true },
+        { label: "Logo on conference website", included: true },
+        { label: "10 complimentary registrations", included: true },
+        { label: "Networking event access", included: true },
+        { label: "Half-page program ad", included: true },
+        { label: "Social media mentions", included: true },
       ],
-      tier: "Gold",
+      tier: "gold" as const,
       icon: Award,
     },
     {
@@ -83,14 +83,14 @@ export default function SponsorshipPage() {
       price: 7500,
       description: "Great visibility and brand recognition",
       benefits: [
-        "Standard booth space (10x10)",
-        "Logo on conference website",
-        "5 complimentary registrations",
-        "Networking event access",
-        "Quarter-page program ad",
-        "Email recognition",
+        { label: "Standard booth space (10x10)", included: true },
+        { label: "Logo on conference website", included: true },
+        { label: "5 complimentary registrations", included: true },
+        { label: "Networking event access", included: true },
+        { label: "Quarter-page program ad", included: true },
+        { label: "Email recognition", included: true },
       ],
-      tier: "Silver",
+      tier: "silver" as const,
       icon: Star,
     },
     {
@@ -99,12 +99,12 @@ export default function SponsorshipPage() {
       price: 3500,
       description: "Entry-level sponsorship with solid benefits",
       benefits: [
-        "Logo on conference website",
-        "2 complimentary registrations",
-        "Name in program",
-        "Social media thank you",
+        { label: "Logo on conference website", included: true },
+        { label: "2 complimentary registrations", included: true },
+        { label: "Name in program", included: true },
+        { label: "Social media thank you", included: true },
       ],
-      tier: "Bronze",
+      tier: "bronze" as const,
       icon: Zap,
     },
   ];
@@ -170,9 +170,9 @@ export default function SponsorshipPage() {
                 return (
                   <Card
                     key={pkg.id}
-                    className={`relative ${pkg.tier === "Platinum" ? "border-[#c9a227] shadow-xl scale-105" : ""}`}
+                    className={`relative ${pkg.tier === "platinum" ? "border-[#c9a227] shadow-xl scale-105" : ""}`}
                   >
-                    {pkg.tier === "Platinum" && (
+                    {pkg.tier === "platinum" && (
                       <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                         <Badge className="bg-[#c9a227] text-[#1a2b4a] px-4 py-1">
                           Best Value
@@ -194,12 +194,13 @@ export default function SponsorshipPage() {
                         {(pkg.benefits || []).map((benefit, i) => (
                           <li key={i} className="flex items-start gap-2 text-sm">
                             <Check className="h-4 w-4 text-green-500 mt-0.5 shrink-0" />
-                            {benefit}
+                            {benefit.label}
+                            {"details" in benefit && benefit.details && <span className="text-muted-foreground ml-1">({benefit.details})</span>}
                           </li>
                         ))}
                       </ul>
                       <Button
-                        className={`w-full ${pkg.tier === "Platinum" ? "bg-[#c9a227] hover:bg-[#b89420] text-[#1a2b4a]" : "bg-[#1e3a5f] hover:bg-[#152a45]"}`}
+                        className={`w-full ${pkg.tier === "platinum" ? "bg-[#c9a227] hover:bg-[#b89420] text-[#1a2b4a]" : "bg-[#1e3a5f] hover:bg-[#152a45]"}`}
                         asChild
                       >
                         <a href="mailto:info@hubzonecouncil.org">Inquire Now</a>

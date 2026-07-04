@@ -32,9 +32,10 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Plus, Pencil, Trash2, Loader2, ArrowLeft, Mic2, Star } from "lucide-react";
+import { Plus, Pencil, Trash2, Loader2, ArrowLeft, Mic2, Star, Wand2 } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
+import { SpeakerWizardDialog } from "@/components/conference/admin-speaker-wizard";
 import type { ConferenceSpeakerDoc } from "@/lib/schema";
 
 type SpeakerType = "keynote" | "featured" | "panelist" | "workshop" | "lightning" | "other";
@@ -91,6 +92,7 @@ export default function SpeakersPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [wizardOpen, setWizardOpen] = useState(false);
   const [editItem, setEditItem] = useState<ConferenceSpeakerDoc | null>(null);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [form, setForm] = useState<FormData>(defaultForm);
@@ -193,7 +195,12 @@ export default function SpeakersPage() {
           <h1 className="text-2xl font-bold">Speakers</h1>
           <p className="text-muted-foreground text-sm">Manage keynotes, panelists, and presenters</p>
         </div>
-        <Button onClick={openCreate}><Plus className="h-4 w-4 mr-2" />Add Speaker</Button>
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={() => setWizardOpen(true)}>
+            <Wand2 className="h-4 w-4 mr-2" /> Wizard
+          </Button>
+          <Button onClick={openCreate}><Plus className="h-4 w-4 mr-2" />Add Speaker</Button>
+        </div>
       </div>
 
       {loading ? (
@@ -353,6 +360,8 @@ export default function SpeakersPage() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      <SpeakerWizardDialog open={wizardOpen} onClose={() => setWizardOpen(false)} onSaved={fetchItems} />
     </div>
   );
 }

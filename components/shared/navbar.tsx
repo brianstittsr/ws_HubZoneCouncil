@@ -7,6 +7,17 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 
+const navLinks = [
+  { label: "Home", href: "/" },
+  { label: "Schedule", href: "/conference/schedule" },
+  { label: "Speakers", href: "/conference/speakers" },
+  { label: "Tickets", href: "/conference/tickets" },
+  { label: "Venue", href: "/conference/venue" },
+  { label: "Sponsorship", href: "/conference/sponsorship" },
+  { label: "Speak", href: "/conference/speakers/apply" },
+  { label: "Contact", href: "/contact" },
+];
+
 export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -17,37 +28,35 @@ export function Navbar() {
         <Link href="/" className="flex items-center gap-2">
           <Image
             src="/logo.jpg"
-            alt="HubZone Council Logo"
+            alt="HUBZone on the Rise Logo"
             width={48}
             height={48}
             className="h-12 w-auto rounded-md bg-white"
             priority
           />
           <div className="flex flex-col">
-            <span className="text-lg font-bold leading-none">HubZone Council</span>
-            <span className="text-xs text-muted-foreground">Works for America</span>
+            <span className="text-lg font-bold leading-none">HUBZone on the Rise</span>
+            <span className="text-xs text-muted-foreground">2026 National Conference</span>
           </div>
         </Link>
 
-        {/* Desktop Navigation - Simplified */}
-        <nav className="hidden lg:flex items-center gap-6">
-          <Link 
-            href="/" 
-            className="text-sm font-medium transition-colors hover:text-primary"
-          >
-            Home
-          </Link>
-          <Link 
-            href="/contact" 
-            className="text-sm font-medium transition-colors hover:text-primary"
-          >
-            Contact
-          </Link>
+        {/* Desktop Navigation */}
+        <nav className="hidden lg:flex items-center gap-5">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="text-sm font-medium transition-colors hover:text-primary"
+            >
+              {link.label}
+            </Link>
+          ))}
         </nav>
 
-        {/* CTA Buttons - Hidden */}
         <div className="hidden lg:flex items-center gap-3">
-          {/* Sign In, Sign Up, and Get Assessment buttons hidden per request */}
+          <Button asChild size="sm" className="bg-[#c9a227] hover:bg-[#b89420] text-[#1a2b4a] font-semibold">
+            <Link href="/conference/tickets">Register Now</Link>
+          </Button>
         </div>
 
         {/* Mobile Menu */}
@@ -59,39 +68,21 @@ export function Navbar() {
           </SheetTrigger>
           <SheetContent side="right" className="w-[300px] sm:w-[400px]">
             <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
-            <nav className="flex flex-col gap-4 mt-8">
-              <div className="space-y-2">
+            <nav className="flex flex-col gap-2 mt-8">
+              {navLinks.map((link) => (
                 <Link
-                  href="/"
+                  key={link.href}
+                  href={link.href}
                   className="block py-2 font-medium"
                   onClick={() => setMobileOpen(false)}
                 >
-                  Home
+                  {link.label}
                 </Link>
-                <Link
-                  href="/contact"
-                  className="block py-2 font-medium"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  Contact
-                </Link>
-              </div>
-
-              {/* Mobile CTA buttons hidden */}
-              <div className="hidden border-t pt-4 space-y-2">
-                <Button variant="outline" className="w-full" asChild>
-                  <Link href="/sign-in" onClick={() => setMobileOpen(false)}>
-                    Sign In
-                  </Link>
-                </Button>
-                <Button variant="secondary" className="w-full" asChild>
-                  <Link href="/sign-up" onClick={() => setMobileOpen(false)}>
-                    Sign Up
-                  </Link>
-                </Button>
-                <Button className="w-full" asChild>
-                  <Link href="/contact" onClick={() => setMobileOpen(false)}>
-                    Get Assessment
+              ))}
+              <div className="border-t pt-4 mt-2">
+                <Button className="w-full bg-[#c9a227] hover:bg-[#b89420] text-[#1a2b4a] font-semibold" asChild>
+                  <Link href="/conference/tickets" onClick={() => setMobileOpen(false)}>
+                    Register Now
                   </Link>
                 </Button>
               </div>

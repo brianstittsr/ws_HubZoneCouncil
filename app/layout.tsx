@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Manrope, DM_Sans } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
-import { AccessibilityWidget } from "@/components/shared/accessibility-widget";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -16,38 +15,37 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://strategicvalueplus.com"),
+  metadataBase: new URL("https://hubzonecouncil.org"),
   title: {
-    default: "Strategic Value+ | Transforming U.S. Manufacturing",
-    template: "%s | Strategic Value+",
+    default: "HUBZone on the Rise | 2026 National HUBZone Conference",
+    template: "%s | HUBZone on the Rise",
   },
   description:
-    "We help small- and mid-sized U.S. manufacturers win OEM contracts through supplier qualification, ISO certification, and operational readiness.",
+    "Join the 2026 National HUBZone Conference, July 21-22, 2026 at the Westfields Marriott in Chantilly, Virginia. Building America's next 250 years through stronger partnerships, stronger communities, and a stronger America.",
   keywords: [
-    "manufacturing consulting",
-    "OEM supplier qualification",
-    "ISO certification",
-    "IATF 16949",
-    "Industry 4.0",
-    "lean manufacturing",
-    "digital transformation",
-    "reshoring",
-    "supply chain optimization",
-    "digital twins",
-    "AI manufacturing",
-    "Toyota supplier",
-    "automotive supplier qualification",
+    "HUBZone",
+    "HUBZone conference",
+    "HUBZone on the Rise",
+    "National HUBZone Conference",
+    "federal contracting",
+    "small business",
+    "workforce development",
+    "manufacturing",
+    "supply chain",
+    "economic opportunity",
+    "Appalachian HUBZone",
+    "HUBZone certification",
   ],
-  authors: [{ name: "Strategic Value+ Solutions", url: "https://strategicvalueplus.com" }],
-  creator: "Strategic Value+ Solutions",
-  publisher: "Strategic Value+ Solutions",
+  authors: [{ name: "HUBZone Contractors National Council", url: "https://hubzonecouncil.org" }],
+  creator: "HUBZone Contractors National Council",
+  publisher: "HUBZone Contractors National Council",
   formatDetection: {
     email: false,
     address: false,
     telephone: false,
   },
   alternates: {
-    canonical: "https://strategicvalueplus.com",
+    canonical: "https://hubzonecouncil.org",
   },
   robots: {
     index: true,
@@ -63,32 +61,30 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://strategicvalueplus.com",
-    siteName: "Strategic Value+",
-    title: "Strategic Value+ | Transforming U.S. Manufacturing",
+    url: "https://hubzonecouncil.org",
+    siteName: "HUBZone on the Rise",
+    title: "HUBZone on the Rise | 2026 National HUBZone Conference",
     description:
-      "We help small- and mid-sized U.S. manufacturers win OEM contracts through supplier qualification, ISO certification, and operational readiness.",
+      "Join the 2026 National HUBZone Conference, July 21-22, 2026 at the Westfields Marriott in Chantilly, Virginia.",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Strategic Value+ - Transforming U.S. Manufacturing",
+        alt: "HUBZone on the Rise - 2026 National HUBZone Conference",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Strategic Value+ | Transforming U.S. Manufacturing",
+    title: "HUBZone on the Rise | 2026 National HUBZone Conference",
     description:
-      "We help small- and mid-sized U.S. manufacturers win OEM contracts through supplier qualification, ISO certification, and operational readiness.",
+      "Join the 2026 National HUBZone Conference, July 21-22, 2026 at the Westfields Marriott in Chantilly, Virginia.",
     images: ["/og-image.png"],
-    creator: "@strategicvalueplus",
+    creator: "@hubzonecouncil",
   },
   verification: {
     google: "your-google-verification-code",
-    // yandex: "your-yandex-verification-code",
-    // bing: "your-bing-verification-code",
   },
   category: "business",
 };
@@ -114,8 +110,6 @@ export default function RootLayout({
         </a>
         {children}
         <Toaster />
-        {/* UserWay Accessibility Widget */}
-        <AccessibilityWidget />
       </body>
     </html>
   );

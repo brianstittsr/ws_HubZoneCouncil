@@ -6,32 +6,33 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Check, Star, Building2 } from "lucide-react";
-import { db } from "@/lib/firebase";
-import { collection, getDocs, query, where, orderBy } from "firebase/firestore";
-import { COLLECTIONS } from "@/lib/schema";
 import type { ConferenceTicketDoc } from "@/lib/schema";
 
+const CONFERENCE_ID = "hubzone-rise-2026";
+
+type DisplayTicket = ConferenceTicketDoc & {
+  highlight?: boolean;
+  features?: string[];
+};
+
 export default function TicketsPage() {
-  const [tickets, setTickets] = useState<ConferenceTicketDoc[]>([]);
+  const [tickets, setTickets] = useState<DisplayTicket[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchTickets = async () => {
-      if (!db) {
-        setLoading(false);
-        return;
-      }
       try {
-        const q = query(
-          collection(db, COLLECTIONS.CONFERENCE_TICKETS),
-          where("isActive", "==", true),
-          orderBy("price", "asc")
+        const res = await fetch(
+          `/api/conference/tickets?conferenceId=${CONFERENCE_ID}&isActive=true`
         );
-        const snapshot = await getDocs(q);
-        const data = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        })) as ConferenceTicketDoc[];
+        const result = await res.json();
+        if (!res.ok || !result.data) {
+          throw new Error(result.error || "Failed to fetch tickets");
+        }
+        const data = (result.data as ConferenceTicketDoc[]).map((ticket) => ({
+          ...ticket,
+          features: ticket.perks || [],
+        })) as DisplayTicket[];
         setTickets(data);
       } catch (error) {
         console.error("Error fetching tickets:", error);
@@ -42,34 +43,64 @@ export default function TicketsPage() {
     fetchTickets();
   }, []);
 
-  const defaultTickets = [
+  const defaultTickets: DisplayTicket[] = [
     {
       id: "member",
+      conferenceId: CONFERENCE_ID,
       name: "Member Registration",
-      price: 95,
-      description: "For current HubZone Council members",
+      price: 650,
+      currency: "usd",
+      ticketType: "paid",
+      description: "For current HUBZone Contractors National Council members",
       features: ["Full conference access", "All sessions & workshops", "Networking events", "Lunch included"],
+      perks: ["Full conference access", "All sessions & workshops", "Networking events", "Lunch included"],
       highlight: false,
+      isPublic: true,
+      isActive: true,
+      soldQuantity: 0,
+      displayOrder: 0,
+      createdAt: {} as never,
+      updatedAt: {} as never,
     },
     {
       id: "non-member",
+      conferenceId: CONFERENCE_ID,
       name: "Non-Member Registration",
-      price: 195,
+      price: 750,
+      currency: "usd",
+      ticketType: "paid",
       description: "Standard conference registration",
       features: ["Full conference access", "All sessions & workshops", "Networking events", "Lunch included"],
+      perks: ["Full conference access", "All sessions & workshops", "Networking events", "Lunch included"],
       highlight: true,
+      isPublic: true,
+      isActive: true,
+      soldQuantity: 0,
+      displayOrder: 1,
+      createdAt: {} as never,
+      updatedAt: {} as never,
     },
     {
       id: "government",
+      conferenceId: CONFERENCE_ID,
       name: "Government Registration",
-      price: 0,
+      price: 250,
+      currency: "usd",
+      ticketType: "free",
       description: "For federal and state government employees",
       features: ["Full conference access", "All sessions & workshops", "Networking events", "Lunch included"],
+      perks: ["Full conference access", "All sessions & workshops", "Networking events", "Lunch included"],
       highlight: false,
+      isPublic: true,
+      isActive: true,
+      soldQuantity: 0,
+      displayOrder: 2,
+      createdAt: {} as never,
+      updatedAt: {} as never,
     },
   ];
 
-  const displayTickets = tickets.length > 0 ? tickets : defaultTickets;
+  const displayTickets: DisplayTicket[] = tickets.length > 0 ? tickets : defaultTickets;
 
   return (
     <div className="min-h-screen bg-background">
@@ -130,13 +161,9 @@ export default function TicketsPage() {
                       className={`w-full ${ticket.highlight ? "bg-[#c9a227] hover:bg-[#b89420] text-[#1a2b4a]" : "bg-[#1e3a5f] hover:bg-[#152a45]"}`}
                       asChild
                     >
-                      <a
-                        href="https://www.eventbrite.com/e/2026-national-hubzone-conference-tickets-1275284506879"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
+                      <Link href="/conference/register">
                         Register Now
-                      </a>
+                      </Link>
                     </Button>
                   </CardContent>
                 </Card>

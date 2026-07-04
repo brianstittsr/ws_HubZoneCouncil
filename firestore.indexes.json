@@ -406,6 +406,81 @@
         { "fieldPath": "attendeeEmail", "order": "ASCENDING" },
         { "fieldPath": "createdAt", "order": "DESCENDING" }
       ]
+    },
+    {
+      "collectionGroup": "conferenceRegistrations",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "conferenceId", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "conferenceRegistrations",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "conferenceId", "order": "ASCENDING" },
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "conferenceRegistrations",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "email", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "conferenceSpeakerApplications",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "conferenceId", "order": "ASCENDING" },
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "conferenceSpeakerApplications",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "email", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "conferenceVenues",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "conferenceId", "order": "ASCENDING" },
+        { "fieldPath": "displayOrder", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "conferenceRooms",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "conferenceId", "order": "ASCENDING" },
+        { "fieldPath": "venueId", "order": "ASCENDING" },
+        { "fieldPath": "displayOrder", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "conferenceDiscountCodes",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "conferenceId", "order": "ASCENDING" },
+        { "fieldPath": "code", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "conferenceCheckIns",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "conferenceId", "order": "ASCENDING" },
+        { "fieldPath": "checkedInAt", "order": "DESCENDING" }
+      ]
     }
   ],
   "fieldOverrides": []
