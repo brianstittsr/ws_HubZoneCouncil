@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
@@ -132,6 +132,7 @@ export function SpeakerWizardDialog({ open, onClose, onSaved }: SpeakerWizardDia
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Add Speaker Wizard</DialogTitle>
+          <DialogDescription>Step {step + 1} of {steps.length}: {steps[step].label}</DialogDescription>
         </DialogHeader>
         <div className="mb-6">
           <div className="flex items-center justify-between mb-2">

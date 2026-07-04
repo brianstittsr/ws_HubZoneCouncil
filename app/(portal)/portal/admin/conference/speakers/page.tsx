@@ -18,6 +18,7 @@ import {
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -281,6 +282,11 @@ export default function SpeakersPage() {
         <DialogContent className="max-w-xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>{editItem ? "Edit Speaker" : "Add Speaker"}</DialogTitle>
+            <DialogDescription>
+              {editItem
+                ? "Update the speaker details below."
+                : "Fill in the details to add a new conference speaker."}
+            </DialogDescription>
           </DialogHeader>
           <div className="space-y-3 py-2">
             <div className="space-y-2">
