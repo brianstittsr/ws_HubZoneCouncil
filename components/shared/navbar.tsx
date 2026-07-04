@@ -45,7 +45,7 @@ export function Navbar() {
         <nav className="hidden lg:flex items-center gap-5">
           {navLinks.map((link) => (
             <Link
-              key={link.href}
+              key={`${link.href}-${link.label}`}
               href={link.href}
               className="text-sm font-medium transition-colors hover:text-primary"
             >
@@ -75,7 +75,7 @@ export function Navbar() {
             <nav className="flex flex-col gap-2 mt-8">
               {navLinks.map((link) => (
                 <Link
-                  key={link.href}
+                  key={`${link.href}-${link.label}`}
                   href={link.href}
                   className="block py-2 font-medium"
                   onClick={() => setMobileOpen(false)}

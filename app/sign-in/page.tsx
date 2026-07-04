@@ -291,6 +291,24 @@ export default function SignInPage() {
                 Sign up
               </Link>
             </p>
+
+            <Button
+              variant="ghost"
+              size="sm"
+              className="w-full text-xs text-muted-foreground hover:text-foreground"
+              onClick={() => {
+                try {
+                  sessionStorage.setItem("svp_authenticated", "true");
+                  sessionStorage.setItem("svp_user_email", "test@hubzonecouncil.org");
+                  sessionStorage.setItem("svp_user_name", "Test User");
+                } catch {
+                  // ignore
+                }
+                window.location.href = "/portal";
+              }}
+            >
+              Bypass Login (Testing Only)
+            </Button>
           </CardFooter>
         </Card>
 
