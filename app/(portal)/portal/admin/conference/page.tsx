@@ -18,6 +18,7 @@ import {
   ClipboardList,
   MapPin,
   CreditCard,
+  Mail,
 } from "lucide-react";
 
 const modules = [
@@ -108,6 +109,14 @@ const modules = [
     icon: Building2,
     color: "bg-yellow-500/10 text-yellow-600",
     badge: null,
+  },
+  {
+    title: "Sponsor Requests",
+    description: "Review and manage inbound sponsorship inquiries.",
+    href: "/portal/admin/conference/sponsor-requests",
+    icon: Mail,
+    color: "bg-teal-500/10 text-teal-600",
+    badge: "NEW",
   },
   {
     title: "Sponsorship Packages",

@@ -5,15 +5,40 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { toast } from "sonner";
 import { Check, Star, Zap, Award, Crown } from "lucide-react";
 import { db } from "@/lib/firebase";
 import { collection, getDocs, query, where, orderBy } from "firebase/firestore";
 import { COLLECTIONS } from "@/lib/schema";
 import type { ConferenceSponsorshipPackageDoc } from "@/lib/schema";
 
+const CONFERENCE_ID = "hubzone-rise-2026";
+const sponsorTiers = [
+  { value: "platinum", label: "Platinum" },
+  { value: "gold", label: "Gold" },
+  { value: "silver", label: "Silver" },
+  { value: "bronze", label: "Bronze" },
+  { value: "custom", label: "Custom / Undecided" },
+];
+
 export default function SponsorshipPage() {
   const [packages, setPackages] = useState<ConferenceSponsorshipPackageDoc[]>([]);
   const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [form, setForm] = useState({
+    organizationName: "",
+    contactName: "",
+    contactEmail: "",
+    contactPhone: "",
+    websiteUrl: "",
+    tier: "",
+    message: "",
+  });
 
   useEffect(() => {
     const fetchPackages = async () => {
@@ -112,6 +137,33 @@ export default function SponsorshipPage() {
   const displayPackages = packages.length > 0 
     ? packages.map((p) => ({ ...p, icon: defaultPackages.find(d => d.tier === p.tier)?.icon || Star }))
     : defaultPackages;
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!form.organizationName || !form.contactName || !form.contactEmail || !form.tier) {
+      toast.error("Please fill out organization, contact name, email, and tier.");
+      return;
+    }
+    setSubmitting(true);
+    try {
+      const res = await fetch("/api/conference/sponsor-requests", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          conferenceId: CONFERENCE_ID,
+          ...form,
+        }),
+      });
+      if (!res.ok) throw new Error("Failed to submit");
+      setSubmitted(true);
+      toast.success("Sponsor inquiry submitted. We will be in touch soon.");
+    } catch (error) {
+      console.error(error);
+      toast.error("Could not submit inquiry. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -214,17 +266,120 @@ export default function SponsorshipPage() {
         </div>
       </section>
 
-      {/* Custom Sponsorship */}
+      {/* Custom Sponsorship / Inquiry Form */}
       <section className="py-16 bg-[#1e3a5f] text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold mb-4">Need a Custom Package?</h2>
-          <p className="text-white/80 max-w-2xl mx-auto mb-8">
-            We can create a tailored sponsorship package that meets your specific 
-            marketing and networking goals.
-          </p>
-          <Button variant="outline" className="border-white text-white hover:bg-white hover:text-[#1e3a5f]" asChild>
-            <a href="mailto:info@hubzonecouncil.org">Contact Us</a>
-          </Button>
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold mb-4">Become a Sponsor</h2>
+            <p className="text-white/80 max-w-2xl mx-auto">
+              Submit your inquiry below or contact us for a tailored sponsorship package.
+            </p>
+          </div>
+          {submitted ? (
+            <Card className="bg-white text-foreground">
+              <CardContent className="p-8 text-center">
+                <div className="h-12 w-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Check className="h-6 w-6 text-green-600" />
+                </div>
+                <h3 className="text-xl font-semibold mb-2">Thank You</h3>
+                <p className="text-muted-foreground">Your sponsorship inquiry has been received. Our team will contact you soon.</p>
+              </CardContent>
+            </Card>
+          ) : (
+            <form onSubmit={handleSubmit}>
+              <Card className="bg-white text-foreground">
+                <CardContent className="p-8 space-y-4">
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="organizationName">Organization *</Label>
+                      <Input
+                        id="organizationName"
+                        value={form.organizationName}
+                        onChange={(e) => setForm({ ...form, organizationName: e.target.value })}
+                        required
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="contactName">Contact Name *</Label>
+                      <Input
+                        id="contactName"
+                        value={form.contactName}
+                        onChange={(e) => setForm({ ...form, contactName: e.target.value })}
+                        required
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="contactEmail">Email *</Label>
+                      <Input
+                        id="contactEmail"
+                        type="email"
+                        value={form.contactEmail}
+                        onChange={(e) => setForm({ ...form, contactEmail: e.target.value })}
+                        required
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="contactPhone">Phone</Label>
+                      <Input
+                        id="contactPhone"
+                        value={form.contactPhone}
+                        onChange={(e) => setForm({ ...form, contactPhone: e.target.value })}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="websiteUrl">Website</Label>
+                      <Input
+                        id="websiteUrl"
+                        value={form.websiteUrl}
+                        onChange={(e) => setForm({ ...form, websiteUrl: e.target.value })}
+                        placeholder="https://..."
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="tier">Sponsorship Tier *</Label>
+                      <Select value={form.tier} onValueChange={(v) => setForm({ ...form, tier: v })} required>
+                        <SelectTrigger id="tier">
+                          <SelectValue placeholder="Select a tier" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {sponsorTiers.map((t) => (
+                            <SelectItem key={t.value} value={t.value}>{t.label}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="message">Message / Goals</Label>
+                    <Textarea
+                      id="message"
+                      rows={4}
+                      value={form.message}
+                      onChange={(e) => setForm({ ...form, message: e.target.value })}
+                      placeholder="Tell us about your organization and sponsorship goals..."
+                    />
+                  </div>
+                  <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
+                    <Button
+                      type="submit"
+                      disabled={submitting}
+                      className="w-full sm:w-auto bg-[#c9a227] hover:bg-[#b89420] text-[#1a2b4a] font-semibold"
+                    >
+                      {submitting ? "Submitting..." : "Submit Sponsorship Inquiry"}
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      className="w-full sm:w-auto border-[#1e3a5f] text-[#1e3a5f] hover:bg-[#1e3a5f] hover:text-white"
+                      asChild
+                    >
+                      <a href="mailto:info@hubzonecouncil.org">Email Us Instead</a>
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </form>
+          )}
         </div>
       </section>
     </div>

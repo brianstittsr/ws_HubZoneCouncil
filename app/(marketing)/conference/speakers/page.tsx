@@ -5,10 +5,9 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Mic2 } from "lucide-react";
-import { db } from "@/lib/firebase";
-import { collection, getDocs, query, where } from "firebase/firestore";
-import { COLLECTIONS } from "@/lib/schema";
 import type { ConferenceSpeakerDoc } from "@/lib/schema";
+
+const CONFERENCE_ID = "hubzone-rise-2026";
 
 export default function SpeakersPage() {
   const [speakers, setSpeakers] = useState<ConferenceSpeakerDoc[]>([]);
@@ -16,21 +15,13 @@ export default function SpeakersPage() {
 
   useEffect(() => {
     const fetchSpeakers = async () => {
-      if (!db) {
-        setLoading(false);
-        return;
-      }
       try {
-        const q = query(
-          collection(db, COLLECTIONS.CONFERENCE_SPEAKERS),
-          where("isActive", "==", true)
-        );
-        const snapshot = await getDocs(q);
-        const data = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        })) as ConferenceSpeakerDoc[];
-        setSpeakers(data);
+        const res = await fetch(`/api/conference/speakers?conferenceId=${CONFERENCE_ID}`);
+        const result = await res.json();
+        if (!res.ok || !result.data) {
+          throw new Error(result.error || "Failed to fetch speakers");
+        }
+        setSpeakers((result.data as ConferenceSpeakerDoc[]).filter((s) => s.isPublic));
       } catch (error) {
         console.error("Error fetching speakers:", error);
       } finally {

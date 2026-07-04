@@ -10,6 +10,7 @@ import { Menu } from "lucide-react";
 const navLinks = [
   { label: "Home", href: "/" },
   { label: "Schedule", href: "/conference/schedule" },
+  { label: "Agenda", href: "/conference/schedule" },
   { label: "Speakers", href: "/conference/speakers" },
   { label: "Tickets", href: "/conference/tickets" },
   { label: "Venue", href: "/conference/venue" },
@@ -54,8 +55,11 @@ export function Navbar() {
         </nav>
 
         <div className="hidden lg:flex items-center gap-3">
+          <Button asChild variant="outline" size="sm">
+            <Link href="/sign-in">Sign In</Link>
+          </Button>
           <Button asChild size="sm" className="bg-[#c9a227] hover:bg-[#b89420] text-[#1a2b4a] font-semibold">
-            <Link href="/conference/tickets">Register Now</Link>
+            <Link href="/conference/register">Register</Link>
           </Button>
         </div>
 
@@ -79,10 +83,15 @@ export function Navbar() {
                   {link.label}
                 </Link>
               ))}
-              <div className="border-t pt-4 mt-2">
+              <div className="border-t pt-4 mt-2 flex flex-col gap-2">
+                <Button variant="outline" className="w-full" asChild>
+                  <Link href="/sign-in" onClick={() => setMobileOpen(false)}>
+                    Sign In
+                  </Link>
+                </Button>
                 <Button className="w-full bg-[#c9a227] hover:bg-[#b89420] text-[#1a2b4a] font-semibold" asChild>
-                  <Link href="/conference/tickets" onClick={() => setMobileOpen(false)}>
-                    Register Now
+                  <Link href="/conference/register" onClick={() => setMobileOpen(false)}>
+                    Register
                   </Link>
                 </Button>
               </div>

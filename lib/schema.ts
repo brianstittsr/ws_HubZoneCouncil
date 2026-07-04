@@ -2316,6 +2316,22 @@ export interface ConferenceSponsorDoc {
   updatedAt: Timestamp;
 }
 
+/** Conference Sponsor Request / Inquiry document */
+export interface ConferenceSponsorRequestDoc {
+  id: string;
+  conferenceId: string;
+  organizationName: string;
+  contactName: string;
+  contactEmail: string;
+  contactPhone?: string;
+  websiteUrl?: string;
+  tier: "platinum" | "gold" | "silver" | "bronze" | "community" | "media" | "in-kind" | "custom";
+  message?: string;
+  status: "new" | "contacted" | "negotiating" | "converted" | "declined";
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+}
+
 /** Conference Sponsorship Package document */
 export interface ConferenceSponsorshipPackageDoc {
   id: string;
@@ -2661,6 +2677,7 @@ export const COLLECTIONS = {
   CONFERENCE_TICKETS: "conferenceTickets",
   CONFERENCE_NEWS: "conferenceNews",
   CONFERENCE_SPONSORS: "conferenceSponsors",
+  CONFERENCE_SPONSOR_REQUESTS: "conferenceSponsorRequests",
   CONFERENCE_SPONSORSHIP_PACKAGES: "conferenceSponsorshipPackages",
   CONFERENCE_ORGANIZERS: "conferenceOrganizers",
   CONFERENCE_VIRTUAL_ACCESS: "conferenceVirtualAccess",
@@ -2807,6 +2824,7 @@ export const conferenceSessionsCollection = () => getCollection<ConferenceSessio
 export const conferenceTicketsCollection = () => getCollection<ConferenceTicketDoc>(COLLECTIONS.CONFERENCE_TICKETS);
 export const conferenceNewsCollection = () => getCollection<ConferenceNewsDoc>(COLLECTIONS.CONFERENCE_NEWS);
 export const conferenceSponsorsCollection = () => getCollection<ConferenceSponsorDoc>(COLLECTIONS.CONFERENCE_SPONSORS);
+export const conferenceSponsorRequestsCollection = () => getCollection<ConferenceSponsorRequestDoc>(COLLECTIONS.CONFERENCE_SPONSOR_REQUESTS);
 export const conferenceSponsorshipPackagesCollection = () => getCollection<ConferenceSponsorshipPackageDoc>(COLLECTIONS.CONFERENCE_SPONSORSHIP_PACKAGES);
 export const conferenceOrganizersCollection = () => getCollection<ConferenceOrganizerDoc>(COLLECTIONS.CONFERENCE_ORGANIZERS);
 
