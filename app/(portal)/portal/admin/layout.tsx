@@ -1,7 +1,7 @@
 "use client";
 
 import { useUserProfile } from "@/contexts/user-profile-context";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { Loader2, ShieldAlert } from "lucide-react";
 
@@ -10,16 +10,21 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { isAuthenticated, isLoading, linkedTeamMember } = useUserProfile();
+  const { isAuthenticated, isLoading, linkedTeamMember, profile } = useUserProfile();
   const router = useRouter();
+  const pathname = usePathname();
 
-  const isAdmin = linkedTeamMember?.role === "admin" || linkedTeamMember?.role === "superadmin";
+  const role = linkedTeamMember?.role || profile.role;
+  const isAdmin = role === "admin" || role === "superadmin";
+  const isTeamMember = role === "team" || role === "team_member";
+  const isConferenceRoute = pathname?.startsWith("/portal/admin/conference");
+  const canAccess = isAdmin || (isTeamMember && isConferenceRoute);
 
   useEffect(() => {
-    if (!isLoading && isAuthenticated && !isAdmin) {
+    if (!isLoading && isAuthenticated && !canAccess) {
       router.push("/portal");
     }
-  }, [isLoading, isAuthenticated, isAdmin, router]);
+  }, [isLoading, isAuthenticated, canAccess, router]);
 
   if (isLoading) {
     return (
@@ -32,7 +37,7 @@ export default function AdminLayout({
     );
   }
 
-  if (!isAdmin) {
+  if (!canAccess) {
     return (
       <div className="flex items-center justify-center min-h-[50vh]">
         <div className="flex flex-col items-center gap-4 text-center">
