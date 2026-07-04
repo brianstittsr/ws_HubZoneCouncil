@@ -33,6 +33,7 @@ export function Footer() {
                 width={40}
                 height={40}
                 className="h-10 w-auto"
+                style={{ width: 'auto', height: 'auto' }}
               />
               <div className="flex flex-col">
                 <span className="text-lg font-bold leading-none">HUBZone on the Rise</span>

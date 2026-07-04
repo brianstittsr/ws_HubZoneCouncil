@@ -33,6 +33,7 @@ export function Navbar() {
             width={48}
             height={48}
             className="h-12 w-auto rounded-md bg-white"
+            style={{ width: 'auto', height: 'auto' }}
             priority
           />
           <div className="flex flex-col">

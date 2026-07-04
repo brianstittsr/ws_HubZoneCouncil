@@ -9,6 +9,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -167,6 +168,7 @@ export default function CommandCenterPage() {
   const [actionItems, setActionItems] = useState<ActionItemDisplay[]>([]);
   const [recentActivity, setRecentActivity] = useState<ActivityDisplay[]>([]);
   const [teamMembers, setTeamMembers] = useState<{ initials: string; name: string }[]>([]);
+  const [dashboardError, setDashboardError] = useState<string | null>(null);
 
   const [formSubmissions, setFormSubmissions] = useState<FormSubmissionDisplay[]>([]);
 
@@ -177,15 +179,23 @@ export default function CommandCenterPage() {
         return;
       }
 
+      let totalPipelineValue = 0;
+      let activeCount = 0;
+      let atRiskCount = 0;
+      let totalProgress = 0;
+      let rockCount = 0;
+      let teamCount = 0;
+      let hasPermissionError = false;
+
+      const isPermissionError = (error: unknown) =>
+        error instanceof Error && error.message.includes("Missing or insufficient permissions");
+
+      // Fetch opportunities
       try {
-        // Fetch opportunities
         const oppsRef = collection(db, COLLECTIONS.OPPORTUNITIES);
         const oppsQuery = query(oppsRef, orderBy("updatedAt", "desc"), limit(5));
         const oppsSnapshot = await getDocs(oppsQuery);
-        
-        let totalPipelineValue = 0;
         const oppsData: OpportunityDisplay[] = [];
-        
         oppsSnapshot.forEach((doc) => {
           const data = doc.data() as OpportunityDoc;
           if (data.stage !== "closed-won" && data.stage !== "closed-lost") {
@@ -202,14 +212,17 @@ export default function CommandCenterPage() {
           });
         });
         setOpportunities(oppsData);
+      } catch (error) {
+        console.error("Failed to fetch opportunities:", error);
+        if (isPermissionError(error)) hasPermissionError = true;
+        setOpportunities([]);
+      }
 
-        // Fetch projects
+      // Fetch projects
+      try {
         const projectsRef = collection(db, COLLECTIONS.PROJECTS);
         const activeProjectsQuery = query(projectsRef, where("status", "==", "active"));
         const projectsSnapshot = await getDocs(activeProjectsQuery);
-        
-        let activeCount = 0;
-        let atRiskCount = 0;
         projectsSnapshot.forEach((doc) => {
           const data = doc.data() as ProjectDoc;
           activeCount++;
@@ -217,8 +230,13 @@ export default function CommandCenterPage() {
             atRiskCount++;
           }
         });
+      } catch (error) {
+        console.error("Failed to fetch projects:", error);
+        if (isPermissionError(error)) hasPermissionError = true;
+      }
 
-        // Fetch today's meetings/calendar events
+      // Fetch today's meetings/calendar events
+      try {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         const tomorrow = new Date(today);
@@ -232,164 +250,165 @@ export default function CommandCenterPage() {
           orderBy("startDate", "asc"),
           limit(5)
         );
-        
-        try {
-          const eventsSnapshot = await getDocs(todayEventsQuery);
-          const meetingsData: MeetingDisplay[] = [];
-          eventsSnapshot.forEach((doc) => {
-            const data = doc.data() as CalendarEventDoc;
-            const startDate = data.startDate?.toDate();
-            const endDate = data.endDate?.toDate();
-            const durationMins = startDate && endDate 
-              ? Math.round((endDate.getTime() - startDate.getTime()) / 60000)
-              : 30;
-            
-            meetingsData.push({
-              id: doc.id,
-              title: data.title || "Meeting",
-              time: startDate ? startDate.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" }) : "",
-              duration: `${durationMins} min`,
-              attendees: data.attendees?.length || 0,
-              joinUrl: data.location || undefined,
-            });
+        const eventsSnapshot = await getDocs(todayEventsQuery);
+        const meetingsData: MeetingDisplay[] = [];
+        eventsSnapshot.forEach((doc) => {
+          const data = doc.data() as CalendarEventDoc;
+          const startDate = data.startDate?.toDate();
+          const endDate = data.endDate?.toDate();
+          const durationMins = startDate && endDate 
+            ? Math.round((endDate.getTime() - startDate.getTime()) / 60000)
+            : 30;
+          meetingsData.push({
+            id: doc.id,
+            title: data.title || "Meeting",
+            time: startDate ? startDate.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" }) : "",
+            duration: `${durationMins} min`,
+            attendees: data.attendees?.length || 0,
+            joinUrl: data.location || undefined,
           });
-          setMeetings(meetingsData);
-        } catch {
-          // Calendar events collection may not exist yet
-          setMeetings([]);
-        }
+        });
+        setMeetings(meetingsData);
+      } catch (error) {
+        console.error("Failed to fetch meetings:", error);
+        if (isPermissionError(error)) hasPermissionError = true;
+        setMeetings([]);
+      }
 
-        // Fetch action items (Traction Todos)
+      // Fetch action items (Traction Todos)
+      try {
         const todosRef = collection(db, COLLECTIONS.TRACTION_TODOS);
         const todosQuery = query(todosRef, where("status", "!=", "complete"), orderBy("status"), orderBy("dueDate", "asc"), limit(5));
-        
-        try {
-          const todosSnapshot = await getDocs(todosQuery);
-          const todosData: ActionItemDisplay[] = [];
-          todosSnapshot.forEach((doc) => {
-            const data = doc.data();
-            const dueDate = data.dueDate?.toDate();
-            todosData.push({
-              id: doc.id,
-              title: data.description || "Task",
-              dueDate: dueDate ? getRelativeTime(dueDate) : "No due date",
-              priority: data.priority || "medium",
-              completed: data.status === "complete",
-            });
+        const todosSnapshot = await getDocs(todosQuery);
+        const todosData: ActionItemDisplay[] = [];
+        todosSnapshot.forEach((doc) => {
+          const data = doc.data();
+          const dueDate = data.dueDate?.toDate();
+          todosData.push({
+            id: doc.id,
+            title: data.description || "Task",
+            dueDate: dueDate ? getRelativeTime(dueDate) : "No due date",
+            priority: data.priority || "medium",
+            completed: data.status === "complete",
           });
-          setActionItems(todosData);
-        } catch {
-          setActionItems([]);
-        }
+        });
+        setActionItems(todosData);
+      } catch (error) {
+        console.error("Failed to fetch action items:", error);
+        if (isPermissionError(error)) hasPermissionError = true;
+        setActionItems([]);
+      }
 
-        // Fetch recent activity
+      // Fetch recent activity
+      try {
         const activitiesRef = collection(db, COLLECTIONS.ACTIVITIES);
         const activitiesQuery = query(activitiesRef, orderBy("createdAt", "desc"), limit(5));
-        
-        try {
-          const activitiesSnapshot = await getDocs(activitiesQuery);
-          const activitiesData: ActivityDisplay[] = [];
-          activitiesSnapshot.forEach((doc) => {
-            const data = doc.data() as ActivityDoc;
-            const createdAt = data.createdAt?.toDate() || new Date();
-            activitiesData.push({
-              id: doc.id,
-              type: data.entityType || "project",
-              message: data.description || "Activity",
-              time: getRelativeTime(createdAt),
-            });
+        const activitiesSnapshot = await getDocs(activitiesQuery);
+        const activitiesData: ActivityDisplay[] = [];
+        activitiesSnapshot.forEach((doc) => {
+          const data = doc.data() as ActivityDoc;
+          const createdAt = data.createdAt?.toDate() || new Date();
+          activitiesData.push({
+            id: doc.id,
+            type: data.entityType || "project",
+            message: data.description || "Activity",
+            time: getRelativeTime(createdAt),
           });
-          setRecentActivity(activitiesData);
-        } catch {
-          setRecentActivity([]);
-        }
+        });
+        setRecentActivity(activitiesData);
+      } catch (error) {
+        console.error("Failed to fetch recent activity:", error);
+        if (isPermissionError(error)) hasPermissionError = true;
+        setRecentActivity([]);
+      }
 
-        // Fetch team members
+      // Fetch team members
+      try {
         const teamRef = collection(db, COLLECTIONS.TEAM_MEMBERS);
         const teamQuery = query(teamRef, where("status", "==", "active"), limit(10));
-        
-        try {
-          const teamSnapshot = await getDocs(teamQuery);
-          const teamData: { initials: string; name: string }[] = [];
-          teamSnapshot.forEach((doc) => {
-            const data = doc.data() as TeamMemberDoc;
-            const initials = `${(data.firstName || "")[0] || ""}${(data.lastName || "")[0] || ""}`.toUpperCase() || "??";
-            teamData.push({
-              initials,
-              name: `${data.firstName || ""} ${data.lastName || ""}`.trim() || "Team Member",
-            });
+        const teamSnapshot = await getDocs(teamQuery);
+        const teamData: { initials: string; name: string }[] = [];
+        teamSnapshot.forEach((doc) => {
+          const data = doc.data() as TeamMemberDoc;
+          const initials = `${(data.firstName || "")[0] || ""}${(data.lastName || "")[0] || ""}`.toUpperCase() || "??";
+          teamData.push({
+            initials,
+            name: `${data.firstName || ""} ${data.lastName || ""}`.trim() || "Team Member",
           });
-          setTeamMembers(teamData);
-        } catch {
-          setTeamMembers([]);
-        }
+        });
+        teamCount = teamData.length;
+        setTeamMembers(teamData);
+      } catch (error) {
+        console.error("Failed to fetch team members:", error);
+        if (isPermissionError(error)) hasPermissionError = true;
+        setTeamMembers([]);
+      }
 
-        // Fetch rocks progress
+      // Fetch rocks progress
+      try {
         const rocksRef = collection(db, COLLECTIONS.TRACTION_ROCKS);
         const currentQuarter = getCurrentQuarter();
         const rocksQuery = query(rocksRef, where("quarter", "==", currentQuarter));
-        
-        let totalProgress = 0;
-        let rockCount = 0;
-        try {
-          const rocksSnapshot = await getDocs(rocksQuery);
-          rocksSnapshot.forEach((doc) => {
-            const data = doc.data();
-            totalProgress += data.progress || 0;
-            rockCount++;
-          });
-        } catch {
-          // Rocks collection may not exist
-        }
+        const rocksSnapshot = await getDocs(rocksQuery);
+        rocksSnapshot.forEach((doc) => {
+          const data = doc.data();
+          totalProgress += data.progress || 0;
+          rockCount++;
+        });
+      } catch (error) {
+        console.error("Failed to fetch rocks:", error);
+        if (isPermissionError(error)) hasPermissionError = true;
+      }
 
-        // Fetch form submissions
+      // Fetch form submissions
+      try {
         const submissionsRef = collection(db, COLLECTIONS.CONTACT_FORM_SUBMISSIONS);
         const submissionsQuery = query(submissionsRef, orderBy("submittedAt", "desc"), limit(5));
-        
-        try {
-          const submissionsSnapshot = await getDocs(submissionsQuery);
-          const submissionsData: FormSubmissionDisplay[] = [];
-          submissionsSnapshot.forEach((doc) => {
-            const data = doc.data();
-            submissionsData.push({
-              id: doc.id,
-              formType: data.formType,
-              firstName: data.firstName,
-              lastName: data.lastName,
-              email: data.email,
-              company: data.company,
-              status: data.status,
-              submittedAt: data.submittedAt?.toDate() || new Date(),
-            });
+        const submissionsSnapshot = await getDocs(submissionsQuery);
+        const submissionsData: FormSubmissionDisplay[] = [];
+        submissionsSnapshot.forEach((doc) => {
+          const data = doc.data();
+          submissionsData.push({
+            id: doc.id,
+            formType: data.formType,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            email: data.email,
+            company: data.company,
+            status: data.status,
+            submittedAt: data.submittedAt?.toDate() || new Date(),
           });
-          setFormSubmissions(submissionsData);
-        } catch {
-          setFormSubmissions([]);
-        }
-
-        // Update stats
-        setStats({
-          pipeline: {
-            value: totalPipelineValue,
-            change: 0, // Would need historical data to calculate
-            trend: "up",
-          },
-          activeProjects: {
-            count: activeCount,
-            atRisk: atRiskCount,
-          },
-          rocks: {
-            progress: rockCount > 0 ? Math.round(totalProgress / rockCount) : 0,
-            daysRemaining: getDaysRemainingInQuarter(),
-          },
-          teamOnline: teamMembers.length,
         });
-
+        setFormSubmissions(submissionsData);
       } catch (error) {
-        console.error("Error fetching dashboard data:", error);
-      } finally {
-        setIsLoading(false);
+        console.error("Failed to fetch form submissions:", error);
+        if (isPermissionError(error)) hasPermissionError = true;
+        setFormSubmissions([]);
       }
+
+      // Update stats
+      setStats({
+        pipeline: {
+          value: totalPipelineValue,
+          change: 0,
+          trend: "up",
+        },
+        activeProjects: {
+          count: activeCount,
+          atRisk: atRiskCount,
+        },
+        rocks: {
+          progress: rockCount > 0 ? Math.round(totalProgress / rockCount) : 0,
+          daysRemaining: getDaysRemainingInQuarter(),
+        },
+        teamOnline: teamCount,
+      });
+
+      if (hasPermissionError) {
+        setDashboardError("Some dashboard data couldn't be loaded because of Firestore permissions. Ask an admin to update your role or the security rules.");
+      }
+
+      setIsLoading(false);
     }
 
     fetchDashboardData();
@@ -445,6 +464,14 @@ export default function CommandCenterPage() {
           </Button>
         </div>
       </div>
+
+      {dashboardError && (
+        <Alert variant="destructive">
+          <AlertCircle className="h-4 w-4" />
+          <AlertTitle>Dashboard data unavailable</AlertTitle>
+          <AlertDescription>{dashboardError}</AlertDescription>
+        </Alert>
+      )}
 
       {/* Stats Cards */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
