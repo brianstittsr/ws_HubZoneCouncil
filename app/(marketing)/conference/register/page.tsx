@@ -13,9 +13,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
 import { Check, ChevronLeft, Loader2, Ticket, User, CreditCard, Calendar, MapPin } from "lucide-react";
-import { db } from "@/lib/firebase";
-import { collection, getDocs, query, where, orderBy } from "firebase/firestore";
-import { COLLECTIONS } from "@/lib/schema";
 import type { ConferenceTicketDoc } from "@/lib/schema";
 
 const steps = [
@@ -59,17 +56,15 @@ function ConferenceRegisterContent() {
 
   useEffect(() => {
     async function loadData() {
-      if (!db) return;
       try {
-        const ticketQuery = query(
-          collection(db, COLLECTIONS.CONFERENCE_TICKETS),
-          where("conferenceId", "==", CONFERENCE_ID),
-          where("isActive", "==", true),
-          orderBy("displayOrder", "asc")
+        const res = await fetch(
+          `/api/conference/tickets?conferenceId=${CONFERENCE_ID}&isActive=true`
         );
-        const ticketSnap = await getDocs(ticketQuery);
-        const ticketData = ticketSnap.docs.map((doc) => ({ id: doc.id, ...doc.data() }) as ConferenceTicketDoc);
-        setTickets(ticketData);
+        const result = await res.json();
+        if (!res.ok || !result.data) {
+          throw new Error(result.error || "Failed to fetch tickets");
+        }
+        setTickets(result.data as ConferenceTicketDoc[]);
       } catch (error) {
         console.error("Error loading tickets:", error);
       } finally {
@@ -78,6 +73,59 @@ function ConferenceRegisterContent() {
     }
     loadData();
   }, []);
+
+  const defaultTickets: ConferenceTicketDoc[] = [
+    {
+      id: "member",
+      conferenceId: CONFERENCE_ID,
+      name: "Member Registration",
+      price: 650,
+      currency: "usd",
+      ticketType: "paid",
+      description: "For current HUBZone Contractors National Council members",
+      perks: ["Full conference access", "All sessions & workshops", "Networking events", "Lunch included"],
+      isPublic: true,
+      isActive: true,
+      soldQuantity: 0,
+      displayOrder: 0,
+      createdAt: {} as never,
+      updatedAt: {} as never,
+    },
+    {
+      id: "non-member",
+      conferenceId: CONFERENCE_ID,
+      name: "Non-Member Registration",
+      price: 750,
+      currency: "usd",
+      ticketType: "paid",
+      description: "Standard conference registration",
+      perks: ["Full conference access", "All sessions & workshops", "Networking events", "Lunch included"],
+      isPublic: true,
+      isActive: true,
+      soldQuantity: 0,
+      displayOrder: 1,
+      createdAt: {} as never,
+      updatedAt: {} as never,
+    },
+    {
+      id: "government",
+      conferenceId: CONFERENCE_ID,
+      name: "Government Registration",
+      price: 250,
+      currency: "usd",
+      ticketType: "free",
+      description: "For federal and state government employees",
+      perks: ["Full conference access", "All sessions & workshops", "Networking events", "Lunch included"],
+      isPublic: true,
+      isActive: true,
+      soldQuantity: 0,
+      displayOrder: 2,
+      createdAt: {} as never,
+      updatedAt: {} as never,
+    },
+  ];
+
+  const displayTickets = tickets.length > 0 ? tickets : defaultTickets;
 
   async function confirmPayment(sessionId: string, registrationId: string) {
     try {
@@ -196,14 +244,14 @@ function ConferenceRegisterContent() {
                   <div className="flex items-center justify-center py-12">
                     <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
                   </div>
-                ) : tickets.length === 0 ? (
+                ) : displayTickets.length === 0 ? (
                   <div className="text-center py-8 text-muted-foreground">
                     <Ticket className="h-10 w-10 mx-auto mb-3" />
                     <p>Tickets are not yet available. Please check back soon.</p>
                   </div>
                 ) : (
                   <div className="space-y-4">
-                    {tickets.map((ticket) => (
+                    {displayTickets.map((ticket) => (
                       <div
                         key={ticket.id}
                         onClick={() => setSelectedTicket(ticket)}

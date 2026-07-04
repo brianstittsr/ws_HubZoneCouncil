@@ -190,7 +190,7 @@ export default function TicketsPage() {
                 </div>
                 <Button
                   variant="outline"
-                  className="border-white text-white hover:bg-white hover:text-[#1e3a5f]"
+                  className="border-white text-white bg-transparent hover:bg-white hover:text-[#1e3a5f]"
                   asChild
                 >
                   <a
