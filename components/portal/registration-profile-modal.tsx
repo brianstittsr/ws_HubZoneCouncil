@@ -32,7 +32,7 @@ export interface RegistrationData {
   email: string;
   phone: string;
   company: string;
-  accountType: "affiliate" | "strategic_partner" | "client";
+  accountType: "member";
 }
 
 interface RegistrationProfileModalProps {
@@ -67,8 +67,7 @@ export function RegistrationProfileModal({
     website: "",
     location: "",
     bio: "",
-    role: registrationData.accountType === "affiliate" ? "affiliate" : 
-          registrationData.accountType === "strategic_partner" ? "consultant" : "team",
+    role: "team",
     status: "active" as const,
   });
 
@@ -81,8 +80,7 @@ export function RegistrationProfileModal({
       emailPrimary: registrationData.email,
       mobile: registrationData.phone,
       company: registrationData.company,
-      role: registrationData.accountType === "affiliate" ? "affiliate" : 
-            registrationData.accountType === "strategic_partner" ? "consultant" : "team",
+      role: "team",
     }));
   }, [registrationData]);
 

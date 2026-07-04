@@ -11,7 +11,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Loader2, Eye, EyeOff, AlertCircle, Users, Building2, CheckCircle, Factory, UserCheck } from "lucide-react";
+import { Loader2, Eye, EyeOff, AlertCircle, CheckCircle, UserCheck } from "lucide-react";
 import { auth } from "@/lib/firebase";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { findAndLinkTeamMember } from "@/lib/auth-team-member-link";
@@ -20,7 +20,7 @@ import { RegistrationProfileModal, type RegistrationData } from "@/components/po
 export default function SignUpPage() {
   const router = useRouter();
   const [step, setStep] = useState(1);
-  const [accountType, setAccountType] = useState<"affiliate" | "strategic_partner" | "client" | "">("");
+  const [accountType, setAccountType] = useState<"member" | "">("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -150,7 +150,7 @@ export default function SignUpPage() {
           email,
           phone: "",
           company: "",
-          accountType: accountType as "affiliate" | "strategic_partner" | "client",
+          accountType: accountType as "member",
         });
         
         // Store session info
@@ -176,25 +176,13 @@ export default function SignUpPage() {
   const handleProfileComplete = (teamMemberId: string) => {
     console.log("Profile created with team member ID:", teamMemberId);
     setShowProfileModal(false);
-    
-    // Redirect based on account type
-    if (accountType === "client") {
-      router.push("/onboarding/client");
-    } else {
-      router.push("/portal");
-    }
+    router.push("/portal");
   };
 
   // Handle profile modal skip - redirect anyway but without full profile
   const handleProfileSkip = () => {
     setShowProfileModal(false);
-    
-    // Redirect based on account type
-    if (accountType === "client") {
-      router.push("/onboarding/client");
-    } else {
-      router.push("/portal");
-    }
+    router.push("/portal");
   };
 
   return (
@@ -261,92 +249,34 @@ export default function SignUpPage() {
               <div className="space-y-4">
                 <RadioGroup
                   value={accountType}
-                  onValueChange={(value) => setAccountType(value as "affiliate" | "strategic_partner" | "client")}
+                  onValueChange={(value) => setAccountType(value as "member")}
                   className="space-y-4"
                 >
-                  <div 
+                  <div
                     className={`flex items-start space-x-4 p-4 border-2 rounded-lg cursor-pointer transition-all ${
-                      accountType === "affiliate" 
-                        ? "border-[#C8A951] bg-[#C8A951]/5" 
+                      accountType === "member"
+                        ? "border-[#C8A951] bg-[#C8A951]/5"
                         : "border-muted hover:border-muted-foreground/50"
                     }`}
-                    onClick={() => setAccountType("affiliate")}
+                    onClick={() => setAccountType("member")}
                   >
-                    <RadioGroupItem value="affiliate" id="affiliate" className="mt-1" />
+                    <RadioGroupItem value="member" id="member" className="mt-1" />
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
-                        <Users className="h-5 w-5 text-[#C8A951]" />
-                        <Label htmlFor="affiliate" className="text-lg font-semibold cursor-pointer">
-                          Affiliate Partner
+                        <UserCheck className="h-5 w-5 text-[#C8A951]" />
+                        <Label htmlFor="member" className="text-lg font-semibold cursor-pointer">
+                          Member
                         </Label>
                       </div>
                       <p className="text-sm text-muted-foreground mt-1">
-                        Join our referral network and earn commissions by connecting manufacturers with V+ services. 
-                        Perfect for consultants, industry experts, and business development professionals.
+                        Join HubZone Council as a member to access exclusive resources, networking events, 
+                        and member-only opportunities.
                       </p>
                       <ul className="text-xs text-muted-foreground mt-2 space-y-1">
-                        <li>• Earn referral commissions</li>
-                        <li>• Access networking tools</li>
-                        <li>• One-to-One meeting scheduling</li>
-                        <li>• Training and resources</li>
-                      </ul>
-                    </div>
-                  </div>
-
-                  <div 
-                    className={`flex items-start space-x-4 p-4 border-2 rounded-lg cursor-pointer transition-all ${
-                      accountType === "strategic_partner" 
-                        ? "border-[#C8A951] bg-[#C8A951]/5" 
-                        : "border-muted hover:border-muted-foreground/50"
-                    }`}
-                    onClick={() => setAccountType("strategic_partner")}
-                  >
-                    <RadioGroupItem value="strategic_partner" id="strategic_partner" className="mt-1" />
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2">
-                        <Building2 className="h-5 w-5 text-[#C8A951]" />
-                        <Label htmlFor="strategic_partner" className="text-lg font-semibold cursor-pointer">
-                          Strategic Partner
-                        </Label>
-                      </div>
-                      <p className="text-sm text-muted-foreground mt-1">
-                        Partner with Strategic Value+ to deliver comprehensive manufacturing solutions. 
-                        Ideal for service providers, technology vendors, and industry organizations.
-                      </p>
-                      <ul className="text-xs text-muted-foreground mt-2 space-y-1">
-                        <li>• Co-branded solutions</li>
-                        <li>• Joint go-to-market opportunities</li>
-                        <li>• Access to manufacturer network</li>
-                        <li>• Priority deal flow</li>
-                      </ul>
-                    </div>
-                  </div>
-
-                  <div 
-                    className={`flex items-start space-x-4 p-4 border-2 rounded-lg cursor-pointer transition-all ${
-                      accountType === "client" 
-                        ? "border-[#C8A951] bg-[#C8A951]/5" 
-                        : "border-muted hover:border-muted-foreground/50"
-                    }`}
-                    onClick={() => setAccountType("client")}
-                  >
-                    <RadioGroupItem value="client" id="client" className="mt-1" />
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2">
-                        <Factory className="h-5 w-5 text-[#C8A951]" />
-                        <Label htmlFor="client" className="text-lg font-semibold cursor-pointer">
-                          Client (Customer/Supplier)
-                        </Label>
-                      </div>
-                      <p className="text-sm text-muted-foreground mt-1">
-                        Register as a manufacturing customer or supplier to access V+ services and 
-                        connect with our network of consultants and partners.
-                      </p>
-                      <ul className="text-xs text-muted-foreground mt-2 space-y-1">
-                        <li>• Access to V+ consulting services</li>
-                        <li>• Supplier qualification programs</li>
-                        <li>• Manufacturing assessments</li>
-                        <li>• Industry 4.0 transformation support</li>
+                        <li>• Access to member portal and resources</li>
+                        <li>• Networking and community events</li>
+                        <li>• Training and educational content</li>
+                        <li>• Member directory and connections</li>
                       </ul>
                     </div>
                   </div>
