@@ -298,12 +298,6 @@ const adminToolsItems = [
     icon: UserCog,
   },
   {
-    title: "EOS2 Dashboard",
-    href: "/portal/eos2",
-    icon: Target,
-    badge: "EOS",
-  },
-  {
     title: "Initiatives",
     href: "/portal/admin/initiatives",
     icon: Rocket,

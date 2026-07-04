@@ -602,37 +602,8 @@ export function UserProfileProvider({ children }: { children: ReactNode }) {
     return () => unsubscribe();
   }, []);
 
-  // Check if wizards should be shown after profile is loaded
-  useEffect(() => {
-    // Don't show wizard while loading or if not authenticated
-    if (isLoading || !isAuthenticated) {
-      return;
-    }
-    
-    // For AFFILIATES: Use the Affiliate Onboarding Wizard which includes ALL profile and networking fields
-    // Skip the separate profile wizard entirely for affiliates
-    if (profile.isAffiliate) {
-      // If affiliate onboarding is not complete, show the affiliate onboarding wizard
-      if (!profile.affiliateOnboardingComplete) {
-        setShowProfileWizard(false); // Never show profile wizard for affiliates
-        setShowNetworkingWizard(false); // Never show networking wizard for affiliates
-        setShowAffiliateOnboarding(true);
-      } else {
-        // Affiliate onboarding is complete - don't show any wizards
-        setShowProfileWizard(false);
-        setShowNetworkingWizard(false);
-        setShowAffiliateOnboarding(false);
-      }
-      return;
-    }
-    
-    // For NON-AFFILIATES: Use the standard profile wizard
-    if (!isComplete) {
-      setShowProfileWizard(true);
-      setShowNetworkingWizard(false);
-      setShowAffiliateOnboarding(false);
-    }
-  }, [isLoading, isAuthenticated, isComplete, profile.isAffiliate, profile.affiliateOnboardingComplete]);
+  // Onboarding popup auto-show is DISABLED.
+  // Wizards can still be opened manually via setShowProfileWizard / setShowAffiliateOnboarding / setShowNetworkingWizard.
 
   const updateProfile = (updates: Partial<UserProfile>) => {
     setProfile((prev) => ({
