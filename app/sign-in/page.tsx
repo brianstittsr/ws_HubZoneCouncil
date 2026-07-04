@@ -299,8 +299,11 @@ export default function SignInPage() {
               onClick={() => {
                 try {
                   sessionStorage.setItem("svp_authenticated", "true");
+                  sessionStorage.setItem("svp_bypass_auth", "true");
                   sessionStorage.setItem("svp_user_email", "test@hubzonecouncil.org");
                   sessionStorage.setItem("svp_user_name", "Test User");
+                  sessionStorage.setItem("svp_user_role", "superadmin");
+                  sessionStorage.setItem("svp_user_id", "bypass-test-user");
                 } catch {
                   // ignore
                 }

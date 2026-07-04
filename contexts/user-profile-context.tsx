@@ -569,9 +569,31 @@ export function UserProfileProvider({ children }: { children: ReactNode }) {
           console.error("Error fetching user data:", error);
         }
       } else {
-        setIsAuthenticated(false);
-        setLinkedTeamMember(null);
-        setProfile(defaultProfile);
+        // Check for bypass auth (testing only) when Firebase user is not signed in
+        const isBypassAuth = typeof window !== 'undefined' && sessionStorage.getItem("svp_bypass_auth") === "true";
+        if (isBypassAuth) {
+          const bypassEmail = sessionStorage.getItem("svp_user_email") || "test@hubzonecouncil.org";
+          const bypassName = sessionStorage.getItem("svp_user_name") || "Test User";
+          const bypassRole = (sessionStorage.getItem("svp_user_role") || "team_member") as UserProfile["role"];
+          const bypassId = sessionStorage.getItem("svp_user_id") || "bypass-test-user";
+          const nameParts = bypassName.split(" ");
+
+          setIsAuthenticated(true);
+          setProfile((prev) => ({
+            ...prev,
+            id: bypassId,
+            email: bypassEmail,
+            firstName: nameParts[0] || "",
+            lastName: nameParts.slice(1).join(" ") || "",
+            role: bypassRole,
+            isAffiliate: bypassRole === "affiliate",
+            updatedAt: new Date().toISOString(),
+          }));
+        } else {
+          setIsAuthenticated(false);
+          setLinkedTeamMember(null);
+          setProfile(defaultProfile);
+        }
       }
       
       setIsLoading(false);
